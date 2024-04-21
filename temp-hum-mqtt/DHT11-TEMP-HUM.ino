@@ -1,18 +1,17 @@
-#include "TFT_eSPI.h"
-#include "DHT.h" // Include DHT library
-
-#include <rpcWiFi.h>
-#include "MQTT.h"
+#include "TFT_eSPI.h" //LCD library
+#include "DHT.h" // DHT library
+#include <rpcWiFi.h> //wifi library
+#include "MQTT.h" //mqtt library
 
 /********************************************************/
 
-const char* ssid = "your ssid";
-const char* password =  "your password";
+const char* ssid = "iPhone (5)";
+const char* password =  "evhb010hikc5";
 
-const char* mqttServer = "broker.hivemq.com"; // Replace with your MQTT server address
-const int mqttPort = 1883; // Default MQTT port
-const char* mqttUsername = ""; // No username required for public HiveMQ broker
-const char* mqttPassword = ""; // No password required for public HiveMQ broker
+const char* mqttServer = "broker.hivemq.com"; // HiveMQ MQTT server address
+const int mqttPort = 1883; // HiveMQ MQTT port
+const char* mqttUsername = ""; // username for public HiveMQ broker
+const char* mqttPassword = ""; // password for public HiveMQ broker
 
 /********************************************************/
 #define DHTPIN 0       // Define signal Pin of DHT
@@ -33,7 +32,7 @@ void setup() {
   Serial.begin(115200);
   while(!Serial); // Wait for Serial to be ready
 
-  // Set WiFi to station mode and disconnect from an AP if it was previously connected
+
   WiFi.mode(WIFI_STA);
   WiFi.disconnect();
 
@@ -43,20 +42,20 @@ void setup() {
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.println("Connecting to WiFi..");
-    WiFi.begin(ssid, password); //OK
+    WiFi.begin(ssid, password); 
   }
   Serial.println("Connected to the WiFi network");
   Serial.print("IP Address: ");
-  Serial.println(WiFi.localIP()); // prints out the device's IP address
+  Serial.println(WiFi.localIP()); // print device's IP address
 
   while (!Serial)
     delay(10);
 
-  tft.begin(); // Start TFT display OK
+  tft.begin(); // Start TFT display 
   tft.setRotation(3); // Rotate the display to match Wio Terminal orientation
   tft.fillScreen(TFT_BLACK); // Clear the screen
 
-  dht.begin(); // Start DHT sensor OK
+  dht.begin(); // Start DHT sensor 
 
   client.begin(mqttServer, mqttPort, espClient);
   client.connect("WioTerminalClient", mqttUsername, mqttPassword);
@@ -69,12 +68,12 @@ void loop() {
   float h = dht.readHumidity();    // Read humidity
 
   if (client.connected()) {
-  // Publish temperature in desired format
+  // Publish temperature 
   String temperatureMsg = "Temperature: " + String(t) + " C";
   client.publish("envirobaby/temp", temperatureMsg.c_str());
   Serial.println("Temperature Sent");
 
-  // Publish humidity in desired format
+  // Publish humidity 
   String humidityMsg = "Humidity: " + String(h) + " %";
   client.publish("envirobaby/hum", humidityMsg.c_str());
   Serial.println("Humidity Sent");
