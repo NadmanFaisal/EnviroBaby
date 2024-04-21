@@ -4,8 +4,8 @@
 
 /********************************************************/
 
-const char* ssid = "nadmans batcave"; // wifi SSID
-const char* password =  "0736773532"; // wifi password
+const char* ssid = "enterSSID"; // wifi SSID
+const char* password =  "enterPASS"; // wifi password
 
 /********************************************************/
 
