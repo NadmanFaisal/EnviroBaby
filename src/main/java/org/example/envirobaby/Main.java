@@ -1,7 +1,7 @@
 package org.example.envirobaby;
 
-public class HelloApplication {
-
+// This class is used to ensure the subscription is working by printing in the console.
+public class Main {
 
     public static void main(String[] args) {
         MQTTSubscriber subscriber = new MQTTSubscriber();
@@ -13,9 +13,6 @@ public class HelloApplication {
                 if (noiseLevel != null) {
                     System.out.println(noiseLevel);
                 }
-//                else {
-//                    System.out.println("Working");
-//                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
