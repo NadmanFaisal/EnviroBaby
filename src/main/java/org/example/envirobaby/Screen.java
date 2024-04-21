@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class NoiseScreen extends Application {
+public class Screen extends Application {
 
 
     public void start(Stage envb) throws IOException {
