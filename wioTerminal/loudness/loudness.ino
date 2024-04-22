@@ -1,3 +1,4 @@
+<<<<<<< wioTerminal/loudness/loudness.ino
 #include "TFT_eSPI.h"
 
 #define LOUDNESS_PIN A0 // Pin in the terminal for loudness sensor
@@ -7,10 +8,58 @@ const char* TITLE = "ENVIROBABY";
 
 void setup() {
   Serial.begin(115200);
+=======
+#include "rpcWiFi.h" //wifi library
+#include "MQTT.h" //mqtt library
+
+/********************************************************/
+
+const char* ssid = "enterSSID"; // wifi SSID
+const char* password =  "enterPASS"; // wifi password
+
+/********************************************************/
+
+const char* mqttServer = "broker.hivemq.com"; // hivemq mqtt server address
+const int mqttPort = 1883; // hivemq mqtt port
+const char* mqttUsername = ""; // username for public hivemq broker
+const char* mqttPassword = ""; // password for public hivemq broker
+const char* mqttTopic = "envirobaby/"; // topic for hivemq broker 
+
+/********************************************************/
+
+WiFiClient espClient; //declaring wifi object
+MQTTClient client; //declaring mqtt object
+
+/********************************************************/
+
+int loudness;
+
+/********************************************************/
+
+void setup() {
+
+  while(!Serial); // waiting for serial monitor to open
+
+  WiFi.mode(WIFI_STA); // set WiFi mode to station (client)
+  WiFi.disconnect(); // disconnect any previous wifi connection
+
+  Serial.println("Connecting to WiFi..");
+  WiFi.begin(ssid, password); // connecting to wifi
+
+  while (WiFi.status() != WL_CONNECTED) { // waiting until wifi is being connected
+    delay(500);
+    Serial.println("Connecting to WiFi..");
+    WiFi.begin(ssid, password);
+  }
+  Serial.println("Connected to the WiFi network"); 
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP()); // prints wifi ip address
+>>>>>>> wioTerminal/loudness/loudness.ino
 
   while (!Serial)
     delay(10);
 
+<<<<<<< wioTerminal/loudness/loudness.ino
   tft.begin();
   tft.setRotation(3);
   tft.fillScreen(TFT_NAVY);
@@ -48,4 +97,25 @@ void drawValueBox(int x, int y, int width, int height, String label, String valu
   tft.println(label);
   tft.setCursor(x + 10, y + (height + 5) / 2);
   tft.println(value);
+=======
+
+
+  client.begin(mqttServer, mqttPort, espClient); // initialize mqtt client
+  client.connect("WioTerminalClient", mqttUsername, mqttPassword); // connect to the MQTT server
+}
+
+/********************************************************/
+
+void loop() {
+
+
+  if (client.connected()) { 
+  String loudnessValue = String(loudness) + " db";
+  client.publish(String(mqttTopic) + "loud", loudnessValue.c_str()); // publish loudness value to mqtt topict
+  Serial.println("Loudness Sent");
+  }else {
+  Serial.println("MQTT Disconnected"); 
+}
+    
+>>>>>>> wioTerminal/loudness/loudness.ino
 }
