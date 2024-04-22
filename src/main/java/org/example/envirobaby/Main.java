@@ -8,7 +8,7 @@ public class Main {
 
         while (true) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
                 String noiseLevel = subscriber.getLastReceivedMessage();
                 if (noiseLevel != null) {
                     System.out.println(noiseLevel);
