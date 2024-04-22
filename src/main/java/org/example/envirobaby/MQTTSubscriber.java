@@ -15,18 +15,6 @@ public class MQTTSubscriber implements MqttCallback {
     private Label noiseLabel;
     private String lastReceivedMessage; // stores last published message
 
-    public MQTTSubscriber() {
-
-        // if any error occurs, they are caught in the try catch block and printed
-        try {
-            client = new MqttClient(BROKER_URL, CLIENT_ID);
-            client.setCallback(this);
-            client.connect();
-            client.subscribe(MQTT_TOPIC);
-        } catch (MqttException e) {
-            e.printStackTrace();
-        }
-    }
 
     public MQTTSubscriber(Label noiseLabel) {
         this.noiseLabel = noiseLabel;
@@ -35,7 +23,8 @@ public class MQTTSubscriber implements MqttCallback {
             client.setCallback(this);
             client.connect();
             client.subscribe(MQTT_TOPIC);
-        } catch (MqttException e) { //Print error messages
+        } catch (MqttException e) {
+            //Print error messages
             e.printStackTrace();
         }
     }
@@ -63,10 +52,6 @@ public class MQTTSubscriber implements MqttCallback {
                 noiseLabel.setText(lastReceivedMessage); //Set label text to the last received message
             });
         }
-    }
-
-    public String getLastReceivedMessage() {
-        return lastReceivedMessage;
     }
 
     public void deliveryComplete(IMqttDeliveryToken token) {
