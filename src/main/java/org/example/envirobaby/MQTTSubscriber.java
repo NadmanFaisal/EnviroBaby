@@ -9,11 +9,11 @@ import org.eclipse.paho.client.mqttv3.*;
 public class MQTTSubscriber implements MqttCallback {
     private static final String BROKER_URL = "tcp://broker.hivemq.com:1883";
     private static final String CLIENT_ID = "JavaSubscriber";
-    private static final String MQTT_TOPIC = "envirobaby/loud";
+    private static final String LOUD_TOPIC = "envirobaby/loud";
 
     private MqttClient client; // connects to the broker and manages subscription in the constructor
     private Label noiseLabel;
-    private String lastReceivedMessage; // stores last published message
+    private String noiseValue; // stores last published message
 
 
     public MQTTSubscriber(Label noiseLabel) {
@@ -22,7 +22,7 @@ public class MQTTSubscriber implements MqttCallback {
             client = new MqttClient(BROKER_URL, CLIENT_ID); //Create mqtt client
             client.setCallback(this);
             client.connect();
-            client.subscribe(MQTT_TOPIC);
+            client.subscribe(LOUD_TOPIC);
         } catch (MqttException e) {
             //Print error messages
             e.printStackTrace();
@@ -39,17 +39,20 @@ public class MQTTSubscriber implements MqttCallback {
     public void messageArrived(String topic, MqttMessage message) throws InterruptedException {
 
         // Loudness messages stored in variable
-        if (MQTT_TOPIC.equals(topic)) {
-            lastReceivedMessage = new String(message.getPayload());
-            updateLabel();
+        switch (topic) {
+            case LOUD_TOPIC -> {
+                noiseValue = new String(message.getPayload());
+                updateLabel(noiseLabel,noiseValue);
+                break;
+            }
         }
     }
 
-//Called whenever a message is received
-    private void updateLabel() {
-        if (noiseLabel != null && lastReceivedMessage != null) {
+// This method updates respective labels according to the message it receives in the arguments.
+    private void updateLabel(Label label, String message) {
+        if (label != null && message != null) {
             Platform.runLater(() -> { //Run the label update operation on JavaFX Application Thread
-                noiseLabel.setText(lastReceivedMessage); //Set label text to the last received message
+                noiseLabel.setText(noiseValue); //Set label text to the last received message
             });
         }
     }
