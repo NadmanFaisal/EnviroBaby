@@ -40,9 +40,11 @@ public class MQTTSubscriber implements MqttCallback {
 
         // Loudness messages stored in variable
         switch (topic) {
-            case LOUD_TOPIC ->
+            case LOUD_TOPIC -> {
                 noiseValue = new String(message.getPayload());
                 updateLabel(noiseLabel,noiseValue);
+                break;
+            }
         }
     }
 
