@@ -10,7 +10,8 @@
          <children>
             <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="76.0" style="-fx-background-color: CDB45B;" text="Home" />
             <Label fx:id="tempLabel" alignment="CENTER" layoutX="25.0" layoutY="160.0" prefHeight="47.0" prefWidth="131.0" style="-fx-background-color: CDB45B;" text="Temperature" textAlignment="CENTER" />
-            <Label fx:id="noiseLabel" alignment="CENTER" layoutX="178.0" layoutY="160.0" prefHeight="47.0" prefWidth="131.0" style="-fx-background-color: CDB45B;" text="noise" textAlignment="CENTER" />
+            <Label fx:id="noiseLabel" alignment="CENTER" layoutX="313.0" layoutY="160.0" prefHeight="47.0" prefWidth="131.0" style="-fx-background-color: CDB45B;" text="noise" textAlignment="CENTER" />
+            <Label fx:id="humLabel" alignment="CENTER" layoutX="169.0" layoutY="160.0" prefHeight="47.0" prefWidth="131.0" style="-fx-background-color: CDB45B;" text="Humidity" textAlignment="CENTER" />
          </children>
       </AnchorPane>
    </children>

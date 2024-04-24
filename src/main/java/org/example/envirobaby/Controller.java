@@ -10,11 +10,14 @@ public class Controller {
     @FXML
     private Label tempLabel;
 
+    @FXML
+    private Label humLabel;
+
     private MQTTSubscriber mqttSubscriber;
 
     @FXML
     public void initialize() { //Creates new subscriber object
-        mqttSubscriber = new MQTTSubscriber(noiseLabel, tempLabel);
+        mqttSubscriber = new MQTTSubscriber(noiseLabel, tempLabel, humLabel);
 
     }}
 

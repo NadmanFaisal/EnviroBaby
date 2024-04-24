@@ -12,26 +12,30 @@ public class MQTTSubscriber implements MqttCallback {
     private static final String CLIENT_ID = "JavaSubscriber";
     private static final String LOUD_TOPIC = "envirobaby/loud";
     private static final String TEMP_TOPIC = "envirobaby/temp";
+    private static final String HUM_TOPIC = "envirobaby/humi";
 
 
     private MqttClient client; // connects to the broker and manages subscription in the constructor
     private Label noiseLabel;
     private Label tempLabel;
+    private Label humLabel;
     private String noiseValue; // stores last published message
     private String tempValue; // Holds the latest temperature data received via MQTT
-
+    private String humValue; // Holds the latest humidity data received via MQTT
 
 
     // Constructor sets up labels and MQTT connection, subscribes to topics for loudness and temperature.
-    public MQTTSubscriber(Label noiseLabel, Label tempLabel) {
+    public MQTTSubscriber(Label noiseLabel, Label tempLabel, Label humLabel) {
         this.noiseLabel = noiseLabel;
         this.tempLabel = tempLabel;
+        this.humLabel = humLabel;
         try {
             client = new MqttClient(BROKER_URL, CLIENT_ID); //Create mqtt client
             client.setCallback(this);
             client.connect();
             client.subscribe(LOUD_TOPIC);
             client.subscribe(TEMP_TOPIC);
+            client.subscribe(HUM_TOPIC);
         } catch (MqttException e) {
             //Print error messages
             e.printStackTrace(); //Error handling for MQTT connection issues
@@ -59,6 +63,11 @@ public class MQTTSubscriber implements MqttCallback {
             case TEMP_TOPIC -> {
                 tempValue = new String(message.getPayload());
                 updateLabel(tempLabel,tempValue);
+                break;
+            }
+            case HUM_TOPIC -> {
+                humValue = new String(message.getPayload());
+                updateLabel(humLabel,humValue);
                 break;
             }
         }
