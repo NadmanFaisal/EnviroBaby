@@ -6,11 +6,16 @@ public class Controller {
 
     @FXML
     private Label noiseLabel;
+
+    @FXML
+    private Label tempLabel;
+
     private MQTTSubscriber mqttSubscriber;
 
     @FXML
     public void initialize() { //Creates new subscriber object
-        mqttSubscriber = new MQTTSubscriber(noiseLabel);
+        mqttSubscriber = new MQTTSubscriber(noiseLabel, tempLabel);
+
     }}
 
 
