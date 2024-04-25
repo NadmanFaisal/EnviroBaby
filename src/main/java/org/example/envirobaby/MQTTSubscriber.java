@@ -50,7 +50,7 @@ public class MQTTSubscriber implements MqttCallback {
                 updateLabel(noiseLabel,noiseValue);
 
                 if(extractNumber(noiseValue) > NOISE_THRESHOLD) {
-                    createNotification();
+                    createNotification("Noise notification", "NOISE THRESHOLD CROSSED: " + extractNumber(noiseValue) + " db");
                 }
                 break;
             }
@@ -60,8 +60,8 @@ public class MQTTSubscriber implements MqttCallback {
 // This method updates respective labels according to the message it receives in the arguments.
     private void updateLabel(Label label, String message) {
         if (label != null && message != null) {
-            Platform.runLater(() -> { //Run the label update operation on JavaFX Application Thread
-                noiseLabel.setText(noiseValue); //Set label text to the last received message
+            Platform.runLater(() -> { //Runs the label update operation on JavaFX Application Thread
+                noiseLabel.setText(noiseValue); //Sets label text to the last received message
             });
         }
     }
@@ -74,12 +74,12 @@ public class MQTTSubscriber implements MqttCallback {
         StringBuilder number = new StringBuilder();
         boolean found = false;
 
+        // Loops and checks if a character is a digit
         for (char letter : message.toCharArray()) {
             if (Character.isDigit(letter)) {
                 number.append(letter);
                 found = true;
             } else if (found) {
-                // Break the loop if we have already found some digits and then encounter a non-digit
                 break;
             }
         }
@@ -93,10 +93,10 @@ public class MQTTSubscriber implements MqttCallback {
         }
     }
 
-    public void createNotification() throws IOException {
+    public void createNotification(String title, String message) {
 
         Platform.runLater(() -> {
-            Notifications notifications = Notifications.create().title("Notification").text("Notification").graphic(null).hideAfter(Duration.seconds(5)).position(Pos.BOTTOM_RIGHT);
+            Notifications notifications = Notifications.create().title(title).text(message).graphic(null).hideAfter(Duration.seconds(7)).position(Pos.BOTTOM_RIGHT);
             notifications.showConfirm();
         });
     }
