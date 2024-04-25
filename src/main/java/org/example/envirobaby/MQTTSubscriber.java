@@ -2,6 +2,7 @@ package org.example.envirobaby;
 
 import javafx.scene.control.Label;
 import javafx.application.Platform;
+import javafx.scene.control.TextField;
 import org.eclipse.paho.client.mqttv3.*;
 
 
@@ -14,10 +15,14 @@ public class MQTTSubscriber implements MqttCallback {
     private MqttClient client; // connects to the broker and manages subscription in the constructor
     private Label noiseLabel;
     private String noiseValue; // stores last published message
+    private TextField upperBoundNoise; // reference to textField object
+    private int threshold; // stores last received noise level value
 
 
-    public MQTTSubscriber(Label noiseLabel) {
+    public MQTTSubscriber(Label noiseLabel, TextField upperBoundNoise) {
         this.noiseLabel = noiseLabel;
+        this.upperBoundNoise = upperBoundNoise;
+        this.threshold = 90;
         try {
             client = new MqttClient(BROKER_URL, CLIENT_ID); //Create mqtt client
             client.setCallback(this);
@@ -55,6 +60,18 @@ public class MQTTSubscriber implements MqttCallback {
                 noiseLabel.setText(noiseValue); //Set label text to the last received message
             });
         }
+    }
+
+    public void updateNoiseThreshold(){ // method that updates the threshold value
+        String thresholdTextValue = upperBoundNoise.getText(); // gets and stores the string value from textField
+        if (thresholdTextValue.matches("\\d+")){ //condition to find if there are any numeric value
+            this.threshold = Integer.parseInt(thresholdTextValue); // converts the string into integer
+        } else {
+            System.out.println("Enter a numeric value, Thank you!"); // if no numeric value id found this is printed
+        }
+    }
+    public int getThreshold() { // getter method to receive threshold value
+        return threshold;
     }
 
     public void deliveryComplete(IMqttDeliveryToken token) {
