@@ -1,11 +1,8 @@
 package org.example.envirobaby;
 
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.application.Platform;
-import javafx.util.Duration;
 import org.eclipse.paho.client.mqttv3.*;
-import org.controlsfx.control.Notifications;
 import java.io.IOException;
 
 
@@ -20,9 +17,12 @@ public class MQTTSubscriber implements MqttCallback {
     private Label noiseLabel;
     private String noiseValue; // stores last published message
 
+    private Notification notification; // instance variable from Notification class
+
 
     public MQTTSubscriber(Label noiseLabel) {
         this.noiseLabel = noiseLabel;
+        this.notification = new Notification();
         try {
             client = new MqttClient(BROKER_URL, CLIENT_ID); //Create mqtt client
             client.setCallback(this);
@@ -50,7 +50,7 @@ public class MQTTSubscriber implements MqttCallback {
                 updateLabel(noiseLabel,noiseValue);
 
                 if(extractNumber(noiseValue) > NOISE_THRESHOLD) {
-                    createNotification("Noise notification", "NOISE THRESHOLD CROSSED: " + extractNumber(noiseValue) + " db");
+                    notification.createNotification("Noise notification", "NOISE THRESHOLD CROSSED: " + extractNumber(noiseValue) + " db");
                 }
                 break;
             }
@@ -91,13 +91,5 @@ public class MQTTSubscriber implements MqttCallback {
         } else {
             throw new NumberFormatException("No number found in the text");
         }
-    }
-
-    public void createNotification(String title, String message) {
-
-        Platform.runLater(() -> {
-            Notifications notifications = Notifications.create().title(title).text(message).graphic(null).hideAfter(Duration.seconds(7)).position(Pos.BOTTOM_RIGHT);
-            notifications.showConfirm();
-        });
     }
 }
