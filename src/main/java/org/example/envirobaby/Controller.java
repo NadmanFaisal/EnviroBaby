@@ -9,7 +9,7 @@ public class Controller {
     @FXML
     private Label noiseLabel;
     @FXML
-    private TextField upperBoundBox;
+    private TextField maxNoise;
     @FXML
     private Label tempLabel;
     @FXML
@@ -20,8 +20,8 @@ public class Controller {
     @FXML
     public void initialize() { //Creates new subscriber object
 
-        mqttSubscriber = new MQTTSubscriber(noiseLabel, tempLabel, humLabel, upperBoundBox);
-        upperBoundBox.setText(String.valueOf(mqttSubscriber.getThreshold()));
+        mqttSubscriber = new MQTTSubscriber(noiseLabel, tempLabel, humLabel, maxNoise);
+        maxNoise.setText(String.valueOf(mqttSubscriber.getThreshold()));
     }
 
     @FXML
