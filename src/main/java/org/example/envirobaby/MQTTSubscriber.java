@@ -3,6 +3,7 @@ package org.example.envirobaby;
 import javafx.scene.control.Label;
 import javafx.application.Platform;
 import org.eclipse.paho.client.mqttv3.*;
+import java.io.IOException;
 
 // This class implements the MqttCallback interface to handle MQTT communications,
 // specifically subscribing to topics and updating UI components with received messages.
@@ -13,7 +14,7 @@ public class MQTTSubscriber implements MqttCallback {
     private static final String LOUD_TOPIC = "envirobaby/loud";
     private static final String TEMP_TOPIC = "envirobaby/temp";
     private static final String HUM_TOPIC = "envirobaby/humi";
-
+    private static final int NOISE_THRESHOLD = 70;
 
     private MqttClient client; // connects to the broker and manages subscription in the constructor
     private Label noiseLabel;
@@ -23,12 +24,15 @@ public class MQTTSubscriber implements MqttCallback {
     private String tempValue; // Holds the latest temperature data received via MQTT
     private String humValue; // Holds the latest humidity data received via MQTT
 
+    private Notification notification; // instance variable from Notification class
+
 
     // Constructor sets up labels and MQTT connection, subscribes to topics for loudness and temperature.
     public MQTTSubscriber(Label noiseLabel, Label tempLabel, Label humLabel) {
         this.noiseLabel = noiseLabel;
         this.tempLabel = tempLabel;
         this.humLabel = humLabel;
+        this.notification = new Notification();
         try {
             client = new MqttClient(BROKER_URL, CLIENT_ID); //Create mqtt client
             client.setCallback(this);
@@ -50,13 +54,17 @@ public class MQTTSubscriber implements MqttCallback {
     }
 
     // Messages from Mqtt are stored in the variables present in the if block
-    public void messageArrived(String topic, MqttMessage message) throws InterruptedException {
+    public void messageArrived(String topic, MqttMessage message) throws IOException {
 
         // Loudness messages stored in variable
         switch (topic) {
             case LOUD_TOPIC -> {
                 noiseValue = new String(message.getPayload());
                 updateLabel(noiseLabel,noiseValue);
+
+                if(extractNumber(noiseValue) > NOISE_THRESHOLD) {
+                    notification.createNotification("Noise notification", "NOISE THRESHOLD CROSSED: " + extractNumber(noiseValue) + " db");
+                }
                 break;
             }
 
@@ -85,5 +93,28 @@ public class MQTTSubscriber implements MqttCallback {
 
     public void deliveryComplete(IMqttDeliveryToken token) {
         // this method is not implemented yet
+    }
+
+    public int extractNumber(String message) {
+        StringBuilder number = new StringBuilder();
+        boolean found = false;
+
+        // Loops and checks if a character is a digit
+        for (char letter : message.toCharArray()) {
+            if (Character.isDigit(letter)) {
+                number.append(letter);
+                found = true;
+            } else if (found) {
+                break;
+            }
+        }
+
+        if (!number.isEmpty()) {
+
+            // Converts a string to an int if it is compatible to do so
+            return Integer.parseInt(number.toString());
+        } else {
+            throw new NumberFormatException("No number found in the text");
+        }
     }
 }
