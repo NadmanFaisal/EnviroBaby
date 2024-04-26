@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -7,20 +11,16 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: skin;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.envirobaby.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: skin;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.envirobaby.Controller">
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: skin;">
          <children>
             <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="76.0" style="-fx-background-color: CDB45B;" text="Home" />
-            <Pane layoutX="310.0" layoutY="166.0" prefHeight="47.0" prefWidth="131.0" style="-fx-background-color: CDB45B;">
-               <children>
-                  <Label fx:id="tempLabel" alignment="CENTER" layoutX="25.0" layoutY="160.0" prefHeight="47.0" prefWidth="131.0" style="-fx-background-color: CDB45B;" text="Temperature" textAlignment="CENTER" />
-            <Label fx:id="noiseLabel" alignment="CENTER" layoutX="313.0" layoutY="160.0" prefHeight="47.0" prefWidth="131.0" style="-fx-background-color: CDB45B;" text="noise" textAlignment="CENTER" />
-            <Label fx:id="humLabel" alignment="CENTER" layoutX="169.0" layoutY="160.0" prefHeight="47.0" prefWidth="131.0" style="-fx-background-color: CDB45B;" text="Humidity" textAlignment="CENTER" />
-               </children>
-            </Pane>
             <TextField fx:id="upperBoundBox" layoutX="331.0" layoutY="280.0" onAction="#updateUpperBound" prefHeight="40.0" prefWidth="89.0" />
             <Text fx:id="Enter_Limit_for_Noise" layoutX="321.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Limit for Noise" />
+            <Label fx:id="tempLabel" alignment="CENTER" layoutX="52.0" layoutY="140.0" prefHeight="47.0" prefWidth="131.0" style="-fx-background-color: CDB45B;" text="Temperature" textAlignment="CENTER" />
+      <Label fx:id="humLabel" alignment="CENTER" layoutX="200.0" layoutY="140.0" prefHeight="47.0" prefWidth="131.0" style="-fx-background-color: CDB45B;" text="Humidity" textAlignment="CENTER" />
+      <Label fx:id="noiseLabel" alignment="CENTER" layoutX="355.0" layoutY="140.0" prefHeight="47.0" prefWidth="131.0" style="-fx-background-color: CDB45B;" text="noise" textAlignment="CENTER" />
          </children>
       </AnchorPane>
    </children>
