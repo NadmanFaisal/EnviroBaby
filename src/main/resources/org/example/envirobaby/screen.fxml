@@ -14,7 +14,9 @@
             <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="76.0" style="-fx-background-color: CDB45B;" text="Home" />
             <Pane layoutX="310.0" layoutY="166.0" prefHeight="47.0" prefWidth="131.0" style="-fx-background-color: CDB45B;">
                <children>
-                  <Label fx:id="noiseLabel" alignment="CENTER" prefHeight="47.0" prefWidth="131.0" text="Label" textAlignment="CENTER" />
+                  <Label fx:id="tempLabel" alignment="CENTER" layoutX="25.0" layoutY="160.0" prefHeight="47.0" prefWidth="131.0" style="-fx-background-color: CDB45B;" text="Temperature" textAlignment="CENTER" />
+            <Label fx:id="noiseLabel" alignment="CENTER" layoutX="313.0" layoutY="160.0" prefHeight="47.0" prefWidth="131.0" style="-fx-background-color: CDB45B;" text="noise" textAlignment="CENTER" />
+            <Label fx:id="humLabel" alignment="CENTER" layoutX="169.0" layoutY="160.0" prefHeight="47.0" prefWidth="131.0" style="-fx-background-color: CDB45B;" text="Humidity" textAlignment="CENTER" />
                </children>
             </Pane>
             <TextField fx:id="upperBoundBox" layoutX="331.0" layoutY="280.0" onAction="#updateUpperBound" prefHeight="40.0" prefWidth="89.0" />

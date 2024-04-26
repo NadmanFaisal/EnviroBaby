@@ -10,17 +10,23 @@ public class Controller {
     private Label noiseLabel;
     @FXML
     private TextField upperBoundBox;
+    @FXML
+    private Label tempLabel;
+    @FXML
+    private Label humLabel;
+
     private MQTTSubscriber mqttSubscriber;
 
     @FXML
     public void initialize() { //Creates new subscriber object
-        mqttSubscriber = new MQTTSubscriber(noiseLabel, upperBoundBox);
+
+        mqttSubscriber = new MQTTSubscriber(noiseLabel, tempLabel, humLabel, upperBoundBox);
         upperBoundBox.setText(String.valueOf(mqttSubscriber.getThreshold()));
     }
 
     @FXML
     public void updateUpperBound(ActionEvent actionEvent){ // controller class method used in FXML file that handles and action event
-        mqttSubscriber.updateNoiseThreshold();
+    mqttSubscriber.updateNoiseThreshold();
     }
 
 }
