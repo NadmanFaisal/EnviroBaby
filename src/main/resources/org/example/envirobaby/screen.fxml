@@ -32,8 +32,8 @@
                <font>
                   <Font name="Baloo Paaji 2 SemiBold" size="13.0" />
                </font></Label>
-            <TextField fx:id="minHumBox" layoutX="439.0" layoutY="265.0" prefHeight="28.0" prefWidth="66.0" promptText="Min" />
-            <TextField fx:id="maxHumBox" layoutX="508.0" layoutY="265.0" prefHeight="28.0" prefWidth="66.0" promptText="Max" />
+            <TextField fx:id="minHumBox" layoutX="439.0" layoutY="265.0" onAction="#updateMinHum" prefHeight="28.0" prefWidth="66.0" promptText="Min" />
+            <TextField fx:id="maxHumBox" layoutX="508.0" layoutY="265.0" onAction="#updateMaxHum" prefHeight="28.0" prefWidth="66.0" promptText="Max" />
             <Label layoutX="531.0" layoutY="256.0" />
             <Label fx:id="humThreshLabel" layoutX="480.0" layoutY="241.0" prefHeight="24.0" prefWidth="57.0" text="Humidity">
                <font>

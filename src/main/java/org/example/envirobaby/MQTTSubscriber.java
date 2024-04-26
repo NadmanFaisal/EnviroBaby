@@ -21,21 +21,30 @@ public class MQTTSubscriber implements MqttCallback {
     private Label tempLabel;
     private Label humLabel;
     private String noiseValue; // stores last published message
-    private TextField upperBoundNoise; // reference to textField object
-    private int threshold; // stores last received noise level value
+    private TextField maxNoise; // reference to textField object
+    private int noiseThreshold; // stores last received noise level value
     private String tempValue; // Holds the latest temperature data received via MQTT
     private String humValue; // Holds the latest humidity data received via MQTT
+
+    private int minHum; // stores latest input for minimum humidity threshold
+    private int maxHum; // stores latest input for maximum humidity threshold
+    private TextField minHumBox; //reference to the TextField object
+    private TextField maxHumBox; //reference to the TextField object
 
     private Notification notification; // instance variable from Notification class
 
 
     // Constructor sets up labels and MQTT connection, subscribes to topics for loudness and temperature.
-    public MQTTSubscriber(Label noiseLabel, Label tempLabel, Label humLabel, TextField upperBoundNoise) {
+    public MQTTSubscriber(Label noiseLabel, Label tempLabel, Label humLabel, TextField maxNoise, TextField minHumBox, TextField maxHumBox ) {
         this.noiseLabel = noiseLabel;
         this.tempLabel = tempLabel;
         this.humLabel = humLabel;
-            this.upperBoundNoise = upperBoundNoise;
-            this.threshold = 90;
+        this.minHumBox = minHumBox;
+        this.maxHumBox = maxHumBox;
+        this.minHum = 30;
+        this.maxHum = 60;
+            this.maxNoise = maxNoise;
+            this.noiseThreshold = 90;
         this.notification = new Notification();
 
         try {
@@ -67,7 +76,7 @@ public class MQTTSubscriber implements MqttCallback {
                 noiseValue = new String(message.getPayload());
                 updateLabel(noiseLabel,noiseValue);
 
-                if(extractNumber(noiseValue) > threshold) {
+                if(extractNumber(noiseValue) > noiseThreshold) {
                     notification.createNotification("Noise notification", "NOISE THRESHOLD CROSSED: " + extractNumber(noiseValue) + " db");
                 }
                 break;
@@ -97,15 +106,42 @@ public class MQTTSubscriber implements MqttCallback {
     }
 
     public void updateNoiseThreshold(){ // method that updates the threshold value
-        String thresholdTextValue = upperBoundNoise.getText(); // gets and stores the string value from textField
+        String thresholdTextValue = maxNoise.getText(); // gets and stores the string value from textField
         if (thresholdTextValue.matches("\\d+")){ //condition to find if there are any numeric value
-            this.threshold = Integer.parseInt(thresholdTextValue); // converts the string into integer
+            this.noiseThreshold = Integer.parseInt(thresholdTextValue); // converts the string into integer
         } else {
             System.out.println("Enter a numeric value, Thank you!"); // if no numeric value id found this is printed
         }
     }
-    public int getThreshold() { // getter method to receive threshold value
-        return threshold;
+
+    public void updateMinHum() { // Updates minimum humidity threshold
+        String minHumTextValue = minHumBox.getText();
+        if (minHumTextValue.matches("\\d+")) {
+            this.minHum = Integer.parseInt(minHumTextValue);
+        } else {
+            System.out.println("Please enter a numeric value");
+        }
+    }
+
+    public void updateMaxHum() { // Updates maximum humidity threshold
+        String maxHumTextValue = maxHumBox.getText();
+        if (maxHumTextValue.matches("\\d+")) {
+            this.maxHum = Integer.parseInt(maxHumTextValue);
+        } else {
+            System.out.println("Please enter a numeric value");
+        }
+    }
+
+    public int getMinHum(){ //getter for minimum humidity threshold
+        return minHum;
+    }
+
+    public int getMaxHum(){ //getter for maximum humidity treshold
+        return maxHum;
+    }
+
+    public int getNoiseThreshold() { // getter method to receive threshold value
+        return noiseThreshold;
     }
 
     public void deliveryComplete(IMqttDeliveryToken token) {
