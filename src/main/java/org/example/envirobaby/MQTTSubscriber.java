@@ -5,6 +5,8 @@ import javafx.application.Platform;
 import javafx.scene.control.TextField;
 import org.eclipse.paho.client.mqttv3.*;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 // This class implements the MqttCallback interface to handle MQTT communications,
 // specifically subscribing to topics and updating UI components with received messages.
@@ -90,6 +92,12 @@ public class MQTTSubscriber implements MqttCallback {
             case HUM_TOPIC -> {
                 humValue = new String(message.getPayload());
                 updateLabel(humLabel,humValue);
+
+                if(extractDouble(humValue) > maxHum) {
+                    notification.createNotification("Humidity notification", "Humidity exceeded! " + humValue);
+                } else if (extractDouble(humValue) < minHum) {
+                    notification.createNotification("Humidity notification", "Humidity too low! " + humValue);
+                }
                 break;
             }
         }
@@ -170,4 +178,14 @@ public class MQTTSubscriber implements MqttCallback {
             throw new NumberFormatException("No number found in the text");
         }
     }
-}
+
+    public double extractDouble(String message) { //  locate double within a String
+        Pattern doublePattern = Pattern.compile("([0-9]{1,13}(\\.[0-9]*)?)"); //setup regex pattern
+        Matcher doubleMatcher = doublePattern.matcher(message); // search for pattern in string
+        double extracted = 0;
+
+        if(doubleMatcher.find()) {
+            extracted = Double.parseDouble(doubleMatcher.group()); //if found, parse into double
+        }
+        return extracted;
+    }}
