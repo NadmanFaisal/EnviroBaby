@@ -24,19 +24,26 @@ public class MQTTSubscriber implements MqttCallback {
     private Label humLabel;
     private String noiseValue; // stores last published message
     private TextField maxNoise; // reference to textField object
+
     private TextField maxTempBox;
     private TextField minTempBox;
     private int noiseThreshold; // stores last received noise level value
     private double tempUbound;
     private double tempLbound;
+
     private String tempValue; // Holds the latest temperature data received via MQTT
     private String humValue; // Holds the latest humidity data received via MQTT
+
+    private double minHum; // stores latest input for minimum humidity threshold
+    private double maxHum; // stores latest input for maximum humidity threshold
+    private TextField minHumBox; //reference to the TextField object
+    private TextField maxHumBox; //reference to the TextField object
 
     private Notification notification; // instance variable from Notification class
 
 
     // Constructor sets up labels and MQTT connection, subscribes to topics for loudness and temperature.
-    public MQTTSubscriber(Label noiseLabel, Label tempLabel, Label humLabel, TextField maxNoise, TextField maxTempBox, TextField minTempBox) {
+    public MQTTSubscriber(Label noiseLabel, Label tempLabel, Label humLabel, TextField maxNoise, TextField maxTempBox, TextField minTempBox, TextField minHumBox, TextField maxHumBox) {
         this.noiseLabel = noiseLabel;
         this.tempLabel = tempLabel;
             this.maxTempBox = maxTempBox;
@@ -44,6 +51,10 @@ public class MQTTSubscriber implements MqttCallback {
             this.minTempBox =minTempBox;
             this.tempLbound = 18.00;
         this.humLabel = humLabel;
+        this.minHumBox = minHumBox;
+        this.maxHumBox = maxHumBox;
+        this.minHum = 30;
+        this.maxHum = 60;
             this.maxNoise = maxNoise;
             this.noiseThreshold = 90;
         this.notification = new Notification();
@@ -130,7 +141,7 @@ public class MQTTSubscriber implements MqttCallback {
             System.out.println("Enter a numeric value, Thank you!");
         }
     }
-    public void updateTempLbound() {
+        public void updateTempLbound() {
         String thresholdTextValue = minTempBox.getText();
 
         if (thresholdTextValue.matches("[0-9]{1,13}(\\.[0-9]*)?")) {
@@ -140,10 +151,36 @@ public class MQTTSubscriber implements MqttCallback {
         }
     }
 
+    public void updateMinHum() { // Updates minimum humidity threshold
+        String minHumTextValue = minHumBox.getText();
+        if (minHumTextValue.matches("[0-9]{1,13}(.[0-9]*)?")) {
+            this.minHum = Double.parseDouble(minHumTextValue);
+        } else {
+            System.out.println("Please enter a numeric value");
+        }
+    }
+
+    public void updateMaxHum() { // Updates maximum humidity threshold
+        String maxHumTextValue = maxHumBox.getText();
+        if (maxHumTextValue.matches("[0-9]{1,13}(.[0-9]*)?")) {
+            this.maxHum = Double.parseDouble(maxHumTextValue);
+        } else {
+            System.out.println("Please enter a numeric value");
+        }
+    }
+
+    public double getMinHum(){ //getter for minimum humidity threshold
+        return minHum;
+    }
+
+    public double getMaxHum(){ //getter for maximum humidity treshold
+        return maxHum;
+    }
 
     public int getNoiseThreshold() { // getter method to receive threshold value
         return noiseThreshold;
-    }
+        }
+
     public double getTempUbound() { // getter method to receive threshold value
         return tempUbound;
     }
