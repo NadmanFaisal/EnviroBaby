@@ -2,6 +2,7 @@ package org.example.envirobaby;
 
 import javafx.scene.control.Label;
 import javafx.application.Platform;
+import javafx.scene.control.TextField;
 import org.eclipse.paho.client.mqttv3.*;
 import java.io.IOException;
 
@@ -21,12 +22,17 @@ public class MQTTSubscriber implements MqttCallback {
     private Label tempLabel;
     private Label humLabel;
     private String noiseValue; // stores last published message
+    private TextField upperBoundNoise; // reference to textField object
+    private int threshold; // stores last received noise level value
     private String tempValue; // Holds the latest temperature data received via MQTT
     private String humValue; // Holds the latest humidity data received via MQTT
 
     private Notification notification; // instance variable from Notification class
 
-
+    public MQTTSubscriber(Label noiseLabel, TextField upperBoundNoise) {
+        this.noiseLabel = noiseLabel;
+        this.upperBoundNoise = upperBoundNoise;
+        this.threshold = 90;
     // Constructor sets up labels and MQTT connection, subscribes to topics for loudness and temperature.
     public MQTTSubscriber(Label noiseLabel, Label tempLabel, Label humLabel) {
         this.noiseLabel = noiseLabel;
@@ -89,6 +95,18 @@ public class MQTTSubscriber implements MqttCallback {
                 label.setText(message); //Set label text to the last received message
             });
         }
+    }
+
+    public void updateNoiseThreshold(){ // method that updates the threshold value
+        String thresholdTextValue = upperBoundNoise.getText(); // gets and stores the string value from textField
+        if (thresholdTextValue.matches("\\d+")){ //condition to find if there are any numeric value
+            this.threshold = Integer.parseInt(thresholdTextValue); // converts the string into integer
+        } else {
+            System.out.println("Enter a numeric value, Thank you!"); // if no numeric value id found this is printed
+        }
+    }
+    public int getThreshold() { // getter method to receive threshold value
+        return threshold;
     }
 
     public void deliveryComplete(IMqttDeliveryToken token) {
