@@ -8,38 +8,44 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: skin;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.envirobaby.Controller">
-   <children>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fff3f0;">
-         <children>
-            <Button layoutX="28.0" layoutY="14.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="76.0" style="-fx-background-color: #FFF0F5; -fx-border-color: #FFB6C1; -fx-background-radius: 5; -fx-border-radius: 5;" text="Home">
-               <font>
-                  <Font name="Baloo Paaji 2 SemiBold" size="13.0" />
-               </font></Button>
-            <TextField fx:id="maxNoise" layoutX="439.0" layoutY="341.0" onAction="#updateUpperBound" prefHeight="28.0" prefWidth="135.0" promptText="Enter max" />
-            <Text fx:id="noiseThreshLabel" layoutX="489.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Noise">
-               <font>
-                  <Font name="Baloo Paaji 2 SemiBold" size="13.0" />
-               </font></Text>
-            <Label fx:id="tempLabel" alignment="CENTER" layoutX="32.0" layoutY="125.0" prefHeight="47.0" prefWidth="126.0" style="-fx-background-color: #FFF0F5; -fx-background-radius: 5; -fx-border-color: #FFB6C1; -fx-border-radius: 5;" text="Temperature" textAlignment="CENTER">
-               <font>
-                  <Font name="Baloo Paaji 2 SemiBold" size="13.0" />
-               </font></Label>
-      <Label fx:id="humLabel" alignment="CENTER" layoutX="171.0" layoutY="125.0" prefHeight="47.0" prefWidth="126.0" style="-fx-background-color: #FFF0F5; -fx-background-radius: 5; -fx-border-color: #FFB6C1; -fx-border-radius: 5;" text="Humidity" textAlignment="CENTER">
-               <font>
-                  <Font name="Baloo Paaji 2 SemiBold" size="13.0" />
-               </font></Label>
-      <Label fx:id="noiseLabel" alignment="CENTER" layoutX="309.0" layoutY="125.0" prefHeight="47.0" prefWidth="126.0" style="-fx-background-color: #FFF0F5; -fx-background-radius: 5; -fx-border-color: #FFB6C1; -fx-border-radius: 5;" text="Noise" textAlignment="CENTER">
-               <font>
-                  <Font name="Baloo Paaji 2 SemiBold" size="13.0" />
-               </font></Label>
-            <TextField fx:id="minHumBox" layoutX="439.0" layoutY="265.0" prefHeight="28.0" prefWidth="66.0" promptText="Min" />
-            <TextField fx:id="maxHumBox" layoutX="508.0" layoutY="265.0" prefHeight="28.0" prefWidth="66.0" promptText="Max" />
-            <Label layoutX="531.0" layoutY="256.0" />
-            <Label fx:id="humThreshLabel" layoutX="480.0" layoutY="241.0" prefHeight="24.0" prefWidth="57.0" text="Humidity">
-               <font>
-                  <Font name="Baloo Paaji 2 SemiBold" size="13.0" />
-               </font></Label>
-         </children>
-      </AnchorPane>
-   </children>
+    <children>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fff3f0;">
+            <children>
+                <Button layoutX="28.0" layoutY="14.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="76.0" style="-fx-background-color: #FFF0F5; -fx-border-color: #FFB6C1; -fx-background-radius: 5; -fx-border-radius: 5;" text="Home">
+                    <font>
+                        <Font name="Baloo Paaji 2 SemiBold" size="13.0" />
+                    </font></Button>
+                <TextField fx:id="maxNoise" layoutX="439.0" layoutY="341.0" onAction="#updateNoiseUpperBound" prefHeight="28.0" prefWidth="135.0" promptText="Enter max" />
+                <Text fx:id="noiseThreshLabel" layoutX="489.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Noise">
+                    <font>
+                        <Font name="Baloo Paaji 2 SemiBold" size="13.0" />
+                    </font></Text>
+                <Label fx:id="tempLabel" alignment="CENTER" layoutX="32.0" layoutY="125.0" prefHeight="47.0" prefWidth="126.0" style="-fx-background-color: #FFF0F5; -fx-background-radius: 5; -fx-border-color: #FFB6C1; -fx-border-radius: 5;" text="Temperature" textAlignment="CENTER">
+                    <font>
+                        <Font name="Baloo Paaji 2 SemiBold" size="13.0" />
+                    </font></Label>
+                <Label fx:id="humLabel" alignment="CENTER" layoutX="171.0" layoutY="125.0" prefHeight="47.0" prefWidth="126.0" style="-fx-background-color: #FFF0F5; -fx-background-radius: 5; -fx-border-color: #FFB6C1; -fx-border-radius: 5;" text="Humidity" textAlignment="CENTER">
+                    <font>
+                        <Font name="Baloo Paaji 2 SemiBold" size="13.0" />
+                    </font></Label>
+                <Label fx:id="noiseLabel" alignment="CENTER" layoutX="309.0" layoutY="125.0" prefHeight="47.0" prefWidth="126.0" style="-fx-background-color: #FFF0F5; -fx-background-radius: 5; -fx-border-color: #FFB6C1; -fx-border-radius: 5;" text="Noise" textAlignment="CENTER">
+                    <font>
+                        <Font name="Baloo Paaji 2 SemiBold" size="13.0" />
+                    </font></Label>
+                <TextField fx:id="minHumBox" layoutX="439.0" layoutY="265.0" prefHeight="28.0" prefWidth="66.0" promptText="Min" />
+                <TextField fx:id="maxHumBox" layoutX="508.0" layoutY="265.0" prefHeight="28.0" prefWidth="66.0" promptText="Max" />
+                <TextField fx:id="minTempBox" onAction="#updateTempLbound" layoutX="439.0" layoutY="192.0" prefHeight="28.0" prefWidth="66.0" promptText="Min" />
+                <TextField fx:id="maxTempBox" onAction="#updateTempUbound" layoutX="508.0" layoutY="192.0" prefHeight="28.0" prefWidth="66.0" promptText="Max" />
+                <Label layoutX="531.0" layoutY="256.0" />
+                <Label fx:id="tempThreshLabel" layoutX="470.0" layoutY="164.0" prefHeight="17.0" prefWidth="76.0" text="Temperature">
+                    <font>
+                        <Font name="Baloo Paaji 2 SemiBold" size="13.0" />
+                    </font></Label>
+                <Label fx:id="humThreshLabel" layoutX="480.0" layoutY="241.0" prefHeight="24.0" prefWidth="57.0" text="Humidity">
+                    <font>
+                        <Font name="Baloo Paaji 2 SemiBold" size="13.0" />
+                    </font></Label>
+            </children>
+        </AnchorPane>
+    </children>
 </AnchorPane>
