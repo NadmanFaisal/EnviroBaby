@@ -15,7 +15,6 @@ public class MQTTSubscriber implements MqttCallback {
     private static final String LOUD_TOPIC = "envirobaby/loud";
     private static final String TEMP_TOPIC = "envirobaby/temp";
     private static final String HUM_TOPIC = "envirobaby/humi";
-    private static final int NOISE_THRESHOLD = 70;
 
     private MqttClient client; // connects to the broker and manages subscription in the constructor
     private Label noiseLabel;
@@ -29,16 +28,16 @@ public class MQTTSubscriber implements MqttCallback {
 
     private Notification notification; // instance variable from Notification class
 
-    public MQTTSubscriber(Label noiseLabel, TextField upperBoundNoise) {
-        this.noiseLabel = noiseLabel;
-        this.upperBoundNoise = upperBoundNoise;
-        this.threshold = 90;
+
     // Constructor sets up labels and MQTT connection, subscribes to topics for loudness and temperature.
-    public MQTTSubscriber(Label noiseLabel, Label tempLabel, Label humLabel) {
+    public MQTTSubscriber(Label noiseLabel, Label tempLabel, Label humLabel, TextField upperBoundNoise) {
         this.noiseLabel = noiseLabel;
         this.tempLabel = tempLabel;
         this.humLabel = humLabel;
+            this.upperBoundNoise = upperBoundNoise;
+            this.threshold = 90;
         this.notification = new Notification();
+
         try {
             client = new MqttClient(BROKER_URL, CLIENT_ID); //Create mqtt client
             client.setCallback(this);
@@ -68,7 +67,7 @@ public class MQTTSubscriber implements MqttCallback {
                 noiseValue = new String(message.getPayload());
                 updateLabel(noiseLabel,noiseValue);
 
-                if(extractNumber(noiseValue) > NOISE_THRESHOLD) {
+                if(extractNumber(noiseValue) > threshold) {
                     notification.createNotification("Noise notification", "NOISE THRESHOLD CROSSED: " + extractNumber(noiseValue) + " db");
                 }
                 break;
