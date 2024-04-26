@@ -22,7 +22,13 @@ public class MQTTSubscriber implements MqttCallback {
     private Label humLabel;
     private String noiseValue; // stores last published message
     private TextField maxNoise; // reference to textField object
+
+    private TextField maxTempBox;
+    private TextField minTempBox;
     private int noiseThreshold; // stores last received noise level value
+    private double tempUbound;
+    private double tempLbound;
+
     private String tempValue; // Holds the latest temperature data received via MQTT
     private String humValue; // Holds the latest humidity data received via MQTT
 
@@ -35,9 +41,13 @@ public class MQTTSubscriber implements MqttCallback {
 
 
     // Constructor sets up labels and MQTT connection, subscribes to topics for loudness and temperature.
-    public MQTTSubscriber(Label noiseLabel, Label tempLabel, Label humLabel, TextField maxNoise, TextField minHumBox, TextField maxHumBox ) {
+    public MQTTSubscriber(Label noiseLabel, Label tempLabel, Label humLabel, TextField maxNoise, TextField maxTempBox, TextField minTempBox, TextField minHumBox, TextField maxHumBox) {
         this.noiseLabel = noiseLabel;
         this.tempLabel = tempLabel;
+            this.maxTempBox = maxTempBox;
+            this.tempUbound = 25.00;
+            this.minTempBox =minTempBox;
+            this.tempLbound = 18.00;
         this.humLabel = humLabel;
         this.minHumBox = minHumBox;
         this.maxHumBox = maxHumBox;
@@ -105,12 +115,31 @@ public class MQTTSubscriber implements MqttCallback {
         }
     }
 
-    public void updateNoiseThreshold(){ // method that updates the threshold value
+    public void updateNoiseThreshold() { // method that updates the threshold value
         String thresholdTextValue = maxNoise.getText(); // gets and stores the string value from textField
-        if (thresholdTextValue.matches("\\d+")){ //condition to find if there are any numeric value
-            this.noiseThreshold = Integer.parseInt(thresholdTextValue); // converts the string into integer
+
+            if (thresholdTextValue.matches("\\d+")) { //condition to find if there are any numeric value
+                this.noiseThreshold = Integer.parseInt(thresholdTextValue); // converts the string into integer
+            } else {
+                System.out.println("Enter a numeric value, Thank you!"); // if no numeric value id found this is printed
+            }
+    }
+    public void updateTempUbound() { // method that updates the threshold value
+        String thresholdTextValue = maxTempBox.getText();
+
+        if (thresholdTextValue.matches("[0-9]{1,13}(\\.[0-9]*)?")) { //checks for double using Regex
+            this.tempUbound = Double.parseDouble(thresholdTextValue); // converts the string into double
         } else {
-            System.out.println("Enter a numeric value, Thank you!"); // if no numeric value id found this is printed
+            System.out.println("Enter a numeric value, Thank you!");
+        }
+    }
+        public void updateTempLbound() {
+        String thresholdTextValue = minTempBox.getText();
+
+        if (thresholdTextValue.matches("[0-9]{1,13}(\\.[0-9]*)?")) {
+            this.tempLbound = Double.parseDouble(thresholdTextValue); // converts the string into double
+        } else {
+            System.out.println("Enter a numeric value, Thank you!");
         }
     }
 
@@ -142,6 +171,13 @@ public class MQTTSubscriber implements MqttCallback {
 
     public int getNoiseThreshold() { // getter method to receive threshold value
         return noiseThreshold;
+        }
+
+    public double getTempUbound() { // getter method to receive threshold value
+        return tempUbound;
+    }
+    public double getTempLbound() {
+        return tempLbound;
     }
 
     public void deliveryComplete(IMqttDeliveryToken token) {
