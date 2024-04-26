@@ -26,8 +26,8 @@ public class MQTTSubscriber implements MqttCallback {
     private String tempValue; // Holds the latest temperature data received via MQTT
     private String humValue; // Holds the latest humidity data received via MQTT
 
-    private int minHum; // stores latest input for minimum humidity threshold
-    private int maxHum; // stores latest input for maximum humidity threshold
+    private double minHum; // stores latest input for minimum humidity threshold
+    private double maxHum; // stores latest input for maximum humidity threshold
     private TextField minHumBox; //reference to the TextField object
     private TextField maxHumBox; //reference to the TextField object
 
@@ -116,8 +116,8 @@ public class MQTTSubscriber implements MqttCallback {
 
     public void updateMinHum() { // Updates minimum humidity threshold
         String minHumTextValue = minHumBox.getText();
-        if (minHumTextValue.matches("\\d+")) {
-            this.minHum = Integer.parseInt(minHumTextValue);
+        if (minHumTextValue.matches("[0-9]{1,13}(.[0-9]*)?")) {
+            this.minHum = Double.parseDouble(minHumTextValue);
         } else {
             System.out.println("Please enter a numeric value");
         }
@@ -125,18 +125,18 @@ public class MQTTSubscriber implements MqttCallback {
 
     public void updateMaxHum() { // Updates maximum humidity threshold
         String maxHumTextValue = maxHumBox.getText();
-        if (maxHumTextValue.matches("\\d+")) {
-            this.maxHum = Integer.parseInt(maxHumTextValue);
+        if (maxHumTextValue.matches("[0-9]{1,13}(.[0-9]*)?")) {
+            this.maxHum = Double.parseDouble(maxHumTextValue);
         } else {
             System.out.println("Please enter a numeric value");
         }
     }
 
-    public int getMinHum(){ //getter for minimum humidity threshold
+    public double getMinHum(){ //getter for minimum humidity threshold
         return minHum;
     }
 
-    public int getMaxHum(){ //getter for maximum humidity treshold
+    public double getMaxHum(){ //getter for maximum humidity treshold
         return maxHum;
     }
 
