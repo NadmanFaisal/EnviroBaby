@@ -15,17 +15,24 @@ public class Controller {
     @FXML
     private Label humLabel;
     @FXML
+    private TextField minHumBox;
+    @FXML
+    private TextField maxHumBox;
+    @FXML
     private TextField maxTempBox;
     @FXML
     private TextField minTempBox;
+
 
     private MQTTSubscriber mqttSubscriber;
 
     @FXML
     public void initialize() { //Creates new subscriber object
 
-        mqttSubscriber = new MQTTSubscriber(noiseLabel, tempLabel, humLabel, maxNoise, maxTempBox, minTempBox);
+        mqttSubscriber = new MQTTSubscriber(noiseLabel, tempLabel, humLabel, maxNoise, minHumBox, maxHumBox, maxTempBox, minTempBox);
         maxNoise.setText(String.valueOf(mqttSubscriber.getNoiseThreshold()));
+        minHumBox.setText(String.valueOf(mqttSubscriber.getMinHum()));
+        maxHumBox.setText(String.valueOf(mqttSubscriber.getMaxHum()));
         maxTempBox.setText(String.valueOf(mqttSubscriber.getTempUbound()));
         minTempBox.setText(String.valueOf(mqttSubscriber.getTempLbound()));
     }
@@ -39,6 +46,10 @@ public class Controller {
     @FXML
     public void updateTempLbound(ActionEvent actionEvent) {mqttSubscriber.updateTempLbound();}
 
-}
+    @FXML
+    public void updateMinHum(ActionEvent actionEvent) { mqttSubscriber.updateMinHum(); }
 
+    public void updateMaxHum (ActionEvent actionEvent) {mqttSubscriber.updateMaxHum();}
+
+}
 
