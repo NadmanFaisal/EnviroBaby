@@ -5,8 +5,8 @@
 
 /********************Wifi & MQTT********************************/
 
-const char* ssid = "iPhone 12 Pro";
-const char* password =  "bijoy2022";
+const char* ssid = "ssid";
+const char* password =  "pass";
 
 const char* mqttServer = "broker.hivemq.com"; // Replace with your MQTT server address
 const int mqttPort = 1883; // Default MQTT port
@@ -68,6 +68,16 @@ void loop() {
   float temp = dht.readTemperature(); // Read temperature
   float humi = dht.readHumidity();    // Read humidity
   int loud = analogRead(LOUDNESS_PIN); // Read loudness
+
+  // Checks if MQTT is connected, if not tries to reconnect 
+  if (!client.connected()) {
+    Serial.println("MQTT Disconnected. Reconnecting...");
+    while (!client.connect("WioTerminal", mqttUsername, mqttPassword)) {
+      Serial.print(".");
+      delay(1000);
+    }
+    Serial.println("MQTT Reconnected");
+  }
 
   if (client.connected()) {
     // Publish temperature in desired format
