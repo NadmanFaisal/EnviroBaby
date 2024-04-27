@@ -72,12 +72,28 @@ void loop() {
   // Checks if MQTT is connected, if not tries to reconnect 
   if (!client.connected()) {
     Serial.println("MQTT Disconnected. Reconnecting...");
-    while (!client.connect("WioTerminal", mqttUsername, mqttPassword)) {
+    
+    // Tries to reconnect to wifi for mqtt
+    if (WiFi.status() != WL_CONNECTED) {
+      Serial.println("WiFi Disconnected. Reconnecting...");
+      WiFi.begin(ssid, password);
+      
+      while (WiFi.status() != WL_CONNECTED) {
+        Serial.print(".");
+        delay(2000);
+      }
+      
+      Serial.println("WiFi Reconnected");
+    }
+
+    // Tries to reconnect to mqtt broker
+    while (!client.connect("envirobabyWIO", mqttUsername, mqttPassword)) {
       Serial.print(".");
-      delay(1000);
+      delay(2000);
     }
     Serial.println("MQTT Reconnected");
-  }
+}
+
 
   if (client.connected()) {
     // Publish temperature in desired format
