@@ -18,22 +18,33 @@ public class Controller {
     private TextField minHumBox;
     @FXML
     private TextField maxHumBox;
+    @FXML
+    private TextField maxTempBox;
+    @FXML
+    private TextField minTempBox;
+
 
     private MQTTSubscriber mqttSubscriber;
 
     @FXML
     public void initialize() { //Creates new subscriber object
 
-        mqttSubscriber = new MQTTSubscriber(noiseLabel, tempLabel, humLabel, maxNoise, minHumBox, maxHumBox);
+        mqttSubscriber = new MQTTSubscriber( noiseLabel,  tempLabel,  humLabel,  maxNoise,  maxTempBox,  minTempBox,  minHumBox,  maxHumBox);
         maxNoise.setText(String.valueOf(mqttSubscriber.getNoiseThreshold()));
         minHumBox.setText(String.valueOf(mqttSubscriber.getMinHum()));
         maxHumBox.setText(String.valueOf(mqttSubscriber.getMaxHum()));
+        maxTempBox.setText(String.valueOf(mqttSubscriber.getTempUbound()));
+        minTempBox.setText(String.valueOf(mqttSubscriber.getTempLbound()));
     }
 
     @FXML
-    public void updateUpperBound(ActionEvent actionEvent){ // controller class method used in FXML file that handles and action event
+    public void updateNoiseUpperBound(ActionEvent actionEvent){ // controller class method used in FXML file that handles and action event
     mqttSubscriber.updateNoiseThreshold();
     }
+    @FXML
+    public void updateTempUbound(ActionEvent actionEvent) {mqttSubscriber.updateTempUbound();}
+    @FXML
+    public void updateTempLbound(ActionEvent actionEvent) {mqttSubscriber.updateTempLbound();}
 
     @FXML
     public void updateMinHum(ActionEvent actionEvent) { mqttSubscriber.updateMinHum(); }
