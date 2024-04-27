@@ -108,6 +108,12 @@ public class MQTTSubscriber implements MqttCallback {
             case HUM_TOPIC -> {
                 humValue = new String(message.getPayload());
                 updateLabel(humLabel,humValue);
+
+                if(extractDouble(humValue) > maxHum) {
+                    notification.createNotification("Humidity notification", "Humidity exceeded! " + humValue);
+                } else if (extractDouble(humValue) < minHum) {
+                    notification.createNotification("Humidity notification", "Humidity too low! " + humValue);
+                }
                 break;
             }
         }
