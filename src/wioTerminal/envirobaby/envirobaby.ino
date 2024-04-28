@@ -1,19 +1,6 @@
 #include "TFT_eSPI.h"
 #include "DHT.h"
-#include "rpcWiFi.h"
-#include "MQTT.h"
-
-/********************Wifi & MQTT********************************/
-
-const char* ssid = "ssid"; // ssid of wifi
-const char* password =  "pass"; //password of wifi
-
-const char* mqttServer = "broker.hivemq.com"; // mqtt server address
-const int mqttPort = 1883; // deafault port for hivemq broker
-const char* mqttUsername = ""; // username for mqtt broker, not needed if public
-const char* mqttPassword = ""; // password for mqtt broker, not needed if public
-const char* mqttTopic = "envirobaby/"; // mqtt broker topic
-const char* projectTITLE = "ENVIROBABY";  // project title
+#include "mqtt_wifi.h"
 
 /*******************Define Pin and Objects*******************************/
 
@@ -38,7 +25,7 @@ void setup() {
 
   connectWiFi(); // connecting to wifi
   tft.begin(); // starting TFT display
-  tft.setRotation(3); // rotate the display to match wio terminal orientation
+  tft.setRotation(1); // rotate the display to match wio terminal orientation
   tft.fillScreen(TFT_RED); // clear the screen
 
   dht.begin(); // starting DHT sensor
@@ -53,8 +40,8 @@ void loop() {
   float temp = dht.readTemperature(); // read temperature
   float humi = dht.readHumidity();    // read humidity
   int loud = analogRead(LOUDNESS_PIN); // read loudness
-
-while (!WiFi.isConnected() || !client.connected()) { // check if wifi and mqtt is connected
+  
+  if (!WiFi.isConnected() || !client.connected()) { // check if wifi and mqtt is connected
     reconnect(); // not connected? reconnect!
   }
 
@@ -124,7 +111,10 @@ void connectWiFi() { // connect ot wifi
 void connectMQTT() { // establish connection with mqtt broker
   Serial.println("Connecting to MQTT..");
   client.begin(mqttServer, mqttPort, espClient);
-  while (!client.connect("WioTerminal", mqttUsername, mqttPassword)) {
+  while (!client.connect(mqttClientId, mqttUsername, mqttPassword)) {
+    // if (!WiFi.isConnected()){
+    // connectWiFi();
+    // }
     Serial.println("MQTT Connection failed. Trying again in 5 seconds...");
     delay(5000);
   }
