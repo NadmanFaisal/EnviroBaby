@@ -5,155 +5,147 @@
 
 /********************Wifi & MQTT********************************/
 
-const char* ssid = "ssid";
-const char* password =  "pass";
+const char* ssid = "ssid"; // ssid of wifi
+const char* password =  "pass"; //password of wifi
 
-const char* mqttServer = "broker.hivemq.com"; // Replace with your MQTT server address
-const int mqttPort = 1883; // Default MQTT port
-const char* mqttUsername = ""; // No username required for public HiveMQ broker
-const char* mqttPassword = ""; // No password required for public HiveMQ broker
-const char* mqttTopic = "envirobaby/";
-const char* projectTITLE = "ENVIROBABY";
+const char* mqttServer = "broker.hivemq.com"; // mqtt server address
+const int mqttPort = 1883; // deafault port for hivemq broker
+const char* mqttUsername = ""; // username for mqtt broker, not needed if public
+const char* mqttPassword = ""; // password for mqtt broker, not needed if public
+const char* mqttTopic = "envirobaby/"; // mqtt broker topic
+const char* projectTITLE = "ENVIROBABY";  // project title
 
 /*******************Define Pin and Objects*******************************/
 
-#define LOUDNESS_PIN A0 // Define pin for loudness sensor
-#define DHTPIN A4       // Define signal Pin of DHT
-#define DHTTYPE DHT11  // Define DHT Sensor Type
+#define LOUDNESS_PIN A0 // pin for loudness sensor
+#define DHTPIN A4       // pin of DHT
+#define DHTTYPE DHT11  // DHT sensor type
 
-DHT dht(DHTPIN, DHTTYPE); // Initialize DHT sensor
-TFT_eSPI tft; // Initialize TFT display
+DHT dht(DHTPIN, DHTTYPE); // initialize DHT sensor
+TFT_eSPI tft; // initialize TFT display
 
-WiFiClient espClient;
-MQTTClient client;
+WiFiClient espClient; // calling wifi obeject
+MQTTClient client; // calling mqtt obejct
 
 /***********************Setup******************************/
 
 void setup() {
-  Serial.begin(115200);
-  while(!Serial); // Wait for Serial to be ready
+  Serial.begin(115200); // setting baund as per amount of data needed to be transmitted
+  while (!Serial); // wait till the serial is ready
 
-  // Set WiFi to station mode and disconnect from an AP if it was previously connected
-  WiFi.mode(WIFI_STA);
-  WiFi.disconnect();
+  WiFi.mode(WIFI_STA); // set wifi to station mode
+  WiFi.disconnect(); // disconnect any previous wifi connection
 
-  Serial.println("Connecting to WiFi..");
-  WiFi.begin(ssid, password);
+  connectWiFi(); // connecting to wifi
+  tft.begin(); // starting TFT display
+  tft.setRotation(3); // rotate the display to match wio terminal orientation
+  tft.fillScreen(TFT_RED); // clear the screen
 
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.println("Connecting to WiFi..");
-    WiFi.begin(ssid, password);
-  }
-  Serial.println("Connected to the WiFi network");
-  Serial.print("IP Address: ");
-  Serial.println(WiFi.localIP()); // prints out the device's IP address
+  dht.begin(); // starting DHT sensor
 
-  while (!Serial)
-    delay(10);
-
-  tft.begin(); // Start TFT display
-  tft.setRotation(3); // Rotate the display to match Wio Terminal orientation
-  tft.fillScreen(TFT_BLACK); // Clear the screen
-
-  dht.begin(); // Start DHT sensor
-
-  client.begin(mqttServer, mqttPort, espClient);
-  client.connect("WioTerminal", mqttUsername, mqttPassword);
+  connectMQTT(); // connecting to MQTT
 }
+
 
 /***********************Loop******************************/
 
 void loop() {
-  float temp = dht.readTemperature(); // Read temperature
-  float humi = dht.readHumidity();    // Read humidity
-  int loud = analogRead(LOUDNESS_PIN); // Read loudness
+  float temp = dht.readTemperature(); // read temperature
+  float humi = dht.readHumidity();    // read humidity
+  int loud = analogRead(LOUDNESS_PIN); // read loudness
 
-  // Checks if MQTT is connected, if not tries to reconnect 
-  if (!client.connected()) {
-    Serial.println("MQTT Disconnected. Reconnecting...");
-    
-    // Tries to reconnect to wifi for mqtt
-    if (WiFi.status() != WL_CONNECTED) {
-      Serial.println("WiFi Disconnected. Reconnecting...");
-      WiFi.begin(ssid, password);
-      
-      while (WiFi.status() != WL_CONNECTED) {
-        Serial.print(".");
-        delay(2000);
-      }
-      
-      Serial.println("WiFi Reconnected");
-    }
+while (!WiFi.isConnected() || !client.connected()) { // check if wifi and mqtt is connected
+    reconnect(); // not connected? reconnect!
+  }
 
-    // Tries to reconnect to mqtt broker
-    while (!client.connect("envirobabyWIO", mqttUsername, mqttPassword)) {
-      Serial.print(".");
-      delay(2000);
-    }
-    Serial.println("MQTT Reconnected");
-}
+  if (client.connected()) { // if connected to mqtt broker publish temp, humi, loud
 
-
-  if (client.connected()) {
-    // Publish temperature in desired format
     String temperatureMsg = "Temperature: " + String(temp) + " C";
     client.publish(String(mqttTopic) + "temp", temperatureMsg.c_str());
     Serial.println("Temperature Sent");
 
-    // Publish humidity in desired format
-    String humidityMsg = "Humidity: " + String(humi) + " %";
+    String humidityMsg = "Humidity: " + String(humi) + " %"; // if connected to mqtt broker publish humidity
     client.publish(String(mqttTopic) + "humi", humidityMsg.c_str());
     Serial.println("Humidity Sent");
 
-    // Publish loudness in desired format
-    String loudnessMsg = "Loudness: " + String(loud) + " db";
+    String loudnessMsg = "Loudness: " + String(loud) + " db"; // if connected to mqtt broker publish loudness
     client.publish(String(mqttTopic) + "loud", loudnessMsg.c_str());
     Serial.println("Loudness Sent");
   } else {
-    Serial.println("MQTT Disconnected");
+    connectMQTT(); // if disconnected again, try to reconnect
   }
 
-  if (isnan(temp) || isnan(humi)) { // Check if any reading failed
+  if (isnan(temp) || isnan(humi)) { // Check if any reading failed for DHT sensor
     Serial.println("Failed to read from DHT sensor!");
     return;
   }
 
-  tft.fillScreen(TFT_NAVY); // Clear the screen
+  tft.fillScreen(TFT_NAVY); // clear the screen
 
-  // Display "ENVIROBABY" text at the top middle part
+  // display ENVIROBABY text at the top middle part
   tft.setTextSize(3);
   tft.setTextColor(TFT_WHITE);
-  tft.setCursor((tft.width() - tft.textWidth(projectTITLE)) / 2, 10);
+  tft.setCursor((tft.width() - tft.textWidth(projectTITLE)) / 2, 10); // set the text position
   tft.println(projectTITLE);
 
-  // Draw three little boxes for temperature, humidity, and loudness
-  int boxWidth = tft.width() - 20; // Adjusted to leave some margin
+  // draw three little boxes for temperature, humidity, and loudness
+  int boxWidth = tft.width() - 20; // adjusted to leave some margin
   int boxHeight = 50;
-  int startX = 10; // Adjusted to leave some margin
+  int startX = 10; // adjusted to leave some margin
   int startY = (tft.height() - (boxHeight * 3)) / 2;
 
-  // Draw temperature box
-  drawValueBox(startX, startY, boxWidth, boxHeight, "Temperature", String(temp) + " C");
+  drawValueBox(startX, startY, boxWidth, boxHeight, "Temperature", String(temp) + " C"); // Draw temperature box
 
-  // Draw humidity box
-  drawValueBox(startX, startY + boxHeight + 10, boxWidth, boxHeight, "Humidity", String(humi) + " %");
+  drawValueBox(startX, startY + boxHeight + 10, boxWidth, boxHeight, "Humidity", String(humi) + " %"); // Draw humidity box
+  
+  drawValueBox(startX, startY + 2 * (boxHeight + 10), boxWidth, boxHeight, "Loudness", String(loud) + " db"); // Draw loudness box
 
-  // Draw loudness box
-  drawValueBox(startX, startY + 2 * (boxHeight + 10), boxWidth, boxHeight, "Loudness", String(loud) + " db");
-
-  delay(1000); // Delay for readability
+  delay(1000); // 1 sec delay according to acceptance criteria
 }
 
 /***********************Methods******************************/
 
-void drawValueBox(int x, int y, int width, int height, String label, String value) {
-  int borderRadius = 10;
-  tft.fillRoundRect(x, y, width, height, borderRadius, TFT_YELLOW); // Draw the box with rounded corners
+void connectWiFi() { // connect ot wifi
+  Serial.println("Connecting to WiFi..");
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(3000);
+    Serial.println("Connecting to WiFi..");
+    WiFi.begin(ssid, password);
+  }
+
+  Serial.println("Connected to the WiFi network");
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP());
+}
+
+
+void connectMQTT() { // establish connection with mqtt broker
+  Serial.println("Connecting to MQTT..");
+  client.begin(mqttServer, mqttPort, espClient);
+  while (!client.connect("WioTerminal", mqttUsername, mqttPassword)) {
+    Serial.println("MQTT Connection failed. Trying again in 5 seconds...");
+    delay(5000);
+  }
+  Serial.println("Connected to MQTT broker");
+}
+
+
+void reconnect() { // reconnect wifi and mqtt
+  Serial.println("Reconnecting to WiFi and MQTT..");
+  connectWiFi(); // calling the wifi connect method
+  connectMQTT(); // calling the mqtt connect method
+}
+
+void drawValueBox(int x, int y, int width, int height, String label, String value) { // method for small boxes that contain the info for perameters
+  int borderRadius = 10; // rounds the corner of box
+  tft.fillRoundRect(x, y, width, height, borderRadius, TFT_YELLOW); // draw the box with rounded corners
   tft.setTextSize(2);
   tft.setTextColor(TFT_BLACK);
-  tft.setCursor(x + 10, y + 5); // Adjust the position for the text
+  tft.setCursor(x + 10, y + 5); // adjust the position for the text
   tft.println(label);
-  tft.setCursor(x + 10, y + (height + 5) / 2); // Adjust the position for the text
+  tft.setCursor(x + 10, y + (height + 5) / 2); // adjust the position for the text
   tft.println(value);
 }
+
