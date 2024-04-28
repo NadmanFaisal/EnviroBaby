@@ -19,9 +19,7 @@ public class MQTTSubscriber implements MqttCallback {
     private static final String HUM_TOPIC = "envirobaby/humi";
 
     private MqttClient client; // connects to the broker and manages subscription in the constructor
-    private Label noiseLabel;
-    private Label tempLabel;
-    private Label humLabel;
+
     private String noiseValue; // stores last published message
     private TextField maxNoise; // reference to textField object
 
@@ -41,23 +39,25 @@ public class MQTTSubscriber implements MqttCallback {
 
     private Notification notification; // instance variable from Notification class
 
+    private Parameters parameters;
+
+
 
     // Constructor sets up labels and MQTT connection, subscribes to topics for loudness and temperature.
     public MQTTSubscriber(Label noiseLabel, Label tempLabel, Label humLabel, TextField maxNoise, TextField maxTempBox, TextField minTempBox, TextField minHumBox, TextField maxHumBox) {
-        this.noiseLabel = noiseLabel;
-        this.tempLabel = tempLabel;
-            this.maxTempBox = maxTempBox;
-            this.tempUbound = 25.00;
-            this.minTempBox =minTempBox;
-            this.tempLbound = 18.00;
-        this.humLabel = humLabel;
+        this.parameters = new Parameters(noiseLabel, tempLabel, humLabel);
+        this.notification = new Notification();
+        this.maxTempBox = maxTempBox;
+        this.minTempBox =minTempBox;
         this.minHumBox = minHumBox;
         this.maxHumBox = maxHumBox;
+        this.maxNoise = maxNoise;
+
+        this.tempUbound = 25.00;
+        this.tempLbound = 18.00;
         this.minHum = 30;
         this.maxHum = 60;
-            this.maxNoise = maxNoise;
-            this.noiseThreshold = 90;
-        this.notification = new Notification();
+        this.noiseThreshold = 90;
 
         try {
             client = new MqttClient(BROKER_URL, CLIENT_ID); //Create mqtt client
@@ -86,47 +86,27 @@ public class MQTTSubscriber implements MqttCallback {
         switch (topic) {
             case LOUD_TOPIC -> {
                 noiseValue = new String(message.getPayload());
-                updateLabel(noiseLabel,noiseValue);
+                Label noiseLabel = parameters.getNoiseLabel();
+                parameters.updateLabel(noiseLabel, noiseValue);
 
-                if(extractNumber(noiseValue) > noiseThreshold) {
-                    notification.createNotification("Noise notification", "NOISE THRESHOLD CROSSED: " + extractNumber(noiseValue) + " db");
-                }
-                break;
+                notification.createNoiseNotification(noiseValue, noiseThreshold);
             }
 
             case TEMP_TOPIC -> {
                 tempValue = new String(message.getPayload());
-                updateLabel(tempLabel,tempValue);
-
-                if(extractDouble(tempValue) > tempUbound) {
-                    notification.createNotification("Temperature notification", "TEMPERATURE EXCEEDS THRESHOLD: " + extractDouble(tempValue) + " C");
-                } else if(extractDouble(tempValue) < tempLbound) {
-                    notification.createNotification("Temperature notification", "TEMPERATURE BELOW THRESHOLD: " + extractDouble(tempValue) + " C");
-                }
-                break;
+                Label tempLabel = parameters.getTempLabel();
+                parameters.updateLabel(tempLabel, tempValue);
+                notification.createTempNotification(tempValue, tempUbound, tempLbound);
             }
+
             case HUM_TOPIC -> {
                 humValue = new String(message.getPayload());
-                updateLabel(humLabel,humValue);
-
-                if(extractDouble(humValue) > maxHum) {
-                    notification.createNotification("Humidity notification", "Humidity exceeded! " + humValue);
-                } else if (extractDouble(humValue) < minHum) {
-                    notification.createNotification("Humidity notification", "Humidity too low! " + humValue);
-                }
-                break;
+                Label humLabel = parameters.getHumLabel();
+                parameters.updateLabel(humLabel, humValue);
+                notification.createHumNotification(humValue, maxHum, minHum);
             }
         }
 
-    }
-
-// This method updates respective labels according to the message it receives in the arguments.
-    private void updateLabel(Label label, String message) {
-        if (label != null && message != null) {
-            Platform.runLater(() -> { //Run the label update operation on JavaFX Application Thread
-                label.setText(message); //Set label text to the last received message
-            });
-        }
     }
 
     public void updateNoiseThreshold() { // method that updates the threshold value

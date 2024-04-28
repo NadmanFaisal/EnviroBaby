@@ -26,10 +26,14 @@ public class Controller {
 
     private MQTTSubscriber mqttSubscriber;
 
+    private Parameters parameters;
+
     @FXML
     public void initialize() { //Creates new subscriber object
 
         mqttSubscriber = new MQTTSubscriber( noiseLabel,  tempLabel,  humLabel,  maxNoise,  maxTempBox,  minTempBox,  minHumBox,  maxHumBox);
+        parameters = new Parameters(noiseLabel, tempLabel, humLabel);
+
         maxNoise.setText(String.valueOf(mqttSubscriber.getNoiseThreshold()));
         minHumBox.setText(String.valueOf(mqttSubscriber.getMinHum()));
         maxHumBox.setText(String.valueOf(mqttSubscriber.getMaxHum()));
