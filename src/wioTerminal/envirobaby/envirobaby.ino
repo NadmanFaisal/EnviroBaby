@@ -26,7 +26,7 @@ void setup() {
   connectWiFi(); // connecting to wifi
   tft.begin(); // starting TFT display
   tft.setRotation(1); // rotate the display to match wio terminal orientation
-  tft.fillScreen(TFT_RED); // clear the screen
+  tft.fillScreen(TFT_NAVY); // clear the screen
 
   dht.begin(); // starting DHT sensor
 
@@ -47,15 +47,15 @@ void loop() {
 
   if (client.connected()) { // if connected to mqtt broker publish temp, humi, loud
 
-    String temperatureMsg = "Temperature: " + String(temp) + " C";
+    String temperatureMsg = String(temp);
     client.publish(String(mqttTopic) + "temp", temperatureMsg.c_str());
     Serial.println("Temperature Sent");
 
-    String humidityMsg = "Humidity: " + String(humi) + " %"; // if connected to mqtt broker publish humidity
+    String humidityMsg = String(humi); // if connected to mqtt broker publish humidity
     client.publish(String(mqttTopic) + "humi", humidityMsg.c_str());
     Serial.println("Humidity Sent");
 
-    String loudnessMsg = "Loudness: " + String(loud) + " db"; // if connected to mqtt broker publish loudness
+    String loudnessMsg = String(loud); // if connected to mqtt broker publish loudness
     client.publish(String(mqttTopic) + "loud", loudnessMsg.c_str());
     Serial.println("Loudness Sent");
   } else {
@@ -112,9 +112,6 @@ void connectMQTT() { // establish connection with mqtt broker
   Serial.println("Connecting to MQTT..");
   client.begin(mqttServer, mqttPort, espClient);
   while (!client.connect(mqttClientId, mqttUsername, mqttPassword)) {
-    // if (!WiFi.isConnected()){
-    // connectWiFi();
-    // }
     Serial.println("MQTT Connection failed. Trying again in 5 seconds...");
     delay(5000);
   }

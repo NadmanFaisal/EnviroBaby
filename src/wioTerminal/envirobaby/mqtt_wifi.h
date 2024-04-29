@@ -12,7 +12,7 @@ extern const int mqttPort; // deafault port for hivemq broker
 extern const char* mqttUsername; // username for mqtt broker, not needed if public
 extern const char* mqttPassword; // password for mqtt broker, not needed if public
 extern const char* mqttTopic; // mqtt broker topic
-extern const char* mqttClientId;
+extern const char* mqttClientId; // mqtt client id
 extern const char* projectTITLE;  // project title
 
 #endif
