@@ -60,6 +60,11 @@ public class NotificationThreshold {
         return humLowerBound;
     }
 
+    /**
+     * Resets the threshold values to default values
+     * such that if the default values are breached,
+     * it triggers notification.
+     */
     public void resetThresholds(){
         this.loudThreshold = DEFAULT_LOUD_THRESHOLD;
         this.tempUpperBound = DEFAULT_CTEMP_UBOUND;

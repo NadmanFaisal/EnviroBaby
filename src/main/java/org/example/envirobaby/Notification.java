@@ -7,7 +7,7 @@ import org.controlsfx.control.Notifications;
 
 
 
-// Source for the code:- https://javadoc.io/doc/org.controlsfx/controlsfx/8.40.16/org/controlsfx/control/Notifications.html
+
 public class Notification {
 
     private int lastNoiseAlert;
@@ -24,8 +24,20 @@ public class Notification {
         this.lastMinHumAlert=0;
     }
 
+    /**
+     * A method what will create notifications when
+     * any environmental parameter is breached. It creates
+     * notifications for temperature, humidity, and noise
+     * threshold breaches.
+     * @param title
+     * The title of the notification
+     * @param message
+     * The message the notification will  show once it appears.
+     */
     public void createNotification(String title, String message) {
         Platform.runLater(() -> {
+
+            // Source for the code:- https://javadoc.io/doc/org.controlsfx/controlsfx/8.40.16/org/controlsfx/control/Notifications.html
             Notifications notifications = Notifications.create().title(title).text(message).graphic(null).hideAfter(Duration.seconds(7)).position(Pos.BOTTOM_RIGHT);
             notifications.showWarning();
         });
