@@ -3,6 +3,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import org.eclipse.paho.client.mqttv3.MqttException;
 
 public class Controller {
 
@@ -24,32 +25,48 @@ public class Controller {
     private TextField minTempBox;
 
 
-    private MQTTSubscriber mqttSubscriber;
+    private Room room;
+
 
     @FXML
-    public void initialize() { //Creates new subscriber object
+    public void initialize() throws MqttException { //Creates new subscriber object
 
-        mqttSubscriber = new MQTTSubscriber( noiseLabel,  tempLabel,  humLabel,  maxNoise,  maxTempBox,  minTempBox,  minHumBox,  maxHumBox);
-        maxNoise.setText(String.valueOf(mqttSubscriber.getNoiseThreshold()));
-        minHumBox.setText(String.valueOf(mqttSubscriber.getMinHum()));
-        maxHumBox.setText(String.valueOf(mqttSubscriber.getMaxHum()));
-        maxTempBox.setText(String.valueOf(mqttSubscriber.getTempUbound()));
-        minTempBox.setText(String.valueOf(mqttSubscriber.getTempLbound()));
+        room = new Room(noiseLabel,tempLabel,humLabel); //initialise room object which implements runnable
+        Thread thread = new Thread(room); //connect runnable to thread
+
+        //initialize the data threshold boxes with stored room threshold data
+
+        maxNoise.setText(String.valueOf(room.getThresholds().getLoudThreshold()));
+        minHumBox.setText(String.valueOf(room.getThresholds().getHumLowerBound()));
+        maxHumBox.setText(String.valueOf(room.getThresholds().getHumUpperBound()));
+        maxTempBox.setText(String.valueOf(room.getThresholds().getTempUpperBound()));
+        minTempBox.setText(String.valueOf(room.getThresholds().getTempLowerBound()));
+
+        thread.start(); //start thread
     }
 
     @FXML
     public void updateNoiseUpperBound(ActionEvent actionEvent){ // controller class method used in FXML file that handles and action event
-    mqttSubscriber.updateNoiseThreshold();
+        room.updateThreshold(maxNoise);
     }
     @FXML
-    public void updateTempUbound(ActionEvent actionEvent) {mqttSubscriber.updateTempUbound();}
+    public void updateTempUbound(ActionEvent actionEvent) {
+        room.updateThreshold(maxTempBox);;
+    }
     @FXML
-    public void updateTempLbound(ActionEvent actionEvent) {mqttSubscriber.updateTempLbound();}
+    public void updateTempLbound(ActionEvent actionEvent) {
+        room.updateThreshold(minTempBox);;
+    }
 
     @FXML
-    public void updateMinHum(ActionEvent actionEvent) { mqttSubscriber.updateMinHum(); }
+    public void updateMinHum(ActionEvent actionEvent) {
+        room.updateThreshold(maxHumBox);;
+    }
 
-    public void updateMaxHum (ActionEvent actionEvent) {mqttSubscriber.updateMaxHum();}
+    @FXML
+    public void updateMaxHum (ActionEvent actionEvent) {
+        room.updateThreshold(minHumBox);;
+    }
 
 }
 
