@@ -12,11 +12,11 @@
     <children>
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fff3f0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Button layoutX="28.0" layoutY="14.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="76.0" style="-fx-background-color: #FFF0F5; -fx-border-color: #FFB6C1; -fx-background-radius: 5; -fx-border-radius: 5;" text="Home">
+                <Button fx:id="homeButton" layoutX="28.0" layoutY="14.0" mnemonicParsing="false" onAction="#homeButtonClick" prefHeight="40.0" prefWidth="76.0" style="-fx-background-color: #FFF0F5; -fx-border-color: #FFB6C1; -fx-background-radius: 5; -fx-border-radius: 5;" text="Home">
                     <font>
                         <Font name="Yu Gothic UI Semibold" size="13.0" />
                     </font></Button>
-                <TextField fx:id="maxNoise" id="maxNoise" layoutX="439.0" layoutY="341.0" onAction="#updateNoiseUpperBound" prefHeight="28.0" prefWidth="135.0" promptText="Enter max" />
+                <TextField id="maxNoise" fx:id="maxNoise" layoutX="439.0" layoutY="341.0" onAction="#updateNoiseUpperBound" prefHeight="28.0" prefWidth="135.0" promptText="Enter max" />
                 <Text fx:id="noiseThreshLabel" layoutX="489.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Noise">
                     <font>
                         <Font name="Baloo Paaji 2 SemiBold" size="13.0" />
@@ -63,10 +63,10 @@
                         <Font name="Segoe UI Semibold" size="13.0" />
                     </font>
             </Label>
-                <TextField fx:id="minHumBox" id="minHum" layoutX="439.0" layoutY="265.0" onAction="#updateMinHum" prefHeight="28.0" prefWidth="66.0" promptText="Min" />
-                <TextField fx:id="maxHumBox" id="maxHum" layoutX="508.0" layoutY="265.0" onAction="#updateMaxHum" prefHeight="28.0" prefWidth="66.0" promptText="Max" />
-                <TextField fx:id="minTempBox" id="minTemp" layoutX="439.0" layoutY="192.0" onAction="#updateTempLbound" prefHeight="28.0" prefWidth="66.0" promptText="Min" />
-                <TextField fx:id="maxTempBox" id="maxTemp" layoutX="508.0" layoutY="192.0" onAction="#updateTempUbound" prefHeight="28.0" prefWidth="66.0" promptText="Max" />
+                <TextField id="minHum" fx:id="minHumBox" layoutX="439.0" layoutY="265.0" onAction="#updateMinHum" prefHeight="28.0" prefWidth="66.0" promptText="Min" />
+                <TextField id="maxHum" fx:id="maxHumBox" layoutX="508.0" layoutY="265.0" onAction="#updateMaxHum" prefHeight="28.0" prefWidth="66.0" promptText="Max" />
+                <TextField id="minTemp" fx:id="minTempBox" layoutX="439.0" layoutY="192.0" onAction="#updateTempLbound" prefHeight="28.0" prefWidth="66.0" promptText="Min" />
+                <TextField id="maxTemp" fx:id="maxTempBox" layoutX="508.0" layoutY="192.0" onAction="#updateTempUbound" prefHeight="28.0" prefWidth="66.0" promptText="Max" />
                 <Label layoutX="531.0" layoutY="256.0" />
                 <Label fx:id="tempThreshLabel" layoutX="470.0" layoutY="164.0" prefHeight="17.0" prefWidth="76.0" text="Temperature">
                     <font>
