@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.io.IOException;
 
@@ -17,6 +18,7 @@ public class Room1BuzzerScreenController {
     public Button room3;
     public Button playSoundButton;
     public Button stopSoundButton;
+    private MQTTSender sender;
 
     public void room1BuzzerScreen(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("room1BuzzerScreen.fxml"));
@@ -45,7 +47,9 @@ public class Room1BuzzerScreenController {
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
-    public void playSound(ActionEvent actionEvent) {
+    public void playSound(ActionEvent actionEvent) throws MqttException, InterruptedException {
+        sender = new MQTTSender();
+        sender.sendMessage("BUZZ", "envirobaby/room1/buzzer");
     }
 
     public void stopSound(ActionEvent actionEvent) {
