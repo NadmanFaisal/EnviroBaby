@@ -12,7 +12,7 @@ stages:
 compile:
   stage: build
   tags:
-    - envirobaby
+    - docker
   script:
     - export PATH=$PATH:/root/bin             # set the path to arduino-cli installation folder
     - pwd                                     # print the current working directory
