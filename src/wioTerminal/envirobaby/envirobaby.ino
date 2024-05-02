@@ -1,3 +1,5 @@
+// Sources : https://www.hackster.io/Salmanfarisvp/mqtt-on-wio-terminal-4ea8f8
+
 #include "TFT_eSPI.h"
 #include "DHT.h"
 #include "mqtt_wifi.h"
@@ -7,6 +9,12 @@
 #define LOUDNESS_PIN A0 // pin for loudness sensor
 #define DHTPIN A4       // pin of DHT
 #define DHTTYPE DHT11  // DHT sensor type
+#define BUZZER_PIN WIO_BUZZER
+
+String room1BuzzerCommand;
+String room2BuzzerCommand;
+String room3BuzzerCommand;
+String room4BuzzerCommand;
 
 DHT dht(DHTPIN, DHTTYPE); // initialize DHT sensor
 TFT_eSPI tft; // initialize TFT display
@@ -30,9 +38,12 @@ void setup() {
 
   dht.begin(); // starting DHT sensor
 
+  pinMode(BUZZER_PIN, OUTPUT);
+
   client.setServer(mqttServer, mqttPort);
   client.setCallback(callback);
   connectMQTT(); // connecting to MQTT
+
 }
 
 
@@ -97,6 +108,32 @@ void loop() {
 
   drawValueBox(startX, startY + 2 * (boxHeight + 10), boxWidth, boxHeight, "Loudness", String(loud) + " db"); // Draw loudness box
 
+
+  // if (room1BuzzerCommand.equals("BUZZ")) {
+  //   tone(BUZZER_PIN, 1000);
+  // } else if(room1BuzzerCommand.equals("STOP")) {
+  //   noTone(BUZZER_PIN);
+  // }
+
+  if (room2BuzzerCommand.equals("BUZZ")) {
+    tone(BUZZER_PIN, 1000);
+  } else if(room2BuzzerCommand.equals("STOP")) {
+    noTone(BUZZER_PIN);
+  }
+
+  // if (room3BuzzerCommand.equals("BUZZ")) {
+  //   tone(BUZZER_PIN, 1000);
+  // } else if(room3BuzzerCommand.equals("STOP")) {
+  //   noTone(BUZZER_PIN);
+  // }
+
+  // if (room4BuzzerCommand.equals("BUZZ")) {
+  //   tone(BUZZER_PIN, 1000);
+  // } else if(room4BuzzerCommand.equals("STOP")) {
+  //   noTone(BUZZER_PIN);
+  // }
+
+
   delay(1000); // 1 sec delay according to acceptance criteria
 }
 
@@ -110,7 +147,7 @@ void connectWiFi() { // connect ot wifi
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.println("Connecting to WiFi..");
-    //WiFi.begin(ssid, password);
+    WiFi.begin(ssid, password);
   }
 
   Serial.println("Connected to the WiFi network");
@@ -126,7 +163,10 @@ void connectMQTT() {
     // Attempt to connect to the MQTT broker
 
   if (client.connect(mqttClientId)) {
-    client.subscribe(mqttSubBuzzer);
+    client.subscribe(mqttRoom1Buzzer);
+    client.subscribe(mqttRoom2Buzzer);
+    client.subscribe(mqttRoom3Buzzer);
+    client.subscribe(mqttRoom4Buzzer);
     Serial.println("Connected to MQTT broker");
   } else {
     Serial.println("MQTT Connection failed. Trying again in 5 seconds...");
@@ -153,6 +193,7 @@ void drawValueBox(int x, int y, int width, int height, String label, String valu
 }
 
 void callback(char* topic, byte* payload, unsigned int length) {
+
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
@@ -164,4 +205,14 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.println();
   buff_p[length] = '\0';
   String msg_p = String(buff_p);
+
+  if (strcmp(topic, mqttRoom1Buzzer) == 0) {
+    room1BuzzerCommand = msg_p;
+  }else if (strcmp(topic, mqttRoom2Buzzer) == 0) {
+    room2BuzzerCommand = msg_p;
+  } else if (strcmp(topic, mqttRoom3Buzzer) == 0) {
+    room3BuzzerCommand = msg_p;
+  } else if (strcmp(topic, mqttRoom4Buzzer) == 0) {
+    room4BuzzerCommand = msg_p;
+  }
 }
