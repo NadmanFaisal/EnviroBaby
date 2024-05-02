@@ -49,10 +49,12 @@ public class Room4BuzzerScreenController {
     }
     public void playSound(ActionEvent actionEvent) throws MqttException, InterruptedException {
         sender = new MQTTSender();
-        sender.sendMessage("BUZZ", "envirobaby/room4/buzzer");
+        sender.sendMessage("BUZZ", "/envirobaby/room4/buzzer");
     }
 
-    public void stopSound(ActionEvent actionEvent) {
+    public void stopSound(ActionEvent actionEvent) throws MqttException, InterruptedException {
+        sender = new MQTTSender();
+        sender.sendMessage("STOP", "/envirobaby/room4/buzzer");
     }
 
 }

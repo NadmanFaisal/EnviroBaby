@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFF0F5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.envirobaby.Room1BuzzerScreenController">
@@ -12,6 +11,5 @@
       <Button fx:id="room4" layoutX="471.0" layoutY="47.0" mnemonicParsing="false" onAction="#room4BuzzerScreen" prefHeight="46.0" prefWidth="102.0" style="-fx-background-color: #FFF0F5; -fx-border-color: #FFB6C1; -fx-border-radius: 5;" text="Room 4" />
       <Button fx:id="playSoundButton" layoutX="215.0" layoutY="173.0" mnemonicParsing="false" onAction="#playSound" prefHeight="54.0" prefWidth="169.0" style="-fx-background-color: #FFF0F5; -fx-border-color: #FFB6C1; -fx-border-radius: 5;" text="Play sound" />
       <Button fx:id="stopSoundButton" layoutX="215.0" layoutY="253.0" mnemonicParsing="false" onAction="#stopSound" prefHeight="54.0" prefWidth="169.0" style="-fx-background-color: #FFF0F5; -fx-border-color: #FFB6C1; -fx-border-radius: 5;" text="Stop sound" />
-      <ButtonBar prefHeight="40.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

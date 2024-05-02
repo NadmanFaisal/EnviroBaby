@@ -11,8 +11,8 @@
 DHT dht(DHTPIN, DHTTYPE); // initialize DHT sensor
 TFT_eSPI tft; // initialize TFT display
 
-WiFiClient espClient; // calling wifi obeject
-MQTTClient client; // calling mqtt obejct
+WiFiClient enviroClient; // calling wifi obeject
+PubSubClient client(enviroClient); // calling mqtt obejct
 
 /***********************Setup******************************/
 
@@ -30,6 +30,8 @@ void setup() {
 
   dht.begin(); // starting DHT sensor
 
+  client.setServer(mqttServer, mqttPort);
+  client.setCallback(callback);
   connectMQTT(); // connecting to MQTT
 }
 
@@ -40,24 +42,32 @@ void loop() {
   float temp = dht.readTemperature(); // read temperature
   float humi = dht.readHumidity();    // read humidity
   int loud = analogRead(LOUDNESS_PIN); // read loudness
-  
+
   if (!WiFi.isConnected() || !client.connected()) { // check if wifi and mqtt is connected
     reconnect(); // not connected? reconnect!
   }
 
+  client.loop();
+
   if (client.connected()) { // if connected to mqtt broker publish temp, humi, loud
 
     String temperatureMsg = String(temp);
-    client.publish(String(mqttTopic) + "temp", temperatureMsg.c_str());
+    String humidityMsg = String(humi);
+    String loudnessMsg = String(loud);
+
+    String topicTemp = String(mqttTopic) + "temp";
+    String topicHumi = String(mqttTopic) + "humi";
+    String topicLoud = String(mqttTopic) + "loud";
+
+    client.publish(topicTemp.c_str(), temperatureMsg.c_str());
     Serial.println("Temperature Sent");
 
-    String humidityMsg = String(humi); // if connected to mqtt broker publish humidity
-    client.publish(String(mqttTopic) + "humi", humidityMsg.c_str());
+    client.publish(topicHumi.c_str(), humidityMsg.c_str());
     Serial.println("Humidity Sent");
 
-    String loudnessMsg = String(loud); // if connected to mqtt broker publish loudness
-    client.publish(String(mqttTopic) + "loud", loudnessMsg.c_str());
+    client.publish(topicLoud.c_str(), loudnessMsg.c_str());
     Serial.println("Loudness Sent");
+
   } else {
     connectMQTT(); // if disconnected again, try to reconnect
   }
@@ -84,7 +94,7 @@ void loop() {
   drawValueBox(startX, startY, boxWidth, boxHeight, "Temperature", String(temp) + " C"); // Draw temperature box
 
   drawValueBox(startX, startY + boxHeight + 10, boxWidth, boxHeight, "Humidity", String(humi) + " %"); // Draw humidity box
-  
+
   drawValueBox(startX, startY + 2 * (boxHeight + 10), boxWidth, boxHeight, "Loudness", String(loud) + " db"); // Draw loudness box
 
   delay(1000); // 1 sec delay according to acceptance criteria
@@ -93,13 +103,14 @@ void loop() {
 /***********************Methods******************************/
 
 void connectWiFi() { // connect ot wifi
+
   Serial.println("Connecting to WiFi..");
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
-    delay(3000);
+    delay(500);
     Serial.println("Connecting to WiFi..");
-    WiFi.begin(ssid, password);
+    //WiFi.begin(ssid, password);
   }
 
   Serial.println("Connected to the WiFi network");
@@ -108,16 +119,21 @@ void connectWiFi() { // connect ot wifi
 }
 
 
-void connectMQTT() { // establish connection with mqtt broker
+void connectMQTT() {
+  // establish connection with mqtt broker
   Serial.println("Connecting to MQTT..");
-  client.begin(mqttServer, mqttPort, espClient);
-  while (!client.connect(mqttClientId, mqttUsername, mqttPassword)) {
+  while (!client.connected()) {
+    // Attempt to connect to the MQTT broker
+
+  if (client.connect(mqttClientId)) {
+    client.subscribe(mqttSubBuzzer);
+    Serial.println("Connected to MQTT broker");
+  } else {
     Serial.println("MQTT Connection failed. Trying again in 5 seconds...");
     delay(5000);
+    }
   }
-  Serial.println("Connected to MQTT broker");
 }
-
 
 void reconnect() { // reconnect wifi and mqtt
   Serial.println("Reconnecting to WiFi and MQTT..");
@@ -136,3 +152,16 @@ void drawValueBox(int x, int y, int width, int height, String label, String valu
   tft.println(value);
 }
 
+void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.print("Message arrived [");
+  Serial.print(topic);
+  Serial.print("] ");
+  char buff_p[length];
+  for (int i = 0; i < length; i++){
+    Serial.print((char)payload[i]);
+    buff_p[i] = (char)payload[i];
+  }
+  Serial.println();
+  buff_p[length] = '\0';
+  String msg_p = String(buff_p);
+}
