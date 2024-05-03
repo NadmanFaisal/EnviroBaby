@@ -69,12 +69,12 @@ public class Controller {
 
     @FXML
     public void updateMinHum(ActionEvent actionEvent) {
-        room.updateThreshold(maxHumBox);
+        room.updateThreshold(minHumBox);
     }
 
     @FXML
     public void updateMaxHum (ActionEvent actionEvent) {
-        room.updateThreshold(minHumBox);;
+        room.updateThreshold(maxHumBox);
     }
 
     public void homeButtonClick(ActionEvent event) throws IOException {

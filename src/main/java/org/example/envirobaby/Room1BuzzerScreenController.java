@@ -20,12 +20,26 @@ public class Room1BuzzerScreenController {
     public Button stopSoundButton;
     private MQTTSender sender;
 
+    /**
+     * Upon clicking with a mouse on the button "Room 1",
+     * the screen switches to the Room 1 screen.
+     * @param event
+     * @throws IOException
+     */
+
     public void room1BuzzerScreen(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("room1BuzzerScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
+
+    /**
+     * Upon clicking with a mouse on the button "Room 2",
+     * the screen switches to the Room 2 screen.
+     * @param event
+     * @throws IOException
+     */
 
     public void room2BuzzerScreen(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("room2BuzzerScreen.fxml"));
@@ -34,6 +48,13 @@ public class Room1BuzzerScreenController {
         stage.setScene(scene);
     }
 
+    /**
+     * Upon clicking with a mouse on the button "Room 3",
+     * the screen switches to the Room 3 screen.
+     * @param event
+     * @throws IOException
+     */
+
     public void room3BuzzerScreen(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("room3BuzzerScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -41,16 +62,42 @@ public class Room1BuzzerScreenController {
         stage.setScene(scene);
     }
 
+    /**
+     * Upon clicking with a mouse on the button "Room 4",
+     * the screen switches to the Room 4 screen.
+     * @param event
+     * @throws IOException
+     */
+
     public void room4BuzzerScreen(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("room4BuzzerScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
+
+
+    /**
+     * When the "Play sound" button is clicked, it publishes
+     * message "BUZZ" message to certain topic so that the
+     * WIO terminal starts buzzing.
+     * @param actionEvent
+     * @throws MqttException
+     * @throws InterruptedException
+     */
     public void playSound(ActionEvent actionEvent) throws MqttException, InterruptedException {
         sender = new MQTTSender();
         sender.sendMessage("BUZZ", "/envirobaby/room1/buzzer");
     }
+
+    /**
+     * When the "Stop sound" button is clicked, it publishes
+     * message "STOP" message to certain topic so that the
+     * WIO terminal stops buzzing.
+     * @param actionEvent
+     * @throws MqttException
+     * @throws InterruptedException
+     */
 
     public void stopSound(ActionEvent actionEvent) throws MqttException, InterruptedException {
         sender = new MQTTSender();
