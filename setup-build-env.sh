@@ -20,7 +20,7 @@ arduino-cli core install Seeeduino:samd --config-file .arduino-cli.yaml
 # Install 'native' packages (libraries that do not come with the core)
 arduino-cli lib install "Seeed Arduino rpcWiFi@1.0.7"
 arduino-cli lib install "DHT sensor library@1.4.6"
-arduino-cli lib install "MQTT@2.5.2"
+arduino-cli lib install "PubSubClient@2.8.0"
 
 cd -
 
