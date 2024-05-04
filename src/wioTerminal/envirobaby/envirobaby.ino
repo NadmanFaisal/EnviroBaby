@@ -14,7 +14,7 @@ TFT_eSPI tft; // initialize TFT display
 WiFiClient enviroClient; // calling wifi obeject
 PubSubClient client(enviroClient); // calling mqtt obejct
 
-bool converToFahren = false;
+bool converToFahren = false; // boolean that triggers temp unit conversion
 
 /***********************Setup******************************/
 
@@ -47,8 +47,7 @@ void loop() {
   float humi = dht.readHumidity();    // read humidity
   int loud = analogRead(LOUDNESS_PIN); // read loudness
   
-  
-  client.loop();
+  client.loop(); // maintains connection with mqtt
   returnConnection();
   publishToMQTT(temp, humi, loud);
   updateScreen(temp, humi, loud);
@@ -89,7 +88,7 @@ void connectMQTT() {
     client.subscribe(mqttSubTempUnit);
     Serial.println("Connected to MQTT broker");
   }
-    delay(3000);
+  delay(3000);
 }
 
 
@@ -123,11 +122,11 @@ void publishToMQTT(float temp, float humi, int loud) {
   String topicHumi = String(mqttTopic) + "humi";
   String topicLoud = String(mqttTopic) + "loud";
 
-  if(converToFahren){
+  if(converToFahren){ // if true the temp unit converts to fahrenheit and pubslishes to mqtt
     String temperatureMsgFahren = convertAndPublishToFahrenheit(temp);
     client.publish(topicTemp.c_str(), temperatureMsgFahren.c_str());
     Serial.println("Temperature Sent");
-  } else {
+  } else { // else temp unit is and pubslished as celsius to mqtt
     client.publish(topicTemp.c_str(), temperatureMsg.c_str());
     Serial.println("Temperature Sent");
   }
@@ -194,7 +193,7 @@ void drawValueBox(int x, int y, int width, int height, String label, String valu
 
 /***********************mqtt callback******************************/
 
-void callback(char* topic, byte* payload, unsigned int length) {
+void callback(char* topic, byte* payload, unsigned int length) {  // callback method in order to recieve messages from mqtt 
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
@@ -218,8 +217,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
 /***********************Convert To Fahrenheit******************************/
 
-String convertAndPublishToFahrenheit(float temp) {
+String convertAndPublishToFahrenheit(float temp) {  // method that converts celsius to fahrenheit
   float fahrenheit = (temp * 9 / 5) + 32;
   return String(fahrenheit);
 }
-

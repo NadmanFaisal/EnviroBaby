@@ -1,6 +1,7 @@
 package org.example.envirobaby;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -23,6 +24,12 @@ public class Controller {
     private TextField maxTempBox;
     @FXML
     private TextField minTempBox;
+    @FXML
+    private Button celciusButton;
+    @FXML
+    private Button fahrenButton;
+
+
 
 
     private Room room;
@@ -51,21 +58,31 @@ public class Controller {
     }
     @FXML
     public void updateTempUbound(ActionEvent actionEvent) {
-        room.updateThreshold(maxTempBox);;
+        room.updateThreshold(maxTempBox);
     }
     @FXML
     public void updateTempLbound(ActionEvent actionEvent) {
-        room.updateThreshold(minTempBox);;
+        room.updateThreshold(minTempBox);
     }
 
     @FXML
     public void updateMinHum(ActionEvent actionEvent) {
-        room.updateThreshold(maxHumBox);;
+        room.updateThreshold(minHumBox);
     }
 
     @FXML
     public void updateMaxHum (ActionEvent actionEvent) {
-        room.updateThreshold(minHumBox);;
+        room.updateThreshold(maxHumBox);
+    }
+
+    @FXML
+    public void convertToCelsius (ActionEvent actionEvent) throws MqttException, InterruptedException {
+        room.sendCelsiusMsg(celciusButton);
+    }
+
+    @FXML
+    public void convertToFahrenheit (ActionEvent actionEvent) throws MqttException, InterruptedException {
+        room.sendFahrenMsg(fahrenButton);
     }
 
 }

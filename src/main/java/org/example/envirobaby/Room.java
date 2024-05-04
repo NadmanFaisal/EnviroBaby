@@ -1,6 +1,7 @@
 package org.example.envirobaby;
 
 import javafx.application.Platform;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -19,6 +20,9 @@ public class Room implements Runnable {
     private ParameterData sensorReadings;
     private MQTTReceiver client;
     private Notification alerts;
+    private MQTTSender sender;
+    private boolean isFahrenheit;
+
 
     DecimalFormat df = new DecimalFormat("#.00");
 
@@ -30,17 +34,25 @@ public class Room implements Runnable {
         this.noiseLabel=noiseLabel;
         this.tempLabel=tempLabel;
         this.humLabel=humLabel;
+        this.isFahrenheit = false;
     }
 
 
 
     private void updateOverview() {
-        String noiseMsg = sensorReadings.getLoudValue() + " db";
-        String tempMsg = df.format( sensorReadings.getTempValue()) + "C";
-        String humMsg = df.format(sensorReadings.getHumValue()) +"%";
 
-        updateLabel(noiseLabel, noiseMsg);
+        String tempMsg;
+        if (isFahrenheit) {
+            tempMsg = df.format(sensorReadings.getTempValue()) + " F";
+        } else {
+            tempMsg = df.format(sensorReadings.getTempValue()) + " C";
+        }
+
+        String humMsg = df.format(sensorReadings.getHumValue()) +" %";
+        String noiseMsg = sensorReadings.getLoudValue() + " db";
+
         updateLabel(tempLabel,tempMsg);
+        updateLabel(noiseLabel, noiseMsg);
         updateLabel(humLabel,humMsg);
     }
 
@@ -55,19 +67,29 @@ public class Room implements Runnable {
             alerts.setLastNoiseAlert(noiseLvl);
         }
 
-        if (tempLvl > thresholds.getTempUpperBound() && alerts.getLastMaxTempAlert()!=tempLvl) {
-            alerts.createNotification("Temperature notification", "TEMPERATURE EXCEEDS THRESHOLD: " + df.format(tempLvl) + "C");
-            alerts.setLastMaxTempAlert(tempLvl);
-        } else if (tempLvl < thresholds.getTempLowerBound() && alerts.getLastMinTempAlert()!=tempLvl) {
-            alerts.createNotification("Temperature notification", "TEMPERATURE BELOW THRESHOLD: " + df.format(tempLvl) + "C");
-            alerts.setLastMinTempAlert(tempLvl);
+        if (isFahrenheit) {
+            if (tempLvl > thresholds.getTempUpperBound() && alerts.getLastMaxTempAlert()!=tempLvl) {
+                alerts.createNotification("Temperature notification", "TEMPERATURE EXCEEDS THRESHOLD: " + df.format(tempLvl) + " F");
+                alerts.setLastMaxTempAlert(tempLvl);
+            } else if (tempLvl < thresholds.getTempLowerBound() && alerts.getLastMinTempAlert()!=tempLvl) {
+                alerts.createNotification("Temperature notification", "TEMPERATURE BELOW THRESHOLD: " + df.format(tempLvl) + " F");
+                alerts.setLastMinTempAlert(tempLvl);
+            }
+        } else {
+            if (tempLvl > thresholds.getTempUpperBound() && alerts.getLastMaxTempAlert()!=tempLvl) {
+                alerts.createNotification("Temperature notification", "TEMPERATURE EXCEEDS THRESHOLD: " + df.format(tempLvl) + " C");
+                alerts.setLastMaxTempAlert(tempLvl);
+            } else if (tempLvl < thresholds.getTempLowerBound() && alerts.getLastMinTempAlert()!=tempLvl) {
+                alerts.createNotification("Temperature notification", "TEMPERATURE BELOW THRESHOLD: " + df.format(tempLvl) + " C");
+                alerts.setLastMinTempAlert(tempLvl);
+            }
         }
 
         if (humLvl > thresholds.getHumUpperBound() && alerts.getLastMaxHumAlert()!=humLvl) {
-            alerts.createNotification("Humidity notification", "HUMIDITY EXCEEDS THRESHOLD: " + df.format(humLvl) + "%");
+            alerts.createNotification("Humidity notification", "HUMIDITY EXCEEDS THRESHOLD: " + df.format(humLvl) + " %");
             alerts.setLastMaxHumAlert(humLvl);
         } else if (humLvl < thresholds.getHumLowerBound() && alerts.getLastMinHumAlert()!=humLvl) {
-            alerts.createNotification("Humidity notification", "HUMIDITY BELOW THRESHOLD: " + df.format(humLvl) + "%");
+            alerts.createNotification("Humidity notification", "HUMIDITY BELOW THRESHOLD: " + df.format(humLvl) + " %");
             alerts.setLastMinHumAlert(humLvl);
         }
     }
@@ -135,5 +157,18 @@ public class Room implements Runnable {
         notificationScheduler.scheduleAtFixedRate(this::sendAlerts, 101, 100, TimeUnit.MILLISECONDS);
 
     }
+
+    public void sendCelsiusMsg(Button actionEvent) throws MqttException, InterruptedException {
+        sender = new MQTTSender();
+        sender.sendMessage("C", "/envirobaby/tempunit");
+        isFahrenheit = false;
+    }
+
+    public void sendFahrenMsg(Button actionEvent) throws MqttException, InterruptedException {
+        sender = new MQTTSender();
+        sender.sendMessage("F", "/envirobaby/tempunit");
+        isFahrenheit = true;
+    }
+
 
 }
