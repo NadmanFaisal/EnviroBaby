@@ -18,14 +18,16 @@ public class HomeScreenController {
     private Button findMe;
     private MQTTSender sender;
 
-    /**
-     * This method will switch to the room1BuzzerScreen when the button
-     * "Find me" is clicked with a mouse.
-     * @param event
-     * @throws IOException
-     */
     @FXML
-    void findMeClick(ActionEvent event) throws IOException {
+    private void roomViewClick(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("room_1.fxml"));
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+    }
+
+    @FXML
+    private void findMeClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("room1BuzzerScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);

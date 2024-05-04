@@ -1,0 +1,26 @@
+.dataOverviewPane {
+    -fx-background-color: #F3B197;
+    -fx-border-color: #F1A080;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-width: 2;
+}
+
+.font{
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 1.5em;
+}
+
+.simpleFont{
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 1.3em;
+}
+
+.headDropShadow {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.34), 10, 0.5, 0.0, 0.0);
+}
+
+.dropShadow {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.15), 10, 0.5, 0.0, 0.0);
+}
+
