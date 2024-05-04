@@ -11,3 +11,7 @@ const char* mqttTopic = "envirobaby/"; // mqtt broker topic
 const char* mqttClientId = "EnviroBaby"; // mqtt client id
 const char* projectTITLE = "ENVIROBABY";  // project title
 const char* mqttSubTempUnit = "/envirobaby/tempunit"; // mqtt sub topic for temp. unit conversion
+const char* mqttRoom1Buzzer = "/envirobaby/room1/buzzer";
+const char* mqttRoom2Buzzer = "/envirobaby/room2/buzzer";
+const char* mqttRoom3Buzzer = "/envirobaby/room3/buzzer";
+const char* mqttRoom4Buzzer = "/envirobaby/room4/buzzer";
