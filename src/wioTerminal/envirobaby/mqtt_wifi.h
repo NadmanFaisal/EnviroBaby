@@ -15,5 +15,9 @@ extern const char* mqttTopic; // mqtt broker topic
 extern const char* mqttClientId; // mqtt client id
 extern const char* projectTITLE;  // project title
 extern const char* mqttSubTempUnit; // mqtt sub topic for temp. unit conversion
+extern const char* mqttRoom1Buzzer;
+extern const char* mqttRoom2Buzzer;
+extern const char* mqttRoom3Buzzer;
+extern const char* mqttRoom4Buzzer;
 
 #endif

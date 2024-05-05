@@ -4,23 +4,35 @@
 
 /*******************Define Pin and Objects*******************************/
 
-#define LOUDNESS_PIN A0 // pin for loudness sensor
-#define DHTPIN A4       // pin of DHT
-#define DHTTYPE DHT11  // DHT sensor type
-
-DHT dht(DHTPIN, DHTTYPE); // initialize DHT sensor
-TFT_eSPI tft; // initialize TFT display
-
-WiFiClient enviroClient; // calling wifi obeject
-PubSubClient client(enviroClient); // calling mqtt obejct
+#define LOUDNESS_PIN A0  // pin for loudness sensor
+#define DHTPIN A4        // pin of DHT
+#define DHTTYPE DHT11    // DHT sensor type
+#define BUZZER_PIN WIO_BUZZER
 
 bool converToFahren = false; // boolean that triggers temp unit conversion
+bool buzzerRoom1Active = false;
+bool buzzerRoom2Active = false;
+bool buzzerRoom3Active = false;
+bool buzzerRoom4Active = false;
+unsigned long buzzerStartTime = 0;
+
+String room1BuzzerCommand;
+String room2BuzzerCommand;
+String room3BuzzerCommand;
+String room4BuzzerCommand;
+
+DHT dht(DHTPIN, DHTTYPE);  // initialize DHT sensor
+TFT_eSPI tft;              // initialize TFT display
+
+WiFiClient enviroClient;            // calling wifi obeject
+PubSubClient client(enviroClient);  // calling mqtt obejct
+
 
 /***********************Setup******************************/
 
 void setup() {
   Serial.begin(115200); // setting baund as per amount of data needed to be transmitted
-  //while (!Serial); // wait till the serial is ready
+  while (!Serial); // wait till the serial is ready
 
   //WiFi.mode(WIFI_STA); // set wifi to station mode
   //WiFi.disconnect(); // disconnect any previous wifi connection
@@ -30,12 +42,13 @@ void setup() {
   tft.setRotation(1); // rotate the display to match wio terminal orientation
   tft.fillScreen(TFT_NAVY); // clear the screen
 
-  dht.begin(); // starting DHT sensor
+  dht.begin();  // starting DHT sensor
 
+  pinMode(BUZZER_PIN, OUTPUT);
 
   client.setServer(mqttServer, mqttPort);
   client.setCallback(callback);
-  //connectMQTT(); // connecting to MQTT
+  //connectMQTT();  // connecting to MQTT
 }
 
 
@@ -81,11 +94,19 @@ void connectMQTT() {
   Serial.println("Connecting to MQTT...");
   client.connect(mqttClientId);
   client.subscribe(mqttSubTempUnit);
+  client.subscribe(mqttRoom1Buzzer);
+  client.subscribe(mqttRoom2Buzzer);
+  client.subscribe(mqttRoom3Buzzer);
+  client.subscribe(mqttRoom4Buzzer);
 
   while (!client.connected()) {
     // Attempt to connect to the MQTT broker
     client.connect(mqttClientId);
     client.subscribe(mqttSubTempUnit);
+    client.subscribe(mqttRoom1Buzzer);
+    client.subscribe(mqttRoom2Buzzer);
+    client.subscribe(mqttRoom3Buzzer);
+    client.subscribe(mqttRoom4Buzzer);
     Serial.println("Connected to MQTT broker");
   }
   delay(3000);
@@ -103,12 +124,11 @@ void returnConnection() { // reconnect wifi and mqtt
   }
 }
 
-
 /***********************PUBLISH******************************/
 
 void publishToMQTT(float temp, float humi, int loud) {
 
-  if (isnan(temp) || isnan(humi)) { // Check if any reading failed for DHT sensor
+  if (isnan(temp) || isnan(humi)) {  // Check if any reading failed for DHT sensor
     Serial.println("Failed to read from DHT sensor!");
     return;
   }
@@ -142,7 +162,6 @@ void publishToMQTT(float temp, float humi, int loud) {
 
 }
 
-
 /***********************wio terminal sreen******************************/
 
 void updateScreen(float temp, float humi, int loud) {
@@ -152,13 +171,13 @@ void updateScreen(float temp, float humi, int loud) {
   // display ENVIROBABY text at the top middle part
   tft.setTextSize(3);
   tft.setTextColor(TFT_WHITE);
-  tft.setCursor((tft.width() - tft.textWidth(projectTITLE)) / 2, 10); // set the text position
+  tft.setCursor((tft.width() - tft.textWidth(projectTITLE)) / 2, 10);  // set the text position
   tft.println(projectTITLE);
 
   // draw three little boxes for temperature, humidity, and loudness
-  int boxWidth = tft.width() - 20; // adjusted to leave some margin
+  int boxWidth = tft.width() - 20;  // adjusted to leave some margin
   int boxHeight = 50;
-  int startX = 10; // adjusted to leave some margin
+  int startX = 10;  // adjusted to leave some margin
   int startY = (tft.height() - (boxHeight * 3)) / 2;
 
   if(converToFahren){
@@ -168,37 +187,105 @@ void updateScreen(float temp, float humi, int loud) {
     drawValueBox(startX, startY, boxWidth, boxHeight, "Temperature", String(temp) + " C"); // Draw temperature box
   }
 
-  drawValueBox(startX, startY + boxHeight + 10, boxWidth, boxHeight, "Humidity", String(humi) + " %"); // Draw humidity box
-  
-  drawValueBox(startX, startY + 2 * (boxHeight + 10), boxWidth, boxHeight, "Loudness", String(loud) + " db"); // Draw loudness box
+  drawValueBox(startX, startY + boxHeight + 10, boxWidth, boxHeight, "Humidity", String(humi) + " %");  // Draw humidity box
 
-  delay(1000); // 1 sec delay according to acceptance criteria
+  drawValueBox(startX, startY + 2 * (boxHeight + 10), boxWidth, boxHeight, "Loudness", String(loud) + " db");  // Draw loudness box
 
+  if (room1BuzzerCommand.equals("BUZZ")) {
+    if (!buzzerRoom1Active) {
+      buzzerStartTime = millis(); // set the start time for the buzzer
+    buzzerRoom1Active = true; // set the boolean to true so that this if statement is not retriggered
+      tone(BUZZER_PIN, 2000); // starts the buzzing noise
+    }
+    // this if statement checks whether 10 seconds have passed.
+    if (millis() - buzzerStartTime >= 10000) { // millis() - buzzerStartTime so that it can check if 10 seconds have passed within an infinite time set
+      noTone(BUZZER_PIN); // buzzer stops after 10 seconds have passed
+      buzzerRoom1Active = false; // set the boolean to false to indicate the buzzer is not buzzing
+      room1BuzzerCommand = "STOP"; // sets the command to STOP so that this if statement is not retriggered
+    }
+  } else if (room1BuzzerCommand.equals("STOP")) {
+    noTone(BUZZER_PIN); // stops the buzzer if "STOP" message is received
+    buzzerRoom1Active = false; // sets the boolean to false to indicate the buzzer is not buzzing
+  }
+
+  // if (room2BuzzerCommand.equals("BUZZ")) {
+  //   if (!buzzerRoom2Active) {
+  //     buzzerStartTime = millis(); // set the start time for the buzzer
+  //     buzzerRoom2Active = true; // set the boolean to true so that this if statement is not retriggered
+  //     tone(BUZZER_PIN, 1000); // starts the buzzing noise
+  //   }
+  //   // this if statement checks whether 10 seconds have passed.
+  //   if (millis() - buzzerStartTime >= 10000) { // millis() - buzzerStartTime so that it can check if 10 seconds have passed within an infinite time set
+  //     noTone(BUZZER_PIN); // buzzer stops after 10 seconds have passed
+  //     buzzerRoom2Active = false; // set the boolean to false to indicate the buzzer is not buzzing
+  //     room2BuzzerCommand = "STOP"; // sets the command to STOP so that this if statement is not retriggered
+  //   }
+  // } else if (room2BuzzerCommand.equals("STOP")) {
+  //   noTone(BUZZER_PIN); // stops the buzzer if "STOP" message is received
+  //   buzzerRoom2Active = false; // sets the boolean to false to indicate the buzzer is not buzzing
+  // }
+
+  // if (room3BuzzerCommand.equals("BUZZ")) {
+  //   if (!buzzerRoom3Active) {
+  //     buzzerStartTime = millis(); // set the start time for the buzzer
+  //     buzzerRoom3Active = true; // set the boolean to true so that this if statement is not retriggered
+  //     tone(BUZZER_PIN, 1000); // starts the buzzing noise
+  //   }
+  //   // this if statement checks whether 10 seconds have passed.
+  //   if (millis() - buzzerStartTime >= 10000) { // millis() - buzzerStartTime so that it can check if 10 seconds have passed within an infinite time set
+  //     noTone(BUZZER_PIN); // buzzer stops after 10 seconds have passed
+  //     buzzerRoom3Active = false; // set the boolean to false to indicate the buzzer is not buzzing
+  //     room3BuzzerCommand = "STOP"; // sets the command to STOP so that this if statement is not retriggered
+  //   }
+  // } else if (room3BuzzerCommand.equals("STOP")) {
+  //   noTone(BUZZER_PIN); // stops the buzzer if "STOP" message is received
+  //   buzzerRoom3Active = false; // sets the boolean to false to indicate the buzzer is not buzzing
+  // }
+
+  // if (room4BuzzerCommand.equals("BUZZ")) {
+  //   if (!buzzerRoom4Active) {
+  //     buzzerStartTime = millis(); // set the start time for the buzzer
+  //     buzzerRoom4Active = true; // set the boolean to true so that this if statement is not retriggered
+  //     tone(BUZZER_PIN, 1000); // starts the buzzing noise
+  //   }
+  //   // this if statement checks whether 10 seconds have passed.
+  //   if (millis() - buzzerStartTime >= 10000) { // millis() - buzzerStartTime so that it can check if 10 seconds have passed within an infinite time set
+  //     noTone(BUZZER_PIN); // buzzer stops after 10 seconds have passed
+  //     buzzerRoom4Active = false; // set the boolean to false to indicate the buzzer is not buzzing
+  //     room4BuzzerCommand = "STOP"; // sets the command to STOP so that this if statement is not retriggered
+  //   }
+  // } else if (room4BuzzerCommand.equals("STOP")) {
+  //   noTone(BUZZER_PIN); // stops the buzzer if "STOP" message is received
+  //   buzzerRoom4Active = false; // sets the boolean to false to indicate the buzzer is not buzzing
+  // }
+
+  delay(1000);  // 1 sec delay according to acceptance criteria
 }
 
 
 /***********************wio boxes value******************************/
 
-void drawValueBox(int x, int y, int width, int height, String label, String value) { // method for small boxes that contain the info for perameters
-  int borderRadius = 10; // rounds the corner of box
-  tft.fillRoundRect(x, y, width, height, borderRadius, TFT_YELLOW); // draw the box with rounded corners
+void drawValueBox(int x, int y, int width, int height, String label, String value) {  // method for small boxes that contain the info for perameters
+  int borderRadius = 10;                                                              // rounds the corner of box
+  tft.fillRoundRect(x, y, width, height, borderRadius, TFT_YELLOW);                   // draw the box with rounded corners
   tft.setTextSize(2);
   tft.setTextColor(TFT_BLACK);
-  tft.setCursor(x + 10, y + 5); // adjust the position for the text
+  tft.setCursor(x + 10, y + 5);  // adjust the position for the text
   tft.println(label);
-  tft.setCursor(x + 10, y + (height + 5) / 2); // adjust the position for the text
+  tft.setCursor(x + 10, y + (height + 5) / 2);  // adjust the position for the text
   tft.println(value);
 }
-
 
 /***********************mqtt callback******************************/
 
 void callback(char* topic, byte* payload, unsigned int length) {  // callback method in order to recieve messages from mqtt 
+
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
   char buff_p[length];
-  for (int i = 0; i < length; i++){
+  for (int i = 0; i < length; i++) {
+
     Serial.print((char)payload[i]);
     buff_p[i] = (char)payload[i];
   }
@@ -212,6 +299,16 @@ void callback(char* topic, byte* payload, unsigned int length) {  // callback me
     } else if (String(msg_p).equals("C")){
       converToFahren = false;
     }
+  }
+
+  if (strcmp(topic, mqttRoom1Buzzer) == 0) {
+    room1BuzzerCommand = msg_p;
+  } else if (strcmp(topic, mqttRoom2Buzzer) == 0) {
+    room2BuzzerCommand = msg_p;
+  } else if (strcmp(topic, mqttRoom3Buzzer) == 0) {
+    room3BuzzerCommand = msg_p;
+  } else if (strcmp(topic, mqttRoom4Buzzer) == 0) {
+    room4BuzzerCommand = msg_p;
   }
 }
 

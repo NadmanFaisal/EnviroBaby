@@ -7,7 +7,8 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class MQTTSender {
 
     private static final String BROKER_URL = "tcp://broker.hivemq.com:1883";
-    private static final String CLIENT_ID = "JavaTempUnit";
+    private static final String CLIENT_ID = "JavaSubscriber";
+
 
     // Define the topic to publish the message (replace if needed)
 

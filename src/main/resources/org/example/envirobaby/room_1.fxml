@@ -12,7 +12,7 @@
     <children>
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fff3f0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Button layoutX="28.0" layoutY="14.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="76.0" style="-fx-background-color: #FFF0F5; -fx-border-color: #FFB6C1; -fx-background-radius: 5; -fx-border-radius: 5;" text="Home">
+                <Button fx:id="homeButton" layoutX="28.0" layoutY="14.0" mnemonicParsing="false" onAction="#homeButtonClick" prefHeight="40.0" prefWidth="76.0" style="-fx-background-color: #FFF0F5; -fx-border-color: #FFB6C1; -fx-background-radius: 5; -fx-border-radius: 5;" text="Home">
                     <font>
                         <Font name="Yu Gothic UI Semibold" size="13.0" />
                     </font></Button>
