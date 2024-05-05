@@ -63,19 +63,29 @@
                         <Font name="Segoe UI Semibold" size="13.0" />
                     </font>
             </Label>
-                <TextField id="minHum" fx:id="minHumBox" layoutX="439.0" layoutY="265.0" onAction="#updateMinHum" prefHeight="28.0" prefWidth="66.0" promptText="Min" />
-                <TextField id="maxHum" fx:id="maxHumBox" layoutX="508.0" layoutY="265.0" onAction="#updateMaxHum" prefHeight="28.0" prefWidth="66.0" promptText="Max" />
-                <TextField id="minTemp" fx:id="minTempBox" layoutX="439.0" layoutY="192.0" onAction="#updateTempLbound" prefHeight="28.0" prefWidth="66.0" promptText="Min" />
-                <TextField id="maxTemp" fx:id="maxTempBox" layoutX="508.0" layoutY="192.0" onAction="#updateTempUbound" prefHeight="28.0" prefWidth="66.0" promptText="Max" />
+                <TextField id="minHum" fx:id="minHumBox" layoutX="439.0" layoutY="286.0" onAction="#updateMinHum" prefHeight="28.0" prefWidth="66.0" promptText="Min" />
+                <TextField id="maxHum" fx:id="maxHumBox" layoutX="508.0" layoutY="286.0" onAction="#updateMaxHum" prefHeight="28.0" prefWidth="66.0" promptText="Max" />
+                <TextField id="minTemp" fx:id="minTempBox" layoutX="439.0" layoutY="180.0" onAction="#updateTempLbound" prefHeight="28.0" prefWidth="66.0" promptText="Min" />
+                <TextField id="maxTemp" fx:id="maxTempBox" layoutX="508.0" layoutY="180.0" onAction="#updateTempUbound" prefHeight="28.0" prefWidth="66.0" promptText="Max" />
                 <Label layoutX="531.0" layoutY="256.0" />
-                <Label fx:id="tempThreshLabel" layoutX="470.0" layoutY="164.0" prefHeight="17.0" prefWidth="76.0" text="Temperature">
+                <Label fx:id="tempThreshLabel" layoutX="470.0" layoutY="152.0" prefHeight="17.0" prefWidth="76.0" text="Temperature">
                     <font>
                         <Font name="Baloo Paaji 2 SemiBold" size="13.0" />
                     </font></Label>
-                <Label fx:id="humThreshLabel" layoutX="480.0" layoutY="241.0" prefHeight="24.0" prefWidth="57.0" text="Humidity">
+                <Label fx:id="humThreshLabel" layoutX="480.0" layoutY="262.0" prefHeight="24.0" prefWidth="57.0" text="Humidity">
                     <font>
                         <Font name="Baloo Paaji 2 SemiBold" size="13.0" />
                     </font></Label>
+            <Button fx:id="celciusButton" layoutX="472.0" layoutY="221.0" mnemonicParsing="false" onAction="#convertToCelsius" prefHeight="17.0" prefWidth="33.0" style="-fx-background-color: #FFB6C1; -fx-border-color: #C71585; -fx-border-radius: 7; -fx-background-radius: 7;" text="C">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="fahrenButton" layoutX="505.0" layoutY="221.0" mnemonicParsing="false" onAction="#convertToFahrenheit" prefHeight="17.0" prefWidth="33.0" style="-fx-background-color: #FFB6C1; -fx-border-color: #C71585; -fx-border-radius: 7; -fx-background-radius: 7;" text="F">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
             </children>
         </AnchorPane>
     </children>

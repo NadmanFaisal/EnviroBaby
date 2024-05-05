@@ -8,7 +8,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 public class MQTTClient {
 
     private static final String BROKER_URL = "tcp://broker.hivemq.com:1883";
-    private static final String CLIENT_ID = "JavaSubscriber";
+    private static final String CLIENT_ID = "JavaSubscriber123";
     private MqttClient client;
 
     public MQTTClient(MqttCallback callback) throws MqttException {
