@@ -26,7 +26,8 @@ public class Room implements Runnable {
 
     DecimalFormat df = new DecimalFormat("#.00");
 
-    public Room(Label noiseLabel, Label tempLabel, Label humLabel) throws MqttException {
+    public Room(Label noiseLabel, Label tempLabel, Label humLabel) throws MqttException, InterruptedException {
+        this.sender = new MQTTSender();
         this.thresholds = new NotificationThreshold();
         this.client = new MQTTReceiver();
         this.sensorReadings = client.getReadings();
@@ -159,13 +160,11 @@ public class Room implements Runnable {
     }
 
     public void sendCelsiusMsg(Button actionEvent) throws MqttException, InterruptedException {
-        sender = new MQTTSender();
         sender.sendMessage("C", "/envirobaby/tempunit");
         isFahrenheit = false;
     }
 
     public void sendFahrenMsg(Button actionEvent) throws MqttException, InterruptedException {
-        sender = new MQTTSender();
         sender.sendMessage("F", "/envirobaby/tempunit");
         isFahrenheit = true;
     }

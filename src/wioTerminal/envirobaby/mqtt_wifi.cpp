@@ -1,7 +1,7 @@
 #include "mqtt_wifi.h"
 
 const char* ssid = "ssid"; // ssid of wifi
-const char* password = "passqord"; //password of wifi
+const char* password = "password"; //password of wifi
 
 const char* mqttServer = "broker.hivemq.com"; // mqtt server address
 const int mqttPort = 1883; // deafault port for hivemq broker

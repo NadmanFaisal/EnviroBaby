@@ -36,7 +36,7 @@ public class Controller {
 
 
     @FXML
-    public void initialize() throws MqttException { //Creates new subscriber object
+    public void initialize() throws MqttException, InterruptedException { //Creates new subscriber object
 
         room = new Room(noiseLabel,tempLabel,humLabel); //initialise room object which implements runnable
         Thread thread = new Thread(room); //connect runnable to thread
