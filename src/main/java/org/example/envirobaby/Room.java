@@ -11,6 +11,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+
 public class Room implements Runnable {
 
     private Label noiseLabel;
@@ -63,33 +64,33 @@ public class Room implements Runnable {
         double humLvl = sensorReadings.getHumValue();
 
         //only send notifications if above/below threshold AND if it isn't the same value as the last sent notification to avoid duplicates
-        if (noiseLvl > thresholds.getLoudThreshold() && alerts.getLastNoiseAlert()!=noiseLvl) {
+        if (noiseLvl > thresholds.getLoudThreshold() && alerts.getLastNoiseAlert()!=noiseLvl && alerts.isNoiseNotifOn()) {
             alerts.createNotification("Noise notification", "NOISE THRESHOLD CROSSED: " + noiseLvl + " db");
             alerts.setLastNoiseAlert(noiseLvl);
         }
 
         if (isFahrenheit) {
-            if (tempLvl > thresholds.getTempUpperBound() && alerts.getLastMaxTempAlert()!=tempLvl) {
+            if (tempLvl > thresholds.getTempUpperBound() && alerts.getLastMaxTempAlert()!=tempLvl && alerts.isTempNotifOn() ) {
                 alerts.createNotification("Temperature notification", "TEMPERATURE EXCEEDS THRESHOLD: " + df.format(tempLvl) + " F");
                 alerts.setLastMaxTempAlert(tempLvl);
-            } else if (tempLvl < thresholds.getTempLowerBound() && alerts.getLastMinTempAlert()!=tempLvl) {
+            } else if (tempLvl < thresholds.getTempLowerBound() && alerts.getLastMinTempAlert()!=tempLvl && alerts.isTempNotifOn()) {
                 alerts.createNotification("Temperature notification", "TEMPERATURE BELOW THRESHOLD: " + df.format(tempLvl) + " F");
                 alerts.setLastMinTempAlert(tempLvl);
             }
         } else {
-            if (tempLvl > thresholds.getTempUpperBound() && alerts.getLastMaxTempAlert()!=tempLvl) {
+            if (tempLvl > thresholds.getTempUpperBound() && alerts.getLastMaxTempAlert()!=tempLvl && alerts.isTempNotifOn()) {
                 alerts.createNotification("Temperature notification", "TEMPERATURE EXCEEDS THRESHOLD: " + df.format(tempLvl) + " C");
                 alerts.setLastMaxTempAlert(tempLvl);
-            } else if (tempLvl < thresholds.getTempLowerBound() && alerts.getLastMinTempAlert()!=tempLvl) {
+            } else if (tempLvl < thresholds.getTempLowerBound() && alerts.getLastMinTempAlert()!=tempLvl && alerts.isTempNotifOn()) {
                 alerts.createNotification("Temperature notification", "TEMPERATURE BELOW THRESHOLD: " + df.format(tempLvl) + " C");
                 alerts.setLastMinTempAlert(tempLvl);
             }
         }
 
-        if (humLvl > thresholds.getHumUpperBound() && alerts.getLastMaxHumAlert()!=humLvl) {
+        if (humLvl > thresholds.getHumUpperBound() && alerts.getLastMaxHumAlert()!=humLvl && alerts.isHumiNotifOn()) {
             alerts.createNotification("Humidity notification", "HUMIDITY EXCEEDS THRESHOLD: " + df.format(humLvl) + " %");
             alerts.setLastMaxHumAlert(humLvl);
-        } else if (humLvl < thresholds.getHumLowerBound() && alerts.getLastMinHumAlert()!=humLvl) {
+        } else if (humLvl < thresholds.getHumLowerBound() && alerts.getLastMinHumAlert()!=humLvl && alerts.isHumiNotifOn()) {
             alerts.createNotification("Humidity notification", "HUMIDITY BELOW THRESHOLD: " + df.format(humLvl) + " %");
             alerts.setLastMinHumAlert(humLvl);
         }

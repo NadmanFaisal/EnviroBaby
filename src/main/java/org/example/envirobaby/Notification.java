@@ -16,12 +16,19 @@ public class Notification {
     private double lastMaxHumAlert;
     private double lastMinHumAlert;
 
+    private boolean tempNotifOn;
+    private boolean humiNotifOn;
+    private boolean noiseNotifOn;
+
     public Notification() {
         this.lastNoiseAlert=0;
         this.lastMaxTempAlert=0;
         this.lastMinTempAlert=0;
         this.lastMaxHumAlert=0;
         this.lastMinHumAlert=0;
+        this.noiseNotifOn=true;
+        this.tempNotifOn=true;
+        this.humiNotifOn=true;
     }
 
     /**
@@ -58,6 +65,13 @@ public class Notification {
     public void setLastMinHumAlert(double lastMinHumAlert) {
         this.lastMinHumAlert = lastMinHumAlert;
     }
+    public void setTempNotifOn(boolean tempNotifOn){ this.tempNotifOn=tempNotifOn;}
+    public void setHumiNotifOn(boolean humiNotifOn) {
+        this.humiNotifOn = humiNotifOn;
+    }
+    public void setNoiseNotifOn(boolean noiseNotifOn) {
+        this.noiseNotifOn = noiseNotifOn;
+    }
 
     public int getLastNoiseAlert() {
         return lastNoiseAlert;
@@ -73,5 +87,14 @@ public class Notification {
     }
     public double getLastMinHumAlert() {
         return lastMinHumAlert;
+    }
+    public boolean isNoiseNotifOn() {
+        return noiseNotifOn;
+    }
+    public boolean isTempNotifOn() {
+        return tempNotifOn;
+    }
+    public boolean isHumiNotifOn() {
+        return humiNotifOn;
     }
 }

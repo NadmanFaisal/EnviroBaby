@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.envirobaby.Room3NotificationsSettingScreenController">
+   <children>
+      <ToggleButton fx:id="ToggleTemperatureButton" layoutX="309.0" layoutY="153.0" mnemonicParsing="false" onAction="#Room3ToggleTemperaturebutton" text="ToggleTemperatureButton" />
+      <ToggleButton fx:id="ToggleHumiditybutton" layoutX="309.0" layoutY="212.0" mnemonicParsing="false" onAction="#Room3ToggleHumiditybutton" prefHeight="26.0" prefWidth="162.0" text="ToggleHumidityButton" />
+      <Text layoutX="97.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Temperature">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
+      <ToggleButton fx:id="ToggleNoisebutton" layoutX="309.0" layoutY="279.0" mnemonicParsing="false" onAction="#Room3ToggleNoisebutton" prefHeight="26.0" prefWidth="162.0" text="ToggleNoiseButton" />
+      <Text layoutX="97.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Humidity">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
+      <Text layoutX="97.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Noise">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
+      <Text layoutX="221.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NOTIFICATIONS">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Button fx:id="Room1" layoutX="99.0" layoutY="84.0" mnemonicParsing="false" onAction="#Room1NotificationSettingsScreen" text="Room1" />
+      <Button fx:id="Room2" layoutX="209.0" layoutY="84.0" mnemonicParsing="false" onAction="#Room2NotificationSettingsScreenController" text="Room2" />
+      <Button fx:id="Room3" layoutX="309.0" layoutY="84.0" mnemonicParsing="false" onAction="#Room3NotificationSettingsScreenController" style="-fx-background-color: #FF69B4; -fx-border-color: #FFB6C1;" text="Room3" />
+      <Button fx:id="Room4" layoutX="412.0" layoutY="84.0" mnemonicParsing="false" onAction="#Room4NotificationSettingsScreenController" text="Room4" />
+   </children>
+</AnchorPane>
