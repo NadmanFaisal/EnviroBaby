@@ -14,15 +14,15 @@ public class MQTTReceiver {
     private ParameterData readings;
 
 
-    public MQTTReceiver() throws MqttException {
-        this.client = connectToMQTTClient();
+    public MQTTReceiver(String userId) throws MqttException {
+        this.client = connectToMQTTClient(userId);
         this.readings = new ParameterData();
         this.client.subscribe(LOUD_TOPIC);
         this.client.subscribe(TEMP_TOPIC);
         this.client.subscribe(HUM_TOPIC);
     }
 
-    private MQTTClient connectToMQTTClient() throws MqttException {
+    private MQTTClient connectToMQTTClient(String userId) throws MqttException {
         MqttCallback callback = new MqttCallback() {
             public void connectionLost(Throwable cause) {
                 System.out.println("Connection lost: " + cause); // Handles the loss of MQTT connection, logging the cause of the disconnection.
@@ -50,12 +50,11 @@ public class MQTTReceiver {
                 // this method is not needed
             }
         };
-        return new MQTTClient(callback);
+        return new MQTTClient(userId, callback);
     }
 
     public ParameterData getReadings() {
         return readings;
     }
-
 
 }

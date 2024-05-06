@@ -1,4 +1,4 @@
-package org.example.envirobaby;
+package org.example.envirobaby.app;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.example.envirobaby.MQTTSender;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package org.example.envirobaby;
+package org.example.envirobaby.app;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +21,7 @@ public class EnviroBabyApp extends Application {
         Scene scene = new Scene(root);
 
         envb.setScene(scene);
-        envb.setResizable(false);
+        envb.setResizable(false); //force screen to stay the same size for log in
         envb.show();
     }
 

@@ -5,86 +5,42 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class Room implements Runnable {
-
-    private Label noiseLabel;
-    private Label tempLabel;
-    private Label humLabel;
+public class Room{
     private NotificationThreshold thresholds;
-    private ParameterData sensorReadings;
+    private ParameterData sensorReading;
     private MQTTReceiver client;
-    private Notification alerts;
+    private String userId;
+    private String roomName;
+    private int capacity;
+    private boolean ageGroup;
 
-    DecimalFormat df = new DecimalFormat("#.00");
+    private DatabaseControl database;
 
-    public Room(Label noiseLabel, Label tempLabel, Label humLabel) throws MqttException {
+    public Room(String userId, String roomName, int capacity, boolean ageGroup) throws MqttException {
+        this.userId = userId;
+        this.roomName = roomName;
+        this.capacity = capacity;
+        this.ageGroup= ageGroup;
         this.thresholds = new NotificationThreshold();
-        this.client = new MQTTReceiver();
-        this.sensorReadings = client.getReadings();
-        this.alerts= new Notification();
-        this.noiseLabel=noiseLabel;
-        this.tempLabel=tempLabel;
-        this.humLabel=humLabel;
+        this.client = new MQTTReceiver(userId);
+        this.sensorReading = client.getReadings();
     }
 
 
 
-    private void updateOverview() {
-        String noiseMsg = sensorReadings.getLoudValue() + " db";
-        String tempMsg = df.format( sensorReadings.getTempValue()) + "C";
-        String humMsg = df.format(sensorReadings.getHumValue()) +"%";
-
-        updateLabel(noiseLabel, noiseMsg);
-        updateLabel(tempLabel,tempMsg);
-        updateLabel(humLabel,humMsg);
-    }
-
-    private void sendAlerts(){
-        int noiseLvl = sensorReadings.getLoudValue();
-        double tempLvl = sensorReadings.getTempValue();
-        double humLvl = sensorReadings.getHumValue();
-
-        //only send notifications if above/below threshold AND if it isn't the same value as the last sent notification to avoid duplicates
-        if (noiseLvl > thresholds.getLoudThreshold() && alerts.getLastNoiseAlert()!=noiseLvl) {
-            alerts.createNotification("Noise notification", "NOISE THRESHOLD CROSSED: " + noiseLvl + " db");
-            alerts.setLastNoiseAlert(noiseLvl);
-        }
-
-        if (tempLvl > thresholds.getTempUpperBound() && alerts.getLastMaxTempAlert()!=tempLvl) {
-            alerts.createNotification("Temperature notification", "TEMPERATURE EXCEEDS THRESHOLD: " + df.format(tempLvl) + "C");
-            alerts.setLastMaxTempAlert(tempLvl);
-        } else if (tempLvl < thresholds.getTempLowerBound() && alerts.getLastMinTempAlert()!=tempLvl) {
-            alerts.createNotification("Temperature notification", "TEMPERATURE BELOW THRESHOLD: " + df.format(tempLvl) + "C");
-            alerts.setLastMinTempAlert(tempLvl);
-        }
-
-        if (humLvl > thresholds.getHumUpperBound() && alerts.getLastMaxHumAlert()!=humLvl) {
-            alerts.createNotification("Humidity notification", "HUMIDITY EXCEEDS THRESHOLD: " + df.format(humLvl) + "%");
-            alerts.setLastMaxHumAlert(humLvl);
-        } else if (humLvl < thresholds.getHumLowerBound() && alerts.getLastMinHumAlert()!=humLvl) {
-            alerts.createNotification("Humidity notification", "HUMIDITY BELOW THRESHOLD: " + df.format(humLvl) + "%");
-            alerts.setLastMinHumAlert(humLvl);
-        }
-    }
-
-
-    private void updateLabel(Label label, String message) {
-        if (label != null && message != null) {
-            Platform.runLater(() -> label.setText(message));
-        }
-    }
-
-    public void updateThreshold(TextField textField) { // method that updates the threshold value
+    public void updateThreshold(TextField textField) throws SQLException { // method that updates the threshold value
         String thresholdTextValue = textField.getText(); // gets and stores the string value from textField
 
         if (textField.getId().equals("maxNoise")) {
             if (thresholdTextValue.matches("\\d+")) { //condition to find if there are any numeric value
                 thresholds.setLoudThreshold(Integer.parseInt(thresholdTextValue)); // converts the string into integer
+                database.updateThresholds(this.userId,this.roomName,"maxnoise",Double.parseDouble(thresholdTextValue)); //store the updated threshold for the room
             } else {
                 System.out.println("Enter a numeric value, Thank you!"); // if no numeric value id found this is printed
             }
@@ -93,15 +49,19 @@ public class Room implements Runnable {
                 switch (textField.getId()) {
                     case "maxTemp":
                         thresholds.setTempUpperBound(Double.parseDouble(thresholdTextValue));
+                        database.updateThresholds(this.userId,this.roomName,"maxtemp",Double.parseDouble(thresholdTextValue)); //store the updated threshold for the room
                         break;
                     case "minTemp":
                         thresholds.setTempLowerBound(Double.parseDouble(thresholdTextValue));
+                        database.updateThresholds(this.userId,this.roomName,"mintemp",Double.parseDouble(thresholdTextValue));
                         break;
                     case "maxHum":
                         thresholds.setHumUpperBound(Double.parseDouble(thresholdTextValue));
+                        database.updateThresholds(this.userId,this.roomName,"maxhum",Double.parseDouble(thresholdTextValue));
                         break;
                     case "minHum":
                         thresholds.setHumLowerBound(Double.parseDouble(thresholdTextValue));
+                        database.updateThresholds(this.userId,this.roomName,"minhum",Double.parseDouble(thresholdTextValue));
                         break;
                 }
             } else {
@@ -110,30 +70,30 @@ public class Room implements Runnable {
         }
     }
 
+    public String getRoomName() {
+        return roomName;
+    }
+    public int getCapacity() {
+        return capacity;
+    }
+    public boolean isAgeGroup() {
+        return ageGroup;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+    public void setAgeGroup(boolean ageGroup) {
+        this.ageGroup = ageGroup;
+    }
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
 
     public NotificationThreshold getThresholds() {
         return thresholds;
     }
-    public ParameterData getSensorReadings() {
-        return sensorReadings;
+    public ParameterData getSensorReading() {
+        return sensorReading;
     }
-    public Notification getAlerts() {
-        return alerts;
-    }
-
-    @Override
-    public void run() {
-        // Create a ScheduledExecutorService for overviews
-        ScheduledExecutorService overviewScheduler = Executors.newSingleThreadScheduledExecutor();
-
-        // Schedule updateOverview with a delay
-        overviewScheduler.scheduleAtFixedRate(this::updateOverview, 0, 100, TimeUnit.MILLISECONDS);
-
-        // Create a ScheduledExecutorService for notifications
-        ScheduledExecutorService notificationScheduler = Executors.newSingleThreadScheduledExecutor();
-        //Schedule sendAlerts with initial delay of 101 to avoid notifications during initialisation
-        notificationScheduler.scheduleAtFixedRate(this::sendAlerts, 101, 100, TimeUnit.MILLISECONDS);
-
-    }
-
 }

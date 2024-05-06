@@ -1,4 +1,4 @@
-package org.example.envirobaby;
+package org.example.envirobaby.app;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,8 +10,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.example.envirobaby.DatabaseControl;
+import org.example.envirobaby.User;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class LogInController {
 
@@ -26,15 +30,30 @@ public class LogInController {
 
     @FXML
     private TextField username;
+
+    private DatabaseControl database;
+    private User user;
+    private UserExchanger transferable; //transfers user object between classes
     private Alert alert = new Alert(Alert.AlertType.WARNING);
 
-    public void logIn(ActionEvent actionEvent) throws IOException {
+    public void logIn(ActionEvent actionEvent) throws IOException, SQLException, MqttException {
         String userId = username.getText();
         String userPass = password.getText();
 
+        //check if log in conditions are met
         if (!userId.isBlank() && !userPass.isBlank()) {
             if(userId.length()<=15) {
-                homeScreenRedirect(actionEvent);
+                database = new DatabaseControl();
+
+                if (database.attemptLogIn(userId, userPass)) { //checks if log in is successful
+                    user = new User(userId);
+                    transferable = UserExchanger.getInstance(); //initialize instance
+                    transferable.setInstanceUser(user); // store user in instance to be accessed by all classes
+                    homeScreenRedirect(actionEvent);
+                } else {
+                    alert.setContentText("Incorrect username or password");
+                    alert.show();
+                }
             } else {
                 alert.setContentText("Username cannot be more than 15 characters");
                 alert.show();
@@ -46,7 +65,7 @@ public class LogInController {
     }
 
     @FXML
-    public void signUpRedirect(ActionEvent event) throws IOException {
+    public void signUpRedirect(ActionEvent event) throws IOException { //switch to sighn up screen
         Parent root = FXMLLoader.load(getClass().getResource("signUp.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -54,11 +73,11 @@ public class LogInController {
     }
 
     @FXML
-    public void homeScreenRedirect(ActionEvent event) throws IOException {
+    public void homeScreenRedirect(ActionEvent event) throws IOException { //forward to homeScreen
         Parent root = FXMLLoader.load(getClass().getResource("homeScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
-        stage.setResizable(true);
+        stage.setResizable(true); //allow changing application size
         stage.setScene(scene);
     }
 }

@@ -1,4 +1,4 @@
-package org.example.envirobaby;
+package org.example.envirobaby.app;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -8,10 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.example.envirobaby.MQTTSender;
 
 import java.io.IOException;
 
-public class Room3BuzzerScreenController {
+public class Room1BuzzerScreenController {
     public Button room1;
     public Button room2;
     public Button room4;
@@ -26,6 +27,7 @@ public class Room3BuzzerScreenController {
      * @param event
      * @throws IOException
      */
+
     public void room1BuzzerScreen(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("room1BuzzerScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -39,6 +41,7 @@ public class Room3BuzzerScreenController {
      * @param event
      * @throws IOException
      */
+
     public void room2BuzzerScreen(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("room2BuzzerScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -52,6 +55,7 @@ public class Room3BuzzerScreenController {
      * @param event
      * @throws IOException
      */
+
     public void room3BuzzerScreen(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("room3BuzzerScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -65,12 +69,14 @@ public class Room3BuzzerScreenController {
      * @param event
      * @throws IOException
      */
+
     public void room4BuzzerScreen(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("room4BuzzerScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
+
 
     /**
      * When the "Play sound" button is clicked, it publishes
@@ -82,7 +88,7 @@ public class Room3BuzzerScreenController {
      */
     public void playSound(ActionEvent actionEvent) throws MqttException, InterruptedException {
         sender = new MQTTSender();
-        sender.sendMessage("BUZZ", "/envirobaby/room3/buzzer");
+        sender.sendMessage("BUZZ", "/envirobaby/room1/buzzer");
     }
 
     /**
@@ -93,9 +99,10 @@ public class Room3BuzzerScreenController {
      * @throws MqttException
      * @throws InterruptedException
      */
+
     public void stopSound(ActionEvent actionEvent) throws MqttException, InterruptedException {
         sender = new MQTTSender();
-        sender.sendMessage("STOP", "/envirobaby/room3/buzzer");
+        sender.sendMessage("STOP", "/envirobaby/room1/buzzer");
     }
 
 }

@@ -1,4 +1,4 @@
-package org.example.envirobaby;
+package org.example.envirobaby.app;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -8,10 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.example.envirobaby.MQTTSender;
 
 import java.io.IOException;
 
-public class Room4BuzzerScreenController {
+public class Room3BuzzerScreenController {
     public Button room1;
     public Button room2;
     public Button room4;
@@ -82,7 +83,7 @@ public class Room4BuzzerScreenController {
      */
     public void playSound(ActionEvent actionEvent) throws MqttException, InterruptedException {
         sender = new MQTTSender();
-        sender.sendMessage("BUZZ", "/envirobaby/room4/buzzer");
+        sender.sendMessage("BUZZ", "/envirobaby/room3/buzzer");
     }
 
     /**
@@ -95,7 +96,7 @@ public class Room4BuzzerScreenController {
      */
     public void stopSound(ActionEvent actionEvent) throws MqttException, InterruptedException {
         sender = new MQTTSender();
-        sender.sendMessage("STOP", "/envirobaby/room4/buzzer");
+        sender.sendMessage("STOP", "/envirobaby/room3/buzzer");
     }
 
 }

@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<GridPane prefHeight="628.0" prefWidth="1025.0" style="-fx-background-color: #fef5e1;" styleClass="headDropShadow" stylesheets="@roomStylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.envirobaby.HomeScreenController">
+<GridPane prefHeight="628.0" prefWidth="1025.0" style="-fx-background-color: #fef5e1;" styleClass="headDropShadow" stylesheets="@roomStylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.envirobaby.app.HomeScreenController">
    <columnConstraints>
       <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
    </columnConstraints>

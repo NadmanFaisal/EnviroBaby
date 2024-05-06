@@ -60,6 +60,14 @@ public class NotificationThreshold {
         return humLowerBound;
     }
 
+    public void setAllThresholds(int maxNoise, double maxTemp, double minTemp, double maxHum, double minHum){
+        this.loudThreshold=maxNoise;
+        this.tempUpperBound=maxTemp;
+        this.tempLowerBound=minTemp;
+        this.humUpperBound=maxHum;
+        this.humLowerBound=minHum;
+    }
+
     /**
      * Resets the threshold values to default values
      * such that if the default values are breached,
