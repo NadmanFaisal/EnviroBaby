@@ -34,6 +34,8 @@ public class RoomController {
     private TextField maxTempBox;
     @FXML
     private TextField minTempBox;
+    @FXML
+    private Label roomCapLabel;
 
 
     private OverviewManager roomOverview;
@@ -58,6 +60,7 @@ public class RoomController {
         maxHumBox.setText(String.valueOf(roomOverview.getUserRoom().getThresholds().getHumUpperBound()));
         maxTempBox.setText(String.valueOf(roomOverview.getUserRoom().getThresholds().getTempUpperBound()));
         minTempBox.setText(String.valueOf(roomOverview.getUserRoom().getThresholds().getTempLowerBound()));
+        roomCapLabel.setText("Capacity: " + currentRoom.getCapacity());
 
         thread.start(); //start thread
     }

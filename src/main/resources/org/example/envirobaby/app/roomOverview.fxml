@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
 <AnchorPane prefHeight="628.0" prefWidth="1025.0" stylesheets="@roomStylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.envirobaby.app.RoomController">
     <children>
         <GridPane layoutY="-23.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="1025.0" style="-fx-background-color: #fef5e1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -168,14 +167,18 @@
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             </columnConstraints>
                             <rowConstraints>
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
                                 <RowConstraints minHeight="10.0" prefHeight="199.0" vgrow="ALWAYS" />
-                                <RowConstraints maxHeight="130.0" minHeight="10.0" prefHeight="78.0" vgrow="ALWAYS" />
-                                <RowConstraints maxHeight="130.0" minHeight="10.0" prefHeight="78.0" vgrow="ALWAYS" />
-                                <RowConstraints maxHeight="130.0" minHeight="10.0" prefHeight="78.0" vgrow="ALWAYS" />
-                                <RowConstraints maxHeight="85.0" minHeight="10.0" prefHeight="78.0" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="130.0" minHeight="10.0" prefHeight="78.0" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="130.0" minHeight="10.0" prefHeight="78.0" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="130.0" minHeight="10.0" prefHeight="78.0" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="85.0" minHeight="10.0" prefHeight="78.0" vgrow="ALWAYS" />
                             </rowConstraints>
                             <children>
-                                <AnchorPane prefHeight="197.0" prefWidth="200.0" GridPane.rowIndex="3">
+                                <AnchorPane prefHeight="197.0" prefWidth="200.0" GridPane.rowIndex="7">
                                     <children>
                                         <GridPane hgap="10.0" layoutY="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
                                             <columnConstraints>
@@ -208,7 +211,7 @@
                                         </Label>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane prefHeight="197.0" prefWidth="200.0" GridPane.rowIndex="2">
+                                <AnchorPane prefHeight="197.0" prefWidth="200.0" GridPane.rowIndex="6">
                                     <children>
                                         <GridPane hgap="10.0" layoutY="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
                                             <columnConstraints>
@@ -257,7 +260,7 @@
                                         </Label>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane prefHeight="197.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                <AnchorPane prefHeight="197.0" prefWidth="200.0" GridPane.rowIndex="5">
                                     <children>
                                         <GridPane hgap="10.0" layoutY="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
                                             <columnConstraints>
@@ -306,7 +309,7 @@
                                         </Label>
                                     </children>
                                 </AnchorPane>
-                                <GridPane prefHeight="28.0" prefWidth="200.0" GridPane.rowIndex="4">
+                                <GridPane prefHeight="28.0" prefWidth="200.0" GridPane.rowIndex="8">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="ALWAYS" maxWidth="57.0" minWidth="10.0" prefWidth="27.0" />
                                         <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="133.0" />
@@ -332,6 +335,13 @@
                                         <Insets bottom="8.0" />
                                     </GridPane.margin>
                                 </GridPane>
+                        <Label fx:id="roomCapLabel" alignment="CENTER" prefHeight="52.0" prefWidth="213.0" style="-fx-background-color: #f19f7f; -fx-border-color: #EC7D51; -fx-border-radius: 5; -fx-background-radius: 5;" text="Room capacity" textAlignment="CENTER" GridPane.rowIndex="3">
+                           <styleClass>
+                              <String fx:value="simpleFont" />
+                              <String fx:value="dropShadow" />
+                              <String fx:value="dataOverviewPane" />
+                           </styleClass>
+                        </Label>
                             </children>
                         </GridPane>
                     </children>

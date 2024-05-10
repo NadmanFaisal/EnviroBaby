@@ -13,6 +13,7 @@ public class OverviewManager implements Runnable{
     private Label noiseLabel;
     private Label tempLabel;
     private Label humLabel;
+    private Label roomCapLabel;
 
     private Notification alerts;
     private Room room;

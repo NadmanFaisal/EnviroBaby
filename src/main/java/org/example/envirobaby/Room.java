@@ -16,7 +16,7 @@ public class Room{
 
     private static DatabaseControl database;
 
-    public Room(String userId, String roomName, int capacity, String ageGroup, String loud, String temp, String humi) throws MqttException {
+    public Room(String userId, String roomName, int capacity, String ageGroup, String loud, String temp, String humi) throws MqttException, SQLException {
         this.userId = userId;
         this.roomName = roomName;
         this.capacity = capacity;
