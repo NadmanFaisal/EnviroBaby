@@ -24,6 +24,7 @@ public class Room{
         this.thresholds = new NotificationThreshold();
         this.client = new MQTTReceiver(userId, loud, temp, humi);
         this.sensorReading = client.getReadings();
+        this.database = new DatabaseControl();
     }
 
 

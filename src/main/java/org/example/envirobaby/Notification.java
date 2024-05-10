@@ -42,7 +42,7 @@ public class Notification {
         Platform.runLater(() -> {
 
             long currentTime = System.currentTimeMillis();
-            long minNotificationInterval = 2000;
+            long minNotificationInterval = 4000;
 
             if (currentTime - lastNotificationTime > minNotificationInterval) {
                 lastNotificationTime = currentTime;
