@@ -39,6 +39,7 @@ public class SignUpController {
     public void signUp(ActionEvent actionEvent) throws IOException, SQLException, MqttException {
         String userId = createUsername.getText();
         String userPass = createPassword.getText();
+        database= new DatabaseControl();
 
         // check if sign up conditions are met
         if (!userId.isBlank() && !userPass.isBlank()) {

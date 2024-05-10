@@ -46,7 +46,7 @@ public class RoomController {
     public void initialize() throws MqttException { //Creates new subscriber object
         instanceUser= UserExchanger.getInstance();
         currentUser = instanceUser.getInstanceUser();
-        currentRoom = currentUser.getRoom("room12");
+        currentRoom = instanceUser.getCurrentRoom();
 
         roomOverview = new OverviewManager(noiseLabel,tempLabel,humLabel, currentRoom); //initialise room object which implements runnable
         Thread thread = new Thread(roomOverview); //connect runnable to thread

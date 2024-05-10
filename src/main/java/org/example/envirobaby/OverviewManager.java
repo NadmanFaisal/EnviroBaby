@@ -83,6 +83,10 @@ public class OverviewManager implements Runnable{
         return room;
     }
 
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
     @Override
     public void run() {
         // Create a ScheduledExecutorService for overviews
