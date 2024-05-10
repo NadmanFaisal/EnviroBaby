@@ -5,6 +5,7 @@ import org.example.envirobaby.*;
 public class UserExchanger {
     private static UserExchanger instance;
     public User instanceUser; //use singleton design pattern to send user object across classes.
+    public Room currentRoom;
 
     private UserExchanger(){
     }
@@ -23,4 +24,12 @@ public class UserExchanger {
     public User getInstanceUser() {
         return instanceUser;
     } // return the current user. always the same post initialisation
+
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(Room currentRoom) {
+        this.currentRoom = currentRoom;
+    }
 }

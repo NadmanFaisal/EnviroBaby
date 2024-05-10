@@ -10,23 +10,24 @@ public class User {
 
     private String userID;
     private DatabaseControl database;
-    private HashMap<String,Room> rooms;
+    private HashMap<Integer,Room> rooms;
+    private Room room;
 
     public User(String userId) throws SQLException, MqttException {
         database = new DatabaseControl();
         this.userID = userId;
-        this.rooms = setRooms(userId);
+        setRooms(userId);
     }
 
-    public HashMap<String,Room> setRooms(String userID) throws SQLException, MqttException {
-        HashMap<String,Room> registeredRooms = new HashMap<>();
+    public void setRooms(String userID) throws SQLException, MqttException {
+        HashMap<Integer,Room> registeredRooms = new HashMap<>();
         ResultSet roomResults= database.retrieveRooms(userID); //get list of rooms already owned by the user
 
         while (roomResults.next()) {
             // for each room owned by the user, get the stored values
             String roomName = roomResults.getString("room_name");
             int capacity = roomResults.getInt("capacity");
-            boolean ageGroup = roomResults.getBoolean("age_group");
+            String ageGroup = roomResults.getString("age_group");
             int maxNoise = roomResults.getInt("maxnoise");
             double maxtemp= roomResults.getDouble("maxtemp");
             double mintemp= roomResults.getDouble("mintemp");
@@ -37,22 +38,43 @@ public class User {
             boolean tempAlerts = roomResults.getBoolean("temp_alerts");
             boolean humAlerts = roomResults.getBoolean("hum_alerts");
 
-            Room newRoom = new Room(userID,roomName,capacity,ageGroup); //create new room object using these instances
+            Room newRoom = new Room(userID,roomName,capacity,ageGroup, "/envirobaby/room" + (registeredRooms.size() + 1) + "/loud", "/envirobaby/room" +( registeredRooms.size() +1) + "/temp", "/envirobaby/room" + (registeredRooms.size() +1) + "/humi"); //create new room object using these instances
             newRoom.getThresholds().setAllThresholds(maxNoise,maxtemp,mintemp,maxHum,minHum); //update the new room objects thresholds to the stored value
 
             //initialise notification toggle and celsius when implemented
-
-            registeredRooms.put(roomName,newRoom); //add room to list
+            Integer roomCount= registeredRooms.size() + 1;
+            registeredRooms.put(roomCount,newRoom); //add room to list
         }
-        return registeredRooms;
+        this.rooms = registeredRooms;
     }
 
-    public HashMap<String, Room> getRooms() {
+    /** Creates a room based on the specified parameters, adds it to the user's rooms, and stores it to the database
+     *
+     * @throws SQLException If there is an error interacting with the database
+     * @throws MqttException If there is an error with the MQTT connection
+     */
+    public Room createRoom(String roomName, String userId, int capacity, String ageGroup,
+                                                            int maxNoise, double maxTemp, double minTemp, double maxHum,
+                                                            double minHum, boolean celsius, boolean noiseAlert,
+                                                            boolean tempAlert, boolean humAlert) throws SQLException, MqttException {
+        Room room = new Room(userId, roomName, capacity, ageGroup, "/envirobaby/room" + (rooms.size() + 1) + "/loud", "/envirobaby/room" + (rooms.size() + 1) + "/temp", "/envirobaby/room" + (rooms.size() + 1) + "/humi");
+        room.getThresholds().setAllThresholds(maxNoise, maxTemp, minTemp, maxHum, minHum);
+        database.addRoom(roomName, userID, capacity, ageGroup, maxNoise, maxTemp,
+                minTemp, maxHum, minHum, celsius, noiseAlert, tempAlert, humAlert);
+
+        // Generates a room number and adds the room to the user's rooms
+        Integer roomCount= rooms.size() + 1;
+        rooms.put(roomCount, room);
+
+        return room;
+    }
+
+    public HashMap<Integer, Room> getRooms() {
         return rooms;
     }
 
-    public Room getRoom(String roomName) {
-        return rooms.get(roomName);
+    public Room getRoom(Integer roomNumber) {
+        return rooms.get(roomNumber);
     }
 
     public String getUserID() {

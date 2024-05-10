@@ -20,7 +20,7 @@ public class HomeScreenController {
 
     @FXML
     private void roomViewClick(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("room_1.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("roomOverview.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -34,4 +34,21 @@ public class HomeScreenController {
         stage.setScene(scene);
     }
 
+    @FXML
+    private void AddRoomsClick(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("addRooms.fxml"));
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+    }
+
+    @FXML
+    private void ViewRoomsClick(ActionEvent event) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("viewRooms.fxml"));
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+    }
+
 }
+

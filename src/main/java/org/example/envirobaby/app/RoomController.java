@@ -34,6 +34,8 @@ public class RoomController {
     private TextField maxTempBox;
     @FXML
     private TextField minTempBox;
+    @FXML
+    private Label roomCapLabel;
 
 
     private OverviewManager roomOverview;
@@ -46,7 +48,7 @@ public class RoomController {
     public void initialize() throws MqttException { //Creates new subscriber object
         instanceUser= UserExchanger.getInstance();
         currentUser = instanceUser.getInstanceUser();
-        currentRoom = currentUser.getRoom("room12");
+        currentRoom = instanceUser.getCurrentRoom();
 
         roomOverview = new OverviewManager(noiseLabel,tempLabel,humLabel, currentRoom); //initialise room object which implements runnable
         Thread thread = new Thread(roomOverview); //connect runnable to thread
@@ -58,6 +60,7 @@ public class RoomController {
         maxHumBox.setText(String.valueOf(roomOverview.getUserRoom().getThresholds().getHumUpperBound()));
         maxTempBox.setText(String.valueOf(roomOverview.getUserRoom().getThresholds().getTempUpperBound()));
         minTempBox.setText(String.valueOf(roomOverview.getUserRoom().getThresholds().getTempLowerBound()));
+        roomCapLabel.setText("Capacity: " + currentRoom.getCapacity());
 
         thread.start(); //start thread
     }

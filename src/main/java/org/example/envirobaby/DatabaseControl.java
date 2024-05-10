@@ -41,10 +41,10 @@ public class DatabaseControl {
         return rs; //return list of rooms
     }
 
-    public void addRoom(String roomName, String userID, int capacity, boolean ageGroup, int maxNoise, double maxTemp, double minTemp, double maxHum, double minHum, boolean celsius, boolean noiseAlert, boolean tempAlert, boolean humAlert) throws SQLException {
+    public void addRoom(String roomName, String userID, int capacity, String ageGroup, int maxNoise, double maxTemp, double minTemp, double maxHum, double minHum, boolean celsius, boolean noiseAlert, boolean tempAlert, boolean humAlert) throws SQLException {
 
         String insertSQL = String.format("INSERT INTO ROOM(room_name, userid,capacity,age_group,maxnoise,maxtemp,mintemp,maxhum,minhum,celsius, noise_alerts,temp_alerts,hum_alerts) " +
-                "VALUES('%s','%s',%d,%s,%d,%f,%f,%f,%f,%s,%s,%s,%s)", roomName,userID,capacity,ageGroup,maxNoise,maxTemp,minTemp,maxHum,minHum,celsius,noiseAlert,tempAlert,humAlert);
+                "VALUES('%s','%s',%d,'%s',%d,%f,%f,%f,%f,%s,%s,%s,%s)", roomName,userID,capacity,ageGroup,maxNoise,maxTemp,minTemp,maxHum,minHum,celsius,noiseAlert,tempAlert,humAlert);
         statement.executeUpdate(insertSQL); //save room data and settings into row
     }
 
@@ -53,7 +53,7 @@ public class DatabaseControl {
         statement.executeUpdate(removeQuery);
     }
     
-    public void updateRoom(String userId, String currentRoom, String roomName,int capacity, boolean ageGroup) throws SQLException {
+    public void updateRoom(String userId, String currentRoom, String roomName,int capacity, String ageGroup) throws SQLException {
         String updateQuery = String.format("UPDATE ROOM SET room_name='%s', capacity=%d,age_group='%s'" +
                 "WHERE userid='%s' AND room_name='%s'", roomName,capacity,ageGroup,userId,currentRoom);
         statement.executeUpdate(updateQuery); //edit room data

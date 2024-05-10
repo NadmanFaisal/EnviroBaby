@@ -13,6 +13,7 @@ public class OverviewManager implements Runnable{
     private Label noiseLabel;
     private Label tempLabel;
     private Label humLabel;
+    private Label roomCapLabel;
 
     private Notification alerts;
     private Room room;
@@ -47,7 +48,7 @@ public class OverviewManager implements Runnable{
     private void sendAlerts(){
         int noiseLvl = room.getSensorReading().getLoudValue();
         double tempLvl = room.getSensorReading().getTempValue();
-        double humLvl = room.getSensorReading().getTempValue();
+        double humLvl = room.getSensorReading().getHumValue();
 
         //only send notifications if above/below threshold AND if it isn't the same value as the last sent notification to avoid duplicates
         if (noiseLvl > room.getThresholds().getLoudThreshold() && alerts.getLastNoiseAlert()!=noiseLvl) {
@@ -81,6 +82,10 @@ public class OverviewManager implements Runnable{
 
     public Room getUserRoom() {
         return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     @Override
