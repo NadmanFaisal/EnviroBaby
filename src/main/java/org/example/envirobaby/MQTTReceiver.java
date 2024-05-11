@@ -6,9 +6,9 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 public class MQTTReceiver {
-    private static final String LOUD_TOPIC = "envirobaby/loud";
-    private static final String TEMP_TOPIC = "envirobaby/temp";
-    private static final String HUM_TOPIC = "envirobaby/humi";
+    private static final String LOUD_TOPIC = "/envirobaby/room3/loud";
+    private static final String TEMP_TOPIC = "/envirobaby/room3/temp";
+    private static final String HUM_TOPIC = "/envirobaby/room3/humi";
 
     private MQTTClient client;
     private ParameterData readings;

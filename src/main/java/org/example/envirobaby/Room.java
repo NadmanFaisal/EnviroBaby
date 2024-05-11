@@ -23,6 +23,10 @@ public class Room implements Runnable {
     private Notification alerts;
     private MQTTSender sender;
     private boolean isFahrenheit;
+    private boolean tempNotiStatus;
+    private boolean humiNotiStatus;
+    private boolean noiseNotiStatus;
+
 
 
     DecimalFormat df = new DecimalFormat("#.00");
@@ -37,6 +41,9 @@ public class Room implements Runnable {
         this.tempLabel=tempLabel;
         this.humLabel=humLabel;
         this.isFahrenheit = false;
+        this.tempNotiStatus = true; //default settings for the system temperature notifications
+        this.humiNotiStatus = true; //default settings for the system humidity notifications
+        this.noiseNotiStatus = true; //default settings for the system noise notifications
     }
 
 
@@ -64,36 +71,44 @@ public class Room implements Runnable {
         double humLvl = sensorReadings.getHumValue();
 
         //only send notifications if above/below threshold AND if it isn't the same value as the last sent notification to avoid duplicates
-        if (noiseLvl > thresholds.getLoudThreshold() && alerts.getLastNoiseAlert()!=noiseLvl && alerts.isNoiseNotifOn()) {
-            alerts.createNotification("Noise notification", "NOISE THRESHOLD CROSSED: " + noiseLvl + " db");
-            alerts.setLastNoiseAlert(noiseLvl);
-        }
 
+        if (tempNotiStatus){ //Condition triggers the temperature notifications
         if (isFahrenheit) {
-            if (tempLvl > thresholds.getTempUpperBound() && alerts.getLastMaxTempAlert()!=tempLvl && alerts.isTempNotifOn() ) {
+            if (tempLvl > thresholds.getTempUpperBound() && alerts.getLastMaxTempAlert()!=tempLvl) {
                 alerts.createNotification("Temperature notification", "TEMPERATURE EXCEEDS THRESHOLD: " + df.format(tempLvl) + " F");
                 alerts.setLastMaxTempAlert(tempLvl);
-            } else if (tempLvl < thresholds.getTempLowerBound() && alerts.getLastMinTempAlert()!=tempLvl && alerts.isTempNotifOn()) {
+            } else if (tempLvl < thresholds.getTempLowerBound() && alerts.getLastMinTempAlert()!=tempLvl) {
                 alerts.createNotification("Temperature notification", "TEMPERATURE BELOW THRESHOLD: " + df.format(tempLvl) + " F");
                 alerts.setLastMinTempAlert(tempLvl);
             }
         } else {
-            if (tempLvl > thresholds.getTempUpperBound() && alerts.getLastMaxTempAlert()!=tempLvl && alerts.isTempNotifOn()) {
+            if (tempLvl > thresholds.getTempUpperBound() && alerts.getLastMaxTempAlert()!=tempLvl) {
                 alerts.createNotification("Temperature notification", "TEMPERATURE EXCEEDS THRESHOLD: " + df.format(tempLvl) + " C");
                 alerts.setLastMaxTempAlert(tempLvl);
-            } else if (tempLvl < thresholds.getTempLowerBound() && alerts.getLastMinTempAlert()!=tempLvl && alerts.isTempNotifOn()) {
+            } else if (tempLvl < thresholds.getTempLowerBound() && alerts.getLastMinTempAlert()!=tempLvl) {
                 alerts.createNotification("Temperature notification", "TEMPERATURE BELOW THRESHOLD: " + df.format(tempLvl) + " C");
                 alerts.setLastMinTempAlert(tempLvl);
+                }
             }
         }
 
-        if (humLvl > thresholds.getHumUpperBound() && alerts.getLastMaxHumAlert()!=humLvl && alerts.isHumiNotifOn()) {
+        if (humiNotiStatus) { //Condition triggers the humidity notifications
+        if (humLvl > thresholds.getHumUpperBound() && alerts.getLastMaxHumAlert()!=humLvl) {
             alerts.createNotification("Humidity notification", "HUMIDITY EXCEEDS THRESHOLD: " + df.format(humLvl) + " %");
             alerts.setLastMaxHumAlert(humLvl);
-        } else if (humLvl < thresholds.getHumLowerBound() && alerts.getLastMinHumAlert()!=humLvl && alerts.isHumiNotifOn()) {
+        } else if (humLvl < thresholds.getHumLowerBound() && alerts.getLastMinHumAlert()!=humLvl) {
             alerts.createNotification("Humidity notification", "HUMIDITY BELOW THRESHOLD: " + df.format(humLvl) + " %");
             alerts.setLastMinHumAlert(humLvl);
+            }
         }
+
+        if (noiseNotiStatus) { //Condition triggers the noise notifications
+        if (noiseLvl > thresholds.getLoudThreshold() && alerts.getLastNoiseAlert()!=noiseLvl) {
+            alerts.createNotification("Noise notification", "NOISE THRESHOLD CROSSED: " + noiseLvl + " db");
+            alerts.setLastNoiseAlert(noiseLvl);
+            }
+        }
+
     }
 
 
@@ -169,6 +184,29 @@ public class Room implements Runnable {
         sender.sendMessage("F", "/envirobaby/tempunit");
         isFahrenheit = true;
     }
+    // Status methods
+    public void tempNotiON(){
+        tempNotiStatus = true;
+    }
 
+    public void tempNotiOFF(){
+        tempNotiStatus = false;
+    }
+
+    public void humiNotiON(){
+        humiNotiStatus = true;
+    }
+
+    public void humiNotiOFF(){
+        humiNotiStatus = false;
+    }
+
+    public void noiseNotiON(){
+        noiseNotiStatus = true;
+    }
+
+    public void noiseNotiOFF(){
+        noiseNotiStatus = false;
+    }
 
 }

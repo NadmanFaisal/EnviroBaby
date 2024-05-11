@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="628.0" prefWidth="1025.0" style="-fx-background-color: #fef5e1;" styleClass="headDropShadow" stylesheets="@../../../../../../../../EnviroBabyPRACTICE/EnviroBaby/src/main/resources/org/example/envirobaby/roomStylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.envirobaby.HomeScreenController">
+<GridPane prefHeight="628.0" prefWidth="1025.0" style="-fx-background-color: #fef5e1;" styleClass="headDropShadow" stylesheets="@roomStylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.envirobaby.NotificationSettingsScreenController">
    <columnConstraints>
       <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
    </columnConstraints>
@@ -35,31 +35,41 @@
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="10.0" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="ALWAYS" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="ALWAYS" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints maxHeight="94.3314208984375" minHeight="10.0" prefHeight="58.9029541015625" vgrow="ALWAYS" />
-                  <RowConstraints maxHeight="91.0970458984375" minHeight="10.0" percentHeight="10.0" prefHeight="91.0970458984375" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="10.0" vgrow="ALWAYS" />
                </rowConstraints>
                <children>
-                  <AnchorPane prefHeight="54.0" prefWidth="1024.0" GridPane.rowIndex="1" />
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                     <children>
+                        <Button fx:id="systemNotificationSettingsButton" layoutX="123.0" layoutY="19.0" mnemonicParsing="false" onAction="#systemNotificationSettingsScreen" prefHeight="66.0" prefWidth="780.0" text="    System Notifications" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="123.0" AnchorPane.rightAnchor="122.0" AnchorPane.topAnchor="19.0">
+                           <styleClass>
+                              <String fx:value="dataOverviewPane" />
+                              <String fx:value="dropShadow" />
+                              <String fx:value="font" />
+                           </styleClass>
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3" />
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5" />
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
                      <children>
-                        <Button fx:id="findMe" layoutX="124.0" layoutY="-16.0" mnemonicParsing="false" onAction="#findMeClick" prefHeight="72.0" prefWidth="779.0" stylesheets="@roomStylesheet.css" text="Find Me" AnchorPane.bottomAnchor="94.0" AnchorPane.leftAnchor="124.0" AnchorPane.rightAnchor="121.0" AnchorPane.topAnchor="-16.0">
+                        <Button fx:id="roomNotificationSettingsButton" layoutX="131.0" layoutY="18.0" mnemonicParsing="false" onAction="#roomNotificationSettingsScreen" prefHeight="66.0" prefWidth="780.0" text="Room Notitications" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="131.0" AnchorPane.rightAnchor="114.0" AnchorPane.topAnchor="18.0">
                            <styleClass>
                               <String fx:value="dataOverviewPane" />
                               <String fx:value="dropShadow" />
                               <String fx:value="font" />
                            </styleClass>
-                        </Button>
-                        <Button fx:id="notificationSettings" layoutX="128.0" layoutY="88.0" mnemonicParsing="false" onAction="#notificationSettingsClick" prefHeight="66.0" prefWidth="780.0" stylesheets="@roomStylesheet.css" text="Notification Settings">
-                           <styleClass>
-                              <String fx:value="dataOverviewPane" />
-                              <String fx:value="dropShadow" />
-                              <String fx:value="font" />
-                           </styleClass>
+                           <font>
+                              <Font size="22.0" />
+                           </font>
                         </Button>
                      </children>
                   </AnchorPane>
@@ -67,12 +77,15 @@
             </GridPane>
          </children>
       </AnchorPane>
-      <Button fx:id="homebutton" mnemonicParsing="false" onAction="#loadHomeScreen" prefHeight="44.0" prefWidth="189.0" stylesheets="@roomStylesheet.css" text="HOME">
+      <Button fx:id="homebutton" mnemonicParsing="false" onAction="#loadHomeScreen" prefHeight="44.0" prefWidth="189.0" text="HOME">
          <styleClass>
             <String fx:value="dataOverviewPane" />
             <String fx:value="dropShadow" />
             <String fx:value="font" />
          </styleClass>
+         <font>
+            <Font size="22.0" />
+         </font>
       </Button>
    </children>
 </GridPane>
