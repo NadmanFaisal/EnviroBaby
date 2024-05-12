@@ -11,17 +11,17 @@ public class MQTTClient {
     private MqttClient client;
 
     public MQTTClient(String CLIENT_ID, MqttCallback callback) throws MqttException {
-            this.client = new MqttClient(BROKER_URL, CLIENT_ID);
-            MqttConnectOptions options = new MqttConnectOptions();
-            options.setAutomaticReconnect(true);
-            options.setCleanSession(true);
+        this.client = new MqttClient(BROKER_URL, CLIENT_ID);
+        MqttConnectOptions options = new MqttConnectOptions();
+        options.setAutomaticReconnect(true);
+        options.setCleanSession(true);
 
-            client.setCallback(callback);
+        client.setCallback(callback);
 
-            client.connect(options);
+        client.connect(options);
     }
 
     public void subscribe(String topic) throws MqttException{
-            client.subscribe(topic);
+        client.subscribe(topic);
     }
 }

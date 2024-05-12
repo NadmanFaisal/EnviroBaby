@@ -23,12 +23,6 @@ public class Room {
     private String ageGroup;
     private Notification alerts;
 
-    private Long lastMaxTempNotif;
-    private Long lastMinTempNotif;
-    private Long lastMaxHumNotif;
-    private Long lastMinHumNotif;
-    private Long lastNoiseNotif;
-
 
     DecimalFormat df = new DecimalFormat("#.00");
 
@@ -42,12 +36,6 @@ public class Room {
         this.thresholds = new NotificationThreshold();
         this.client = new MQTTReceiver(userId, loud, temp, humi);
         this.sensorReading = client.getReadings();
-
-        this.lastMaxTempNotif=0L;
-        this.lastMinTempNotif=0L;
-        this.lastMaxHumNotif=0L;
-        this.lastMinHumNotif=0L;
-        this.lastNoiseNotif=0L;
 
         database = new DatabaseControl();
     }
@@ -105,20 +93,12 @@ public class Room {
         return userId;
     }
 
-    public Long getLastMaxTempNotif() {
-        return lastMaxTempNotif;
+    public NotificationThreshold getThresholds() {
+        return thresholds;
     }
-    public Long getLastMinTempNotif() {
-        return lastMinTempNotif;
-    }
-    public Long getLastMaxHumNotif() {
-        return lastMaxHumNotif;
-    }
-    public Long getLastMinHumNotif() {
-        return lastMinHumNotif;
-    }
-    public Long getLastNoiseNotif() {
-        return lastNoiseNotif;
+
+    public ParameterData getSensorReading() {
+        return sensorReading;
     }
 
     public void setRoomName(String roomName) {
@@ -129,26 +109,4 @@ public class Room {
         this.ageGroup = ageGroup;
     }
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
-    public void setLastMaxTempNotif(Long lastMaxTempNotif) {
-        this.lastMaxTempNotif = lastMaxTempNotif;
-    }
-    public void setLastMinTempNotif(Long lastMinTempNotif) {
-        this.lastMinTempNotif = lastMinTempNotif;
-    }
-    public void setLastMaxHumNotif(Long lastMaxHumNotif) {
-        this.lastMaxHumNotif = lastMaxHumNotif;
-    }
-    public void setLastMinHumNotif(Long lastMinHumNotif) {
-        this.lastMinHumNotif = lastMinHumNotif;
-    }
-    public void setLastNoiseNotif(Long lastNoiseNotif) {
-        this.lastNoiseNotif = lastNoiseNotif;
-    }
-
-    public NotificationThreshold getThresholds() {return thresholds;}
-    public ParameterData getSensorReading() {return sensorReading;}
 }
