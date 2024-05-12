@@ -44,17 +44,17 @@
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
                                 </Button>
-                                <Button fx:id="Room2_Button" alignment="CENTER" layoutX="198.0" layoutY="22.0" mnemonicParsing="false" onAction="#Room2ButtonClick" prefHeight="73.0" prefWidth="158.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #f19f7f; -fx-border-color: #EC7D51;" styleClass="simpleFont, dropShadow" text="Room 2">
+                                <Button fx:id="Room2_Button" alignment="CENTER" layoutX="198.0" layoutY="22.0" mnemonicParsing="false" onAction="#Room2ButtonClick" prefHeight="73.0" prefWidth="158.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #f19f7f; -fx-border-color: #EC7D51;" styleClass="simpleFont, dropShadow" text="Room 2" AnchorPane.bottomAnchor="21.0" AnchorPane.topAnchor="22.0">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
                                 </Button>
-                                <Button fx:id="Room3_Button" alignment="CENTER" layoutX="383.0" layoutY="22.0" mnemonicParsing="false" onAction="#Room3ButtonClick" prefHeight="73.0" prefWidth="158.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #f19f7f; -fx-border-color: #EC7D51;" styleClass="simpleFont, dropShadow" text="Room 3">
+                                <Button fx:id="Room3_Button" alignment="CENTER" layoutX="383.0" layoutY="22.0" mnemonicParsing="false" onAction="#Room3ButtonClick" prefHeight="73.0" prefWidth="158.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #f19f7f; -fx-border-color: #EC7D51;" styleClass="simpleFont, dropShadow" text="Room 3" AnchorPane.bottomAnchor="21.0" AnchorPane.topAnchor="22.0">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
                                 </Button>
-                                <Button fx:id="Room4_Button" alignment="CENTER" layoutX="565.0" layoutY="22.0" mnemonicParsing="false" onAction="#Room4ButtonClick" prefHeight="73.0" prefWidth="158.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #f19f7f; -fx-border-color: #EC7D51;" styleClass="simpleFont, dropShadow" text="Room 4">
+                                <Button fx:id="Room4_Button" alignment="CENTER" layoutX="565.0" layoutY="22.0" mnemonicParsing="false" onAction="#Room4ButtonClick" prefHeight="73.0" prefWidth="158.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #f19f7f; -fx-border-color: #EC7D51;" styleClass="simpleFont, dropShadow" text="Room 4" AnchorPane.bottomAnchor="21.0" AnchorPane.topAnchor="22.0">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>

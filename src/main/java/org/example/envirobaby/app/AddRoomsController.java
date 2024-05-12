@@ -10,14 +10,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.example.envirobaby.OverviewManager;
 import org.example.envirobaby.Room;
 import org.example.envirobaby.User;
+import org.example.envirobaby.UserExchanger;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class AddRoomsController {
 
@@ -115,7 +113,7 @@ public class AddRoomsController {
             String userId = currentUser.getUserID();
 
             //Creates the new room
-            Room room = currentUser.createRoom(roomName, userId, capacity, ageGroup, maxNoiseLevel, maxTemp, minTemp, maxHum, minHum, false, false, false, false);
+            Room room = currentUser.createRoom(roomName, userId, capacity, ageGroup, maxNoiseLevel, maxTemp, minTemp, maxHum, minHum, currentUser.isCelsius(), false, false, false);
             userExchanger.setCurrentRoom(room);
 
             //Loads the "View rooms" screen

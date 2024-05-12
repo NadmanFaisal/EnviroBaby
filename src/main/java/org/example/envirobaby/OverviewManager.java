@@ -2,7 +2,7 @@ package org.example.envirobaby;
 
 import javafx.application.Platform;
 import javafx.scene.control.Label;
-import org.example.envirobaby.app.UserExchanger;
+import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.text.DecimalFormat;
 import java.util.concurrent.Executors;
@@ -17,16 +17,19 @@ public class OverviewManager implements Runnable{
 
     private Notification alerts;
     private Room room;
+    private MQTTSender sender;
+    private UserExchanger instanceUser = UserExchanger.getInstance();
 
 
 
     DecimalFormat df = new DecimalFormat("#.00");
 
 
-    public OverviewManager(Label noiseLabel, Label tempLabel, Label humLabel, Room userRoom){
+    public OverviewManager(Label noiseLabel, Label tempLabel, Label humLabel, Room userRoom) throws MqttException {
 
         this.room = userRoom;
         this.alerts= new Notification();
+        this.sender = new MQTTSender();
 
 
         this.noiseLabel=noiseLabel;
@@ -36,8 +39,15 @@ public class OverviewManager implements Runnable{
 
 
     private void updateOverview() { //show sensor data on room overview page
+
+        String tempMsg;
+        if (!instanceUser.getInstanceUser().isCelsius()) {
+            tempMsg = df.format(((room.getSensorReading().getTempValue() * (9/5)) + 32)) + "F";
+        } else {
+            tempMsg = df.format(room.getSensorReading().getTempValue()) + "C";
+        }
+
         String noiseMsg = room.getSensorReading().getLoudValue() + " db";
-        String tempMsg = df.format(room.getSensorReading().getTempValue()) + "C";
         String humMsg = df.format(room.getSensorReading().getHumValue()) +"%";
 
         updateLabel(noiseLabel, noiseMsg);
@@ -45,33 +55,7 @@ public class OverviewManager implements Runnable{
         updateLabel(humLabel,humMsg);
     }
 
-    private void sendAlerts(){
-        int noiseLvl = room.getSensorReading().getLoudValue();
-        double tempLvl = room.getSensorReading().getTempValue();
-        double humLvl = room.getSensorReading().getHumValue();
 
-        //only send notifications if above/below threshold AND if it isn't the same value as the last sent notification to avoid duplicates
-        if (noiseLvl > room.getThresholds().getLoudThreshold() && alerts.getLastNoiseAlert()!=noiseLvl) {
-            alerts.createNotification("Noise notification", "NOISE THRESHOLD CROSSED: " + noiseLvl + " db");
-            alerts.setLastNoiseAlert(noiseLvl);
-        }
-
-        if (tempLvl >  room.getThresholds().getTempUpperBound() && alerts.getLastMaxTempAlert()!=tempLvl) {
-            alerts.createNotification("Temperature notification", "TEMPERATURE EXCEEDS THRESHOLD: " + df.format(tempLvl) + "C");
-            alerts.setLastMaxTempAlert(tempLvl);
-        } else if (tempLvl <  room.getThresholds().getTempLowerBound() && alerts.getLastMinTempAlert()!=tempLvl) {
-            alerts.createNotification("Temperature notification", "TEMPERATURE BELOW THRESHOLD: " + df.format(tempLvl) + "C");
-            alerts.setLastMinTempAlert(tempLvl);
-        }
-
-        if (humLvl >  room.getThresholds().getHumUpperBound() && alerts.getLastMaxHumAlert()!=humLvl) {
-            alerts.createNotification("Humidity notification", "HUMIDITY EXCEEDS THRESHOLD: " + df.format(humLvl) + "%");
-            alerts.setLastMaxHumAlert(humLvl);
-        } else if (humLvl <  room.getThresholds().getHumLowerBound() && alerts.getLastMinHumAlert()!=humLvl) {
-            alerts.createNotification("Humidity notification", "HUMIDITY BELOW THRESHOLD: " + df.format(humLvl) + "%");
-            alerts.setLastMinHumAlert(humLvl);
-        }
-    }
 
 
     private void updateLabel(Label label, String message) {
@@ -95,10 +79,5 @@ public class OverviewManager implements Runnable{
 
         // Schedule updateOverview with a delay
         overviewScheduler.scheduleAtFixedRate(this::updateOverview, 0, 100, TimeUnit.MILLISECONDS);
-
-        // Create a ScheduledExecutorService for notifications
-        ScheduledExecutorService notificationScheduler = Executors.newSingleThreadScheduledExecutor();
-        //Schedule sendAlerts with initial delay of 101 to avoid notifications during initialisation
-        notificationScheduler.scheduleAtFixedRate(this::sendAlerts, 101, 100, TimeUnit.MILLISECONDS);
     }
 }

@@ -8,15 +8,32 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.example.envirobaby.MQTTSender;
+import org.example.envirobaby.Room;
+import org.example.envirobaby.UserExchanger;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 public class HomeScreenController {
 
     @FXML
     private Button findMe;
     private MQTTSender sender;
+
+    private UserExchanger instanceUser;
+    private HashMap<Integer,Room> userRooms;
+
+    @FXML
+    public void initialize() throws MqttException {
+        instanceUser = UserExchanger.getInstance();
+        Thread thread = new Thread(instanceUser.getInstanceUser());
+        thread.start();
+
+
+
+    }
 
     @FXML
     private void roomViewClick(ActionEvent event) throws IOException {

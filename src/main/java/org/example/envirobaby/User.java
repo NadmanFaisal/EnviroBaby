@@ -1,21 +1,33 @@
 package org.example.envirobaby;
 
+import javafx.scene.control.Button;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-public class User {
+public class User implements Runnable {
 
     private String userID;
     private DatabaseControl database;
     private HashMap<Integer,Room> rooms;
     private Room room;
+    private Notification alerts;
+    private boolean celsius;
+
+    DecimalFormat df = new DecimalFormat("#.00");
+
 
     public User(String userId) throws SQLException, MqttException {
         database = new DatabaseControl();
         this.userID = userId;
+        this.alerts = new Notification();
+        this.celsius = true;
         setRooms(userId);
     }
 
@@ -44,15 +56,13 @@ public class User {
             //initialise notification toggle and celsius when implemented
             Integer roomCount= registeredRooms.size() + 1;
             registeredRooms.put(roomCount,newRoom); //add room to list
+
+            this.celsius = celsius;
         }
         this.rooms = registeredRooms;
     }
 
-    /** Creates a room based on the specified parameters, adds it to the user's rooms, and stores it to the database
-     *
-     * @throws SQLException If there is an error interacting with the database
-     * @throws MqttException If there is an error with the MQTT connection
-     */
+    // Creates a room based on the specified parameters, adds it to the user's rooms, and stores it to the database
     public Room createRoom(String roomName, String userId, int capacity, String ageGroup,
                                                             int maxNoise, double maxTemp, double minTemp, double maxHum,
                                                             double minHum, boolean celsius, boolean noiseAlert,
@@ -69,6 +79,42 @@ public class User {
         return room;
     }
 
+    public void sendAlerts(){
+        for (int i = 1; i <= rooms.size(); i++) {
+            Room room = rooms.get(i);
+            int noiseLvl = room.getSensorReading().getLoudValue();
+            double tempLvl = room.getSensorReading().getTempValue();
+            double humLvl = room.getSensorReading().getHumValue();
+            String tempMsg = df.format(tempLvl) +"C";
+
+            if (!celsius) {
+                tempMsg = df.format((tempLvl * (9/5)) + 32) + "F";
+            }
+
+            //only send notifications if above/below threshold AND if it isn't the same value as the last sent notification to avoid duplicates
+            if (tempLvl > room.getThresholds().getTempUpperBound()) {
+                alerts.createNotification("Temperature notification", "TEMPERATURE IN " + room.getRoomName().toUpperCase() + " EXCEEDS THRESHOLD: " + tempMsg);
+                alerts.setLastMaxTempAlert(tempLvl);
+            } else if (tempLvl < room.getThresholds().getTempLowerBound()) {
+                alerts.createNotification("Temperature notification", "TEMPERATURE IN " + room.getRoomName().toUpperCase() +  " BELOW THRESHOLD: " + tempMsg);
+                alerts.setLastMinTempAlert(tempLvl);
+            }
+
+            if (humLvl > room.getThresholds().getHumUpperBound()) {
+                alerts.createNotification("Humidity notification", "HUMIDITY IN "  + room.getRoomName().toUpperCase() +  " EXCEEDS THRESHOLD: " + df.format(humLvl) + "%");
+                alerts.setLastMaxHumAlert(humLvl);
+            } else if (humLvl < room.getThresholds().getHumLowerBound()) {
+                alerts.createNotification("Humidity notification", "HUMIDITY IN "  + room.getRoomName().toUpperCase() +  " BELOW THRESHOLD: " + df.format(humLvl) + "%");
+                alerts.setLastMinHumAlert(humLvl);
+            }
+
+            if (noiseLvl > room.getThresholds().getLoudThreshold()) {
+                alerts.createNotification("Noise notification", "NOISE THRESHOLD IN "  + room.getRoomName().toUpperCase() + " CROSSED: " + noiseLvl + " db");
+                alerts.setLastNoiseAlert(noiseLvl);
+            }
+        }
+    }
+
     public HashMap<Integer, Room> getRooms() {
         return rooms;
     }
@@ -79,5 +125,21 @@ public class User {
 
     public String getUserID() {
         return userID;
+    }
+
+    public void setCelsius(boolean celsius) {
+        this.celsius = celsius;
+    }
+
+    public boolean isCelsius() {
+        return celsius;
+    }
+
+    @Override
+    public void run() {
+        // Create a ScheduledExecutorService for notifications
+        ScheduledExecutorService notificationScheduler = Executors.newSingleThreadScheduledExecutor();
+        //Schedule sendAlerts with initial delay of 101 to avoid notifications during initialisation
+        notificationScheduler.scheduleAtFixedRate(this::sendAlerts, 101, 100, TimeUnit.MILLISECONDS);
     }
 }

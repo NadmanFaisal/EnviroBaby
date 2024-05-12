@@ -1,6 +1,4 @@
-package org.example.envirobaby.app;
-
-import org.example.envirobaby.*;
+package org.example.envirobaby;
 
 public class UserExchanger {
     private static UserExchanger instance;

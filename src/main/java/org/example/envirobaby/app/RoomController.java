@@ -5,13 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.example.envirobaby.OverviewManager;
-import org.example.envirobaby.Room;
-import org.example.envirobaby.User;
+import org.example.envirobaby.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -36,19 +35,25 @@ public class RoomController {
     private TextField minTempBox;
     @FXML
     private Label roomCapLabel;
+    @FXML
+    private Button celciusButton;
+    @FXML
+    private Button fahrenButton;
 
 
     private OverviewManager roomOverview;
     private UserExchanger instanceUser;
     private Room currentRoom;
-    private User currentUser;
+    private MQTTSender sender;
+    private DatabaseControl database;
 
 
     @FXML
-    public void initialize() throws MqttException { //Creates new subscriber object
+    public void initialize() throws MqttException, SQLException { //Creates new subscriber object
+        database = new DatabaseControl();
         instanceUser= UserExchanger.getInstance();
-        currentUser = instanceUser.getInstanceUser();
         currentRoom = instanceUser.getCurrentRoom();
+        sender = new MQTTSender();
 
         roomOverview = new OverviewManager(noiseLabel,tempLabel,humLabel, currentRoom); //initialise room object which implements runnable
         Thread thread = new Thread(roomOverview); //connect runnable to thread
@@ -93,6 +98,20 @@ public class RoomController {
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
+    }
+
+    @FXML
+    public void convertToCelsius (ActionEvent actionEvent) throws MqttException, InterruptedException, SQLException {
+        sender.sendMessage("C", "/envirobaby/tempunit");
+        instanceUser.getInstanceUser().setCelsius(true);
+        database.updateTempUnit(instanceUser.getInstanceUser().getUserID(),true);
+    }
+
+    @FXML
+    public void convertToFahrenheit (ActionEvent actionEvent) throws MqttException, InterruptedException, SQLException {
+        sender.sendMessage("F", "/envirobaby/tempunit");
+        instanceUser.getInstanceUser().setCelsius(false);
+        database.updateTempUnit(instanceUser.getInstanceUser().getUserID(),false);
     }
 }
 

@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.example.envirobaby.DatabaseControl;
 import org.example.envirobaby.User;
+import org.example.envirobaby.UserExchanger;
 
 import java.io.IOException;
 import java.sql.SQLException;

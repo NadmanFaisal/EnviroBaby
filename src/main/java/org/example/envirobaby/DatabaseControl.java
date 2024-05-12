@@ -70,6 +70,11 @@ public class DatabaseControl {
         statement.executeUpdate(updateQuery); //update notification threshold value depending on which threshold is selected
     }
 
+    public void updateTempUnit(String userId, boolean celsius) throws SQLException {
+        String updateQuery = String.format("UPDATE ROOM SET celsius=%s WHERE userid='%s'", celsius,userId);
+        statement.executeUpdate(updateQuery);
+    }
+
     public void recordData(String userId, String roomName, String recordDate, String recordTime, int loudVal, double tempVal, double humVal) throws SQLException {
         String recordQuery = String.format("INSERT INTO RECORD(userid,room_name,record_date,record_time,loud_data,temp_data,hum_data) " +
                 "VALUES('%s','%s','%s','%s',%d,%f,%f)", userId,roomName,recordDate,recordTime,loudVal,tempVal,humVal);

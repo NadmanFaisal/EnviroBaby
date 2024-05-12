@@ -14,6 +14,7 @@ extern const char* mqttPassword; // password for mqtt broker, not needed if publ
 extern const char* mqttTopic; // mqtt broker topic
 extern const char* mqttClientId; // mqtt client id
 extern const char* projectTITLE;  // project title
+extern const char* mqttSubTempUnit; // mqtt sub topic for temp. unit conversion
 extern const char* mqttRoom1Buzzer;
 extern const char* mqttRoom2Buzzer;
 extern const char* mqttRoom3Buzzer;

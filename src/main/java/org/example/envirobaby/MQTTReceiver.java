@@ -75,7 +75,7 @@ public class MQTTReceiver {
      *
      * @return random string
      */
-    protected String getRandomString() {
+    public String getRandomString() {
         String alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder salt = new StringBuilder();
         Random rnd = new Random();
