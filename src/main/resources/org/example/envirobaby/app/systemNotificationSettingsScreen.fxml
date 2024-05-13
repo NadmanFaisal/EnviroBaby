@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane prefHeight="628.0" prefWidth="1025.0" style="-fx-background-color: #fef5e1;" styleClass="headDropShadow" stylesheets="@roomStylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.envirobaby.SystemNotificationSettingsScreenController">
+<GridPane prefHeight="628.0" prefWidth="1025.0" style="-fx-background-color: #fef5e1;" styleClass="headDropShadow" stylesheets="@roomStylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.envirobaby.app.SystemNotificationSettingsScreenController">
    <columnConstraints>
       <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
    </columnConstraints>
@@ -155,7 +155,12 @@
                   </AnchorPane>
                </children>
             </GridPane>
-            <Button layoutX="365.0" layoutY="41.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="230.0" stylesheets="@roomStylesheet.css" text="System Notifications">
+            <Text layoutX="97.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-border-color: #460a0a;">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Text>
+            <Button fx:id="roomNotificationSettings" layoutX="655.0" layoutY="51.0" mnemonicParsing="false" onAction="#roomNotificationSettingsClick" prefHeight="62.0" prefWidth="230.0" stylesheets="@roomStylesheet.css" text="Room Notifications">
                <font>
                   <Font size="19.0" />
                </font>
@@ -163,12 +168,18 @@
                   <String fx:value="dataOverviewPane" />
                   <String fx:value="dropShadow" />
                   <String fx:value="font" />
-               </styleClass></Button>
-            <Text layoutX="97.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-border-color: #460a0a;">
+               </styleClass>
+            </Button>
+            <Button fx:id="systemsettings" layoutX="200.0" layoutY="51.0" mnemonicParsing="false" onAction="#systemSettingsClick" prefHeight="62.0" prefWidth="230.0" stylesheets="@roomStylesheet.css" text="System Notifications">
                <font>
-                  <Font size="25.0" />
+                  <Font size="19.0" />
                </font>
-            </Text>
+               <styleClass>
+                  <String fx:value="dataOverviewPane" />
+                  <String fx:value="dropShadow" />
+                  <String fx:value="font" />
+               </styleClass>
+            </Button>
          </children>
       </AnchorPane>
    </children>
