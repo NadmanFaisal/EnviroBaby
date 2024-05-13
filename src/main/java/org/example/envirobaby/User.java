@@ -92,23 +92,26 @@ public class User implements Runnable {
             }
 
             //only send notifications if above/below threshold AND if it isn't the same value as the last sent notification to avoid duplicates
-            if (tempLvl > room.getThresholds().getTempUpperBound()) {
+            // temperature alerts
+            if (tempLvl > room.getThresholds().getTempUpperBound() && tempLvl != alerts.getLastMaxTempAlert()) {
                 alerts.createNotification("Temperature notification", "TEMPERATURE IN " + room.getRoomName().toUpperCase() + " EXCEEDS THRESHOLD: " + tempMsg);
                 alerts.setLastMaxTempAlert(tempLvl);
-            } else if (tempLvl < room.getThresholds().getTempLowerBound()) {
+            } else if (tempLvl < room.getThresholds().getTempLowerBound() && tempLvl != alerts.getLastMinTempAlert()) {
                 alerts.createNotification("Temperature notification", "TEMPERATURE IN " + room.getRoomName().toUpperCase() +  " BELOW THRESHOLD: " + tempMsg);
                 alerts.setLastMinTempAlert(tempLvl);
             }
 
-            if (humLvl > room.getThresholds().getHumUpperBound()) {
+            // humidity alerts
+            if (humLvl > room.getThresholds().getHumUpperBound() && humLvl != alerts.getLastMaxHumAlert()) {
                 alerts.createNotification("Humidity notification", "HUMIDITY IN "  + room.getRoomName().toUpperCase() +  " EXCEEDS THRESHOLD: " + df.format(humLvl) + "%");
                 alerts.setLastMaxHumAlert(humLvl);
-            } else if (humLvl < room.getThresholds().getHumLowerBound()) {
+            } else if (humLvl < room.getThresholds().getHumLowerBound() && humLvl != alerts.getLastMinHumAlert()) {
                 alerts.createNotification("Humidity notification", "HUMIDITY IN "  + room.getRoomName().toUpperCase() +  " BELOW THRESHOLD: " + df.format(humLvl) + "%");
                 alerts.setLastMinHumAlert(humLvl);
             }
 
-            if (noiseLvl > room.getThresholds().getLoudThreshold()) {
+            // noise alerts
+            if (noiseLvl > room.getThresholds().getLoudThreshold() && noiseLvl != alerts.getLastNoiseAlert()) {
                 alerts.createNotification("Noise notification", "NOISE THRESHOLD IN "  + room.getRoomName().toUpperCase() + " CROSSED: " + noiseLvl + " db");
                 alerts.setLastNoiseAlert(noiseLvl);
             }
