@@ -24,11 +24,6 @@ public class Room {
     private String ageGroup;
     private Notification alerts;
 
-    /*private MQTTSender sender;
-    private boolean isFahrenheit;
-    private boolean tempNotiStatus;
-    private boolean humiNotiStatus;
-    private boolean noiseNotiStatus;*/
 
 
     DecimalFormat df = new DecimalFormat("#.00");
@@ -45,11 +40,7 @@ public class Room {
         this.sensorReading = client.getReadings();
 
         database = new DatabaseControl();
-        /*this.alerts= new Notification();
-        this.noiseLabel=noiseLabel;
-        this.tempLabel=tempLabel;
-        this.humLabel=humLabel;
-        this.isFahrenheit = false;*/
+        
     }
     public void updateThreshold(TextField textField) throws SQLException { // method that updates the threshold value
         String thresholdTextValue = textField.getText(); // gets and stores the string value from textField

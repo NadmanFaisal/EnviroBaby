@@ -75,7 +75,7 @@ public class SystemNotificationSettingsScreenController {
         instanceUser.tempNotiOFF();
     }
 
-    public void HumidityTurnONButton(ActionEvent actionEvent) {
+    public void humidityTurnONButton(ActionEvent actionEvent) {
         instanceUser.humiNotiON();
     }
 
@@ -83,13 +83,23 @@ public class SystemNotificationSettingsScreenController {
         instanceUser.humiNotiOFF();
     }
 
-    public void NoiseTurnONButton(ActionEvent actionEvent) {
+    public void noiseTurnONButton(ActionEvent actionEvent) {
         instanceUser.noiseNotiON();
     }
 
     public void noiseTurnOFFButton(ActionEvent actionEvent) {
         instanceUser.noiseNotiOFF();
     }
+
+
+
+    /**
+     * Handles click events for the room notification settings.
+     * Currently, this method does not perform any actions but can be used to implement
+     * functionality related to room settings notifications in the future.
+     *
+     * @param actionEvent the event triggered by clicking the notification settings control
+     */
 
     public void roomNotificationSettingsClick(ActionEvent actionEvent) {}
 }

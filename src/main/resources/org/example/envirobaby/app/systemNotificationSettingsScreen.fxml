@@ -94,7 +94,7 @@
                               <Font size="25.0" />
                            </font>
                         </Text>
-                        <Button fx:id="noiseTurnONButton" layoutX="523.0" layoutY="130.0" mnemonicParsing="false" onAction="#NoiseTurnONButton" prefHeight="54.0" prefWidth="169.0" text="Turn ON">
+                        <Button fx:id="noiseTurnONButton" layoutX="523.0" layoutY="130.0" mnemonicParsing="false" onAction="#noiseTurnONButton" prefHeight="54.0" prefWidth="169.0" text="Turn ON">
                            <styleClass>
                               <String fx:value="dataOverviewPane" />
                               <String fx:value="dropShadow" />
@@ -111,7 +111,7 @@
                               <Font size="25.0" />
                            </font>
                         </Text>
-                        <Button fx:id="humiTurnONButton" layoutX="523.0" layoutY="31.0" mnemonicParsing="false" onAction="#HumidityTurnONButton" prefHeight="54.0" prefWidth="169.0" text="Turn ON">
+                        <Button fx:id="humiTurnONButton" layoutX="523.0" layoutY="31.0" mnemonicParsing="false" onAction="#humidityTurnONButton" prefHeight="54.0" prefWidth="169.0" text="Turn ON">
                            <styleClass>
                               <String fx:value="dataOverviewPane" />
                               <String fx:value="dropShadow" />
