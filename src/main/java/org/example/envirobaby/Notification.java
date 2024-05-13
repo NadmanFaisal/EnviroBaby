@@ -5,7 +5,10 @@ import javafx.geometry.Pos;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 
-
+import java.text.DecimalFormat;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 public class Notification {
@@ -16,12 +19,19 @@ public class Notification {
     private double lastMaxHumAlert;
     private double lastMinHumAlert;
 
+    private long lastNotificationTime;
+
+    DecimalFormat df = new DecimalFormat("#.00");
+
     public Notification() {
         this.lastNoiseAlert=0;
         this.lastMaxTempAlert=0;
         this.lastMinTempAlert=0;
         this.lastMaxHumAlert=0;
         this.lastMinHumAlert=0;
+
+        lastNotificationTime = 0L;
+
     }
 
     /**
@@ -37,9 +47,15 @@ public class Notification {
     public void createNotification(String title, String message) {
         Platform.runLater(() -> {
 
-            // Source for the code:- https://javadoc.io/doc/org.controlsfx/controlsfx/8.40.16/org/controlsfx/control/Notifications.html
-            Notifications notifications = Notifications.create().title(title).text(message).graphic(null).hideAfter(Duration.seconds(7)).position(Pos.BOTTOM_RIGHT);
-            notifications.showWarning();
+            long currentTime = System.currentTimeMillis();
+            long minNotificationInterval = 2000L;
+
+            if (currentTime - lastNotificationTime > minNotificationInterval) {
+                lastNotificationTime = currentTime;
+                // Source for the code:- https://javadoc.io/doc/org.controlsfx/controlsfx/8.40.16/org/controlsfx/control/Notifications.html
+                Notifications notifications = Notifications.create().title(title).text(message).graphic(null).hideAfter(Duration.seconds(7)).position(Pos.BOTTOM_RIGHT);
+                notifications.showWarning();
+            }
         });
     }
 
@@ -74,4 +90,14 @@ public class Notification {
     public double getLastMinHumAlert() {
         return lastMinHumAlert;
     }
+
+//    @Override
+//    public void run() {
+//        // Create a ScheduledExecutorService for notifications
+//        ScheduledExecutorService notificationScheduler = Executors.newSingleThreadScheduledExecutor();
+//        //Schedule sendAlerts with initial delay of 101 to avoid notifications during initialisation
+//        notificationScheduler.scheduleAtFixedRate(this::sendAlerts, 101, 100, TimeUnit.MILLISECONDS);
+//    }
+
+
 }
