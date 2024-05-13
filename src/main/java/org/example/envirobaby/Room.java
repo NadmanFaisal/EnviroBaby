@@ -10,6 +10,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+
 public class Room {
     private static DatabaseControl database;
 
@@ -22,6 +23,7 @@ public class Room {
     private int capacity;
     private String ageGroup;
     private Notification alerts;
+
 
 
     DecimalFormat df = new DecimalFormat("#.00");
@@ -38,9 +40,8 @@ public class Room {
         this.sensorReading = client.getReadings();
 
         database = new DatabaseControl();
+        
     }
-
-
     public void updateThreshold(TextField textField) throws SQLException { // method that updates the threshold value
         String thresholdTextValue = textField.getText(); // gets and stores the string value from textField
 
@@ -108,5 +109,4 @@ public class Room {
     public void setAgeGroup(String ageGroup) {
         this.ageGroup = ageGroup;
     }
-
 }

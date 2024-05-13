@@ -30,4 +30,27 @@ public class UserExchanger {
     public void setCurrentRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
     }
+    public void tempNotiON(){ //Triggers the notification flag
+        instanceUser.tempNotiON();
+    }
+
+    public void tempNotiOFF(){
+        instanceUser.tempNotiOFF();
+    }
+
+    public void humiNotiON(){ //Triggers the notification flag
+        instanceUser.humiNotiON();
+    }
+
+    public void humiNotiOFF(){
+        instanceUser.humiNotiOFF();
+    }
+
+    public void noiseNotiON(){ //Triggers the notification flag
+        instanceUser.noiseNotiON();
+    }
+
+    public void noiseNotiOFF(){
+        instanceUser.noiseNotiOFF();
+    }
 }

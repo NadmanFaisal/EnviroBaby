@@ -36,9 +36,9 @@ public class DatabaseControl {
     }
 
     public ResultSet retrieveRooms(String userID) throws SQLException {
-        String sqlQuery = String.format("SELECT * FROM ROOM WHERE userid='%s'", userID); //select all rooms owned by the user
+        String sqlQuery = String.format("SELECT * FROM ROOM WHERE userid='%s' ORDER BY created_at", userID);
         ResultSet rs = statement.executeQuery(sqlQuery);
-        return rs; //return list of rooms
+        return rs;
     }
 
     public void addRoom(String roomName, String userID, int capacity, String ageGroup, int maxNoise, double maxTemp, double minTemp, double maxHum, double minHum, boolean celsius, boolean noiseAlert, boolean tempAlert, boolean humAlert) throws SQLException {
@@ -96,4 +96,5 @@ public class DatabaseControl {
         ResultSet rs = statement.executeQuery(sqlQuery);
         return rs; //return all children data for a specific room owned by the user
     }
+
 }

@@ -21,6 +21,8 @@ public class HomeScreenController {
     @FXML
     private Button findMe;
     private MQTTSender sender;
+    @FXML
+    private Button notificationSettings;
 
     private UserExchanger instanceUser;
     private HashMap<Integer,Room> userRooms;
@@ -62,6 +64,13 @@ public class HomeScreenController {
     @FXML
     private void ViewRoomsClick(ActionEvent event) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("viewRooms.fxml"));
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+    }
+    @FXML
+    void notificationSettingsClick(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("systemNotificationSettingsScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
