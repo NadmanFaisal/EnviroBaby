@@ -101,5 +101,10 @@ public class SystemNotificationSettingsScreenController {
      * @param actionEvent the event triggered by clicking the notification settings control
      */
 
-    public void roomNotificationSettingsClick(ActionEvent actionEvent) {}
+    public void roomNotificationSettingsClick(ActionEvent actionEvent)  throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("roomNotificationScreen.fxml"));
+        Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+    }
 }
