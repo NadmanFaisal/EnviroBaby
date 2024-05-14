@@ -23,6 +23,7 @@ public class Room {
     private int capacity;
     private String ageGroup;
     private Notification alerts;
+    private long lastNotificationTime;
 
 
 
@@ -38,6 +39,7 @@ public class Room {
         this.thresholds = new NotificationThreshold();
         this.client = new MQTTReceiver(userId, loud, temp, humi);
         this.sensorReading = client.getReadings();
+        this.lastNotificationTime = 0L;
 
         database = new DatabaseControl();
         
@@ -109,4 +111,11 @@ public class Room {
     public void setAgeGroup(String ageGroup) {
         this.ageGroup = ageGroup;
     }
+
+    public long getLastNotificationTime() { return lastNotificationTime; }
+
+    public Notification getAlerts() {return alerts; }
+
+    public void setLastNotificationTime(long lastNotificationTime) { this.lastNotificationTime = lastNotificationTime; }
 }
+

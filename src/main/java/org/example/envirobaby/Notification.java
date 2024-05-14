@@ -22,7 +22,6 @@ public class Notification {
     private boolean tempNotifOn;
     private boolean humiNotifOn;
     private boolean noiseNotifOn;
-    private long lastNotificationTime;
 
     DecimalFormat df = new DecimalFormat("#.00");
 
@@ -37,7 +36,6 @@ public class Notification {
         this.tempNotifOn=true;
         this.humiNotifOn=true;
 
-        lastNotificationTime = 0L;
 
     }
 
@@ -54,15 +52,9 @@ public class Notification {
     public void createNotification(String title, String message) {
         Platform.runLater(() -> {
 
-            long currentTime = System.currentTimeMillis();
-            long minNotificationInterval = 2000L;
-
-            if (currentTime - lastNotificationTime > minNotificationInterval) {
-                lastNotificationTime = currentTime;
                 // Source for the code:- https://javadoc.io/doc/org.controlsfx/controlsfx/8.40.16/org/controlsfx/control/Notifications.html
                 Notifications notifications = Notifications.create().title(title).text(message).graphic(null).hideAfter(Duration.seconds(7)).position(Pos.BOTTOM_RIGHT);
                 notifications.showWarning();
-            }
         });
     }
 

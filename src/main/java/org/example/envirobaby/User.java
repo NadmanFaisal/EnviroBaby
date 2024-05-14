@@ -25,6 +25,9 @@ public class User implements Runnable {
     private boolean humiNotiStatus;
     private boolean noiseNotiStatus;
 
+    private long lastNotificationTime;
+
+
     DecimalFormat df = new DecimalFormat("#.00");
 
 
@@ -37,6 +40,7 @@ public class User implements Runnable {
         this.tempNotiStatus = true; //default settings for the system temperature notifications
         this.humiNotiStatus = true; //default settings for the system humidity notifications
         this.noiseNotiStatus = true; //default settings for the system noise notifications
+        lastNotificationTime = 0L;
     }
 
     public void setRooms(String userID) throws SQLException, MqttException {
@@ -98,35 +102,43 @@ public class User implements Runnable {
             if (!celsius) {
                 tempMsg = df.format((tempLvl * (9/5)) + 32) + "F";
             }
+            long currentTime = System.currentTimeMillis();
+            long minNotificationInterval = 2000L;
 
-            //only send notifications if above/below threshold AND if it isn't the same value as the last sent notification to avoid duplicates
-            // temperature alerts
-            if (tempNotiStatus) { //Condition triggers the temperature notifications
-                if (tempLvl > room.getThresholds().getTempUpperBound() && tempLvl != alerts.getLastMaxTempAlert()) {
-                alerts.createNotification("Temperature notification", "TEMPERATURE IN " + room.getRoomName().toUpperCase() + " EXCEEDS THRESHOLD: " + tempMsg);
-                alerts.setLastMaxTempAlert(tempLvl);
-                } else if (tempLvl < room.getThresholds().getTempLowerBound() && tempLvl != alerts.getLastMinTempAlert()) {
-                alerts.createNotification("Temperature notification", "TEMPERATURE IN " + room.getRoomName().toUpperCase() +  " BELOW THRESHOLD: " + tempMsg);
-                alerts.setLastMinTempAlert(tempLvl);
+            if (currentTime - room.getLastNotificationTime()> minNotificationInterval) {
+                room.setLastNotificationTime(currentTime);
+
+                Notification alerts = room.getAlerts();
+
+                //only send notifications if above/below threshold AND if it isn't the same value as the last sent notification to avoid duplicates
+                // temperature alerts
+                if (tempNotiStatus) { //Condition triggers the temperature notifications
+                    if (tempLvl > room.getThresholds().getTempUpperBound() && tempLvl != alerts.getLastMaxTempAlert()) {
+                        alerts.createNotification("Temperature notification", "TEMPERATURE IN " + room.getRoomName().toUpperCase() + " EXCEEDS THRESHOLD: " + tempMsg);
+                        alerts.setLastMaxTempAlert(tempLvl);
+                    } else if (tempLvl < room.getThresholds().getTempLowerBound() && tempLvl != alerts.getLastMinTempAlert()) {
+                        alerts.createNotification("Temperature notification", "TEMPERATURE IN " + room.getRoomName().toUpperCase() + " BELOW THRESHOLD: " + tempMsg);
+                        alerts.setLastMinTempAlert(tempLvl);
+                    }
                 }
-            }
 
-            // humidity alerts
-            if (humiNotiStatus) { //Condition triggers the humidity notifications
-                if (humLvl > room.getThresholds().getHumUpperBound() && humLvl != alerts.getLastMaxHumAlert()) {
-                alerts.createNotification("Humidity notification", "HUMIDITY IN "  + room.getRoomName().toUpperCase() +  " EXCEEDS THRESHOLD: " + df.format(humLvl) + "%");
-                alerts.setLastMaxHumAlert(humLvl);
-                } else if (humLvl < room.getThresholds().getHumLowerBound() && humLvl != alerts.getLastMinHumAlert()) {
-                alerts.createNotification("Humidity notification", "HUMIDITY IN "  + room.getRoomName().toUpperCase() +  " BELOW THRESHOLD: " + df.format(humLvl) + "%");
-                alerts.setLastMinHumAlert(humLvl);
+                // humidity alerts
+                if (humiNotiStatus) { //Condition triggers the humidity notifications
+                    if (humLvl > room.getThresholds().getHumUpperBound() && humLvl != alerts.getLastMaxHumAlert()) {
+                        alerts.createNotification("Humidity notification", "HUMIDITY IN " + room.getRoomName().toUpperCase() + " EXCEEDS THRESHOLD: " + df.format(humLvl) + "%");
+                        alerts.setLastMaxHumAlert(humLvl);
+                    } else if (humLvl < room.getThresholds().getHumLowerBound() && humLvl != alerts.getLastMinHumAlert()) {
+                        alerts.createNotification("Humidity notification", "HUMIDITY IN " + room.getRoomName().toUpperCase() + " BELOW THRESHOLD: " + df.format(humLvl) + "%");
+                        alerts.setLastMinHumAlert(humLvl);
+                    }
                 }
-            }
 
-            // noise alerts
-            if (noiseNotiStatus) { //Condition triggers the noise notifications
-                if (noiseLvl > room.getThresholds().getLoudThreshold() && noiseLvl != alerts.getLastNoiseAlert()) {
-                alerts.createNotification("Noise notification", "NOISE THRESHOLD IN "  + room.getRoomName().toUpperCase() + " CROSSED: " + noiseLvl + " db");
-                alerts.setLastNoiseAlert(noiseLvl);
+                // noise alerts
+                if (noiseNotiStatus) { //Condition triggers the noise notifications
+                    if (noiseLvl > room.getThresholds().getLoudThreshold() && noiseLvl != alerts.getLastNoiseAlert()) {
+                        alerts.createNotification("Noise notification", "NOISE THRESHOLD IN " + room.getRoomName().toUpperCase() + " CROSSED: " + noiseLvl + " db");
+                        alerts.setLastNoiseAlert(noiseLvl);
+                    }
                 }
             }
         }
