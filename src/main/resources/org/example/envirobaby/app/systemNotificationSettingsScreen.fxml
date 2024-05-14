@@ -160,7 +160,7 @@
                   <Font size="25.0" />
                </font>
             </Text>
-            <Button fx:id="roomNotificationSettings" layoutX="655.0" layoutY="51.0" mnemonicParsing="false" onAction="#roomNotificationSettingsClick" prefHeight="62.0" prefWidth="230.0" stylesheets="@roomStylesheet.css" text="Room Notifications">
+            <Button fx:id="roomNotificationSettings" layoutX="655.0" layoutY="51.0" mnemonicParsing="false" onAction="#moveToRoom1Screen" prefHeight="62.0" prefWidth="230.0" stylesheets="@roomStylesheet.css" text="Room Notifications">
                <font>
                   <Font size="19.0" />
                </font>

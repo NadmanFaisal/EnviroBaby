@@ -37,6 +37,9 @@ public class SystemNotificationSettingsScreenController {
     private Button noiseTurnOFFButton;
 
     @FXML
+    private Button roomNotificationSettings;
+
+    @FXML
     private Label tempTXT;
 
     @FXML
@@ -93,16 +96,9 @@ public class SystemNotificationSettingsScreenController {
 
 
 
-    /**
-     * Handles click events for the room notification settings.
-     * Currently, this method does not perform any actions but can be used to implement
-     * functionality related to room settings notifications in the future.
-     *
-     * @param actionEvent the event triggered by clicking the notification settings control
-     */
 
-    public void roomNotificationSettingsClick(ActionEvent actionEvent)  throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("roomNotificationScreen.fxml"));
+    public void moveToRoom1Screen(ActionEvent actionEvent)  throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("RoomNotificationScreen.fxml"));
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

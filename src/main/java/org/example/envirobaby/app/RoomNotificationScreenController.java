@@ -15,6 +15,10 @@ import org.example.envirobaby.UserExchanger;
 
 import java.io.IOException;
 
+/**
+ * Controller for the system for toggling notifications settings in specific rooms selection.
+ */
+
 public class RoomNotificationScreenController {
 
     @FXML
@@ -36,10 +40,19 @@ public class RoomNotificationScreenController {
     private Button room4;
 
     @FXML
-    private Button turnOnNotificationsButton;
+    private Button turnOnTempNotifButton; // Button to turn on temperature notifications
 
     @FXML
-    private Button turnOffNotificationsButton;
+    private Button turnOffTempNotifButton; // Button to turn off temperature notifications
+
+    @FXML
+    private Button turnOnHumiNotifButton; // Button to turn on humidity notifications
+    @FXML
+    private Button turnOffHumiNotifButton; // Button to turn off humidity notifications
+    @FXML
+    private Button turnOnNoiseNotifButton; // Button to turn on noise notifications
+    @FXML
+    private Button turnOffNoiseNotifButton; // Button to turn off noise notifications
     @FXML
     private UserExchanger instanceUser = UserExchanger.getInstance();
     private User currentUser = instanceUser.getInstanceUser();
@@ -49,18 +62,26 @@ public class RoomNotificationScreenController {
     private boolean room3IsActive = false;
     private boolean room4IsActive = false;
 
-    public void initialize () throws IOException {
+    public void initialize () throws IOException { // based on user`s data , after the FXML file loaded, configures visibility and startup settings.
 
-        turnOnNotificationsButton.setVisible(false);
-        turnOffNotificationsButton.setVisible(false);
+        turnOnTempNotifButton.setVisible(false);
+        turnOffTempNotifButton.setVisible(false);
+        turnOnHumiNotifButton.setVisible(false);
+        turnOffHumiNotifButton.setVisible(false);
+        turnOnNoiseNotifButton.setVisible(false);
+        turnOffNoiseNotifButton.setVisible(false);
 
     // Display the room buttons based on how many rooms the current user has
         switch (currentUser.getRooms().size()) {
         case 1 -> {
             room1.setText(currentUser.getRoom(1).getRoomName());
             room1.setVisible(true);
-            turnOnNotificationsButton.setVisible(true);
-            turnOffNotificationsButton.setVisible(true);
+            turnOnTempNotifButton.setVisible(true);
+            turnOffTempNotifButton.setVisible(true);
+            turnOnHumiNotifButton.setVisible(true);
+            turnOffHumiNotifButton.setVisible(true);
+            turnOnNoiseNotifButton.setVisible(true);
+            turnOffNoiseNotifButton.setVisible(true);
 
             room1IsActive = true;
             room2IsActive = false;
@@ -72,8 +93,12 @@ public class RoomNotificationScreenController {
             room1.setVisible(true);
             room2.setText(currentUser.getRoom(2).getRoomName());
             room2.setVisible(true);
-            turnOnNotificationsButton.setVisible(true);
-            turnOffNotificationsButton.setVisible(true);
+            turnOnTempNotifButton.setVisible(true);
+            turnOffTempNotifButton.setVisible(true);
+            turnOnHumiNotifButton.setVisible(true);
+            turnOffHumiNotifButton.setVisible(true);
+            turnOnNoiseNotifButton.setVisible(true);
+            turnOffNoiseNotifButton.setVisible(true);
 
             room1IsActive = true;
             room2IsActive = false;
@@ -87,8 +112,12 @@ public class RoomNotificationScreenController {
             room2.setVisible(true);
             room3.setText(currentUser.getRoom(3).getRoomName());
             room3.setVisible(true);
-            turnOnNotificationsButton.setVisible(true);
-            turnOffNotificationsButton.setVisible(true);
+            turnOnTempNotifButton.setVisible(true);
+            turnOffTempNotifButton.setVisible(true);
+            turnOnHumiNotifButton.setVisible(true);
+            turnOffHumiNotifButton.setVisible(true);
+            turnOnNoiseNotifButton.setVisible(true);
+            turnOffNoiseNotifButton.setVisible(true);
 
             room1IsActive = true;
             room2IsActive = false;
@@ -104,8 +133,12 @@ public class RoomNotificationScreenController {
             room3.setVisible(true);
             room4.setText(currentUser.getRoom(4).getRoomName());
             room4.setVisible(true);
-            turnOnNotificationsButton.setVisible(true);
-            turnOffNotificationsButton.setVisible(true);
+            turnOnTempNotifButton.setVisible(true);
+            turnOffTempNotifButton.setVisible(true);
+            turnOnHumiNotifButton.setVisible(true);
+            turnOffHumiNotifButton.setVisible(true);
+            turnOnNoiseNotifButton.setVisible(true);
+            turnOffNoiseNotifButton.setVisible(true);
 
             room1IsActive = true;
             room2IsActive = false;
@@ -115,7 +148,7 @@ public class RoomNotificationScreenController {
     }
     }
     /**
-     * Upon clicking with a mouse on the button "Room 1",
+     * after clicking on the button "Room 1",
      * the screen switches to the Room 1 screen.
      * @param event
      * @throws IOException
@@ -129,8 +162,8 @@ public class RoomNotificationScreenController {
     }
 
     /**
-     * Upon clicking with a mouse on the button "Room 2",
-     * the screen triggeers room1 flag to be true,
+     * after clicking on the button "Room 2",
+     * the screen triggers room1 flag to be true,
      * indicating that the user is in room 1
      * @param event
      */
@@ -142,8 +175,8 @@ public class RoomNotificationScreenController {
     }
 
     /**
-     * Upon clicking with a mouse on the button "Room 2",
-     * the screen triggeers room2 flag to be true,
+     * after clicking on the button "Room 2",
+     * the screen triggers room2 flag to be true,
      * indicating that the user is in room 2
      * @param event
      */
@@ -156,7 +189,7 @@ public class RoomNotificationScreenController {
     }
 
     /**
-     * Upon clicking with a mouse on the button "Room 3",
+     * after clicking on the button "Room 3",
      * the screen triggeers room 3 flag to be true,
      * indicating that the user is in room 3.
      * @param event
@@ -170,8 +203,8 @@ public class RoomNotificationScreenController {
     }
 
     /**
-     * Upon clicking with a mouse on the button "Room 4",
-     * the screen triggeers room4 flag to be true,
+     * after clicking on the button "Room 4",
+     * the screen triggers room4 flag to be true,
      * indicating that the user is in room 4.
      * @param event
      */
@@ -185,14 +218,27 @@ public class RoomNotificationScreenController {
     public RoomNotificationScreenController() {
         this.instanceUser = UserExchanger.getInstance();
     }
-    public void temperatureTurnONButton(ActionEvent actionEvent) {
+    public void temperatureTurnONButton(ActionEvent actionEvent) { // enable temperature notifications
         instanceUser.tempNotiON();
     }
 
-    public void temperatureTurnOffButton(ActionEvent actionEvent) {
+    public void temperatureTurnOFFButton(ActionEvent actionEvent) { // disable temperature notifications
         instanceUser.tempNotiOFF();
     }
 
-    public void room1NotificationScreen(ActionEvent actionEvent) {
+    public void humidityTurnONButton(ActionEvent actionEvent) { // enable humidity notifications
+        instanceUser.humiNotiON();
     }
+
+    public void humidityTurnOFFButton(ActionEvent actionEvent) { // disable humidity notifications
+        instanceUser.humiNotiOFF();
+    }
+    public void noiseTurnONButton(ActionEvent actionEvent) { // enable noise notifications
+        instanceUser.noiseNotiON();
+    }
+
+    public void noiseTurnOFFButton(ActionEvent actionEvent) { // disable noise notifications
+        instanceUser.noiseNotiOFF();
+    }
+
 }
