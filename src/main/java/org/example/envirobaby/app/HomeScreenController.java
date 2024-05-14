@@ -47,7 +47,7 @@ public class HomeScreenController {
 
     @FXML
     private void findMeClick(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("room1BuzzerScreen.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("buzzerScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

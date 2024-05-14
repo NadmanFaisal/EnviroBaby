@@ -25,10 +25,6 @@ public class Room {
     private Notification alerts;
 
 
-
-    DecimalFormat df = new DecimalFormat("#.00");
-
-
     public Room(String userId, String roomName, int capacity, String ageGroup, String loud, String temp, String humi) throws MqttException, SQLException {
         this.userId = userId;
         this.roomName = roomName;
