@@ -217,7 +217,7 @@
                                 </GridPane>
                                 <TextField fx:id="NewRoomName" layoutX="147.0" layoutY="76.0" prefHeight="59.0" prefWidth="238.0" promptText="New  Room" />
                                 <TextField fx:id="MaxCapacity" layoutX="277.0" layoutY="205.0" prefHeight="37.0" prefWidth="159.0" promptText="Enter maximum capacity" />
-                                <ChoiceBox fx:id="AgeGroupPicker" layoutX="102.0" layoutY="206.0" prefWidth="150.0" style="-fx-background-color: #fffff;" />
+                                <ChoiceBox fx:id="AgeGroupPicker" layoutX="102.0" layoutY="206.0" prefWidth="150.0" style="-fx-background-color: #fffff;" onAction="#setDefaultThresholds" />
                                 <Label fx:id="AgeGroupLabel" alignment="CENTER" layoutX="81.0" layoutY="165.0" prefHeight="31.0" prefWidth="201.0" styleClass="simpleFont" text="Age group" textAlignment="CENTER" />
                                 <Button fx:id="SaveRoomButton"  layoutX="492.0" layoutY="399.0" mnemonicParsing="false" onAction="#handleCreateRoomButtonClick" prefHeight="60.0" prefWidth="150.0" text="Add room" />
                                 <Label fx:id="MaxCapacityLabel" alignment="CENTER" layoutX="256.0" layoutY="165.0" prefHeight="31.0" prefWidth="201.0" styleClass="simpleFont" text="Room capacity" textAlignment="CENTER" />

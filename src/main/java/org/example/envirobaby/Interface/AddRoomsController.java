@@ -138,4 +138,26 @@ public class AddRoomsController {
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
+
+    public void setDefaultThresholds(ActionEvent event) {
+        if(AgeGroupPicker.getValue().equals("0-6 Months")) {
+            this.maxHumBox.setText("60");
+            this.minHumBox.setText("45");
+            this.minTempBox.setText("30");
+            this.maxTempBox.setText("36");
+            this.maxNoise.setText("65");
+        } else if(AgeGroupPicker.getValue().equals("6-12 Months")) {
+            this.maxHumBox.setText("60");
+            this.minHumBox.setText("45");
+            this.minTempBox.setText("30");
+            this.maxTempBox.setText("40");
+            this.maxNoise.setText("65");
+        } else {
+            this.maxHumBox.setText("60");
+            this.minHumBox.setText("35");
+            this.minTempBox.setText("20");
+            this.maxTempBox.setText("42");
+            this.maxNoise.setText("65");
+        }
+    }
 }
