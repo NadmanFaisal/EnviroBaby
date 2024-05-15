@@ -46,7 +46,7 @@ public class OverviewManager implements Runnable{
 
         String tempMsg;
         if (!instanceUser.getInstanceUser().isCelsius()) {
-            tempMsg = df.format(((room.getSensorReading().getTempValue() * (9/5)) + 32)) + "F";
+            tempMsg = df.format(((room.getSensorReading().getTempValue() * 9/5) + 32)) + "F";
         } else {
             tempMsg = df.format(room.getSensorReading().getTempValue()) + "C";
         }
