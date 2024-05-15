@@ -64,6 +64,11 @@ public class RoomNotificationScreenController {
 
     public void initialize () throws IOException { // based on user`s data , after the FXML file loaded, configures visibility and startup settings.
 
+        room1.setVisible(false);
+        room2.setVisible(false);
+        room3.setVisible(false);
+        room4.setVisible(false);
+
         turnOnTempNotifButton.setVisible(false);
         turnOffTempNotifButton.setVisible(false);
         turnOnHumiNotifButton.setVisible(false);
@@ -218,6 +223,7 @@ public class RoomNotificationScreenController {
     public RoomNotificationScreenController() {
         this.instanceUser = UserExchanger.getInstance();
     }
+
     public void temperatureTurnONButton(ActionEvent actionEvent) { // enable temperature notifications
         instanceUser.tempNotiON();
     }
@@ -233,6 +239,7 @@ public class RoomNotificationScreenController {
     public void humidityTurnOFFButton(ActionEvent actionEvent) { // disable humidity notifications
         instanceUser.humiNotiOFF();
     }
+
     public void noiseTurnONButton(ActionEvent actionEvent) { // enable noise notifications
         instanceUser.noiseNotiON();
     }
