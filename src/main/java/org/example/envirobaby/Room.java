@@ -32,7 +32,7 @@ public class Room {
     DecimalFormat df = new DecimalFormat("#.00");
 
 
-    public Room(String userId, String roomName, int capacity, String ageGroup, String loud, String temp, String humi) throws MqttException, SQLException {
+    public Room(String userId, String roomName, int capacity, String ageGroup, String loud, String temp, String humi, boolean tempNotif, boolean humiNotif, boolean noiseNotif) throws MqttException, SQLException {
         this.userId = userId;
         this.roomName = roomName;
         this.capacity = capacity;
@@ -41,9 +41,9 @@ public class Room {
         this.thresholds = new NotificationThreshold();
         this.client = new MQTTReceiver(userId, loud, temp, humi);
         this.sensorReading = client.getReadings();
-        this.tempNotif=true;
-        this.humiNotif=true;
-        this.noiseNotif=true;
+        this.tempNotif = tempNotif;
+        this.humiNotif = humiNotif;
+        this.noiseNotif = noiseNotif;
 
 
         database = new DatabaseControl();

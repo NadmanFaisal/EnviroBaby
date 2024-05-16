@@ -10,10 +10,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.example.envirobaby.DatabaseControl;
 import org.example.envirobaby.User;
 import org.example.envirobaby.UserExchanger;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class SystemNotificationSettingsScreenController {
 
@@ -49,10 +51,12 @@ public class SystemNotificationSettingsScreenController {
     private Label noiseTXT;
 
     private UserExchanger instanceUser;
+    private DatabaseControl database;
 
     @FXML
-    void initialize() {
+    void initialize() throws SQLException {
         instanceUser= UserExchanger.getInstance();
+        database = new DatabaseControl();
     }
     @FXML
     void loadHomeScreen(ActionEvent event) throws IOException {
@@ -70,30 +74,41 @@ public class SystemNotificationSettingsScreenController {
         stage.setScene(scene);
     }
 
-    public void temperatureTurnONButton(ActionEvent actionEvent) {
-        instanceUser.getInstanceUser().tempNotiON();
+    public void temperatureTurnONButton(ActionEvent actionEvent) throws SQLException {
+        instanceUser.getInstanceUser().setTempNotiStatus(true);
+        updateDatabaseSettings();
     }
 
-    public void temperatureTurnOFFButton(ActionEvent actionEvent) {
+    public void temperatureTurnOFFButton(ActionEvent actionEvent) throws SQLException {
 
-        instanceUser.getInstanceUser().tempNotiOFF();
+        instanceUser.getInstanceUser().setTempNotiStatus(false);
+        updateDatabaseSettings();
     }
 
-    public void humidityTurnONButton(ActionEvent actionEvent) {
+    public void humidityTurnONButton(ActionEvent actionEvent) throws SQLException {
 
-        instanceUser.getInstanceUser().humiNotiON();
+        instanceUser.getInstanceUser().setHumiNotiStatus(true);
+        updateDatabaseSettings();
     }
 
-    public void humidityTurnOFFButton(ActionEvent actionEvent) {
-        instanceUser.getInstanceUser().humiNotiOFF();
+    public void humidityTurnOFFButton(ActionEvent actionEvent) throws SQLException {
+        instanceUser.getInstanceUser().setHumiNotiStatus(false);
+        updateDatabaseSettings();
     }
 
-    public void noiseTurnONButton(ActionEvent actionEvent) {
-        instanceUser.getInstanceUser().noiseNotiON();
+    public void noiseTurnONButton(ActionEvent actionEvent) throws SQLException {
+        instanceUser.getInstanceUser().setNoiseNotiStatus(true);
+        updateDatabaseSettings();
     }
 
-    public void noiseTurnOFFButton(ActionEvent actionEvent) {
-        instanceUser.getInstanceUser().noiseNotiOFF();
+    public void noiseTurnOFFButton(ActionEvent actionEvent) throws SQLException {
+        instanceUser.getInstanceUser().setNoiseNotiStatus(false);
+        updateDatabaseSettings();
+    }
+
+    public void updateDatabaseSettings() throws SQLException {
+        User currentUser = instanceUser.getInstanceUser();
+        database.updateSystemNotificationSettings(currentUser.getUserID(),currentUser.isNoiseNotiStatus(),currentUser.isTempNotiStatus(),currentUser.isHumiNotiStatus());
     }
     public void moveToRoom1Screen(ActionEvent actionEvent)  throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("RoomNotificationScreen.fxml"));

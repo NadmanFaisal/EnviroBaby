@@ -10,11 +10,13 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
+import org.example.envirobaby.DatabaseControl;
 import org.example.envirobaby.Room;
 import org.example.envirobaby.User;
 import org.example.envirobaby.UserExchanger;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * Controller for toggling notifications settings in specific rooms selection.
@@ -62,8 +64,11 @@ public class RoomNotificationScreenController {
     private boolean room2IsActive = false;
     private boolean room3IsActive = false;
     private boolean room4IsActive = false;
+    private DatabaseControl database;
 
-    public void initialize () throws IOException { // based on user`s data , after the FXML file loaded, configures visibility and startup settings.
+    public void initialize () throws IOException, SQLException { // based on user`s data , after the FXML file loaded, configures visibility and startup settings.
+
+        database = new DatabaseControl();
 
         // Hide all buttons initially
         room1.setVisible(false);
@@ -210,54 +215,59 @@ public class RoomNotificationScreenController {
      * Turns temperature notifications on for the current room.
      * @param actionEvent The event that triggered this action.
      */
-    public void temperatureTurnONButton(ActionEvent actionEvent) {
-        Room currentRoom = instanceUser.getCurrentRoom();
+    public void temperatureTurnONButton(ActionEvent actionEvent) throws SQLException {
         instanceUser.getCurrentRoom().settTempNotifON(true);
+        updateRoomNotifSettings();
     }
 
     /**
      * Turns temperature notifications off for the current room.
      * @param actionEvent The event that triggered this action.
      */
-    public void temperatureTurnOFFButton(ActionEvent actionEvent) {
-        Room currentRoom = instanceUser.getCurrentRoom();
+    public void temperatureTurnOFFButton(ActionEvent actionEvent) throws SQLException {
         instanceUser.getCurrentRoom().settTempNotifON(false);
+        updateRoomNotifSettings();
     }
 
     /**
      * Turns humidity notifications on for the current room.
      * @param actionEvent The event that triggered this action.
      */
-    public void humidityTurnONButton(ActionEvent actionEvent) {
-        Room currentRoom = instanceUser.getCurrentRoom();
+    public void humidityTurnONButton(ActionEvent actionEvent) throws SQLException {
         instanceUser.getCurrentRoom().setHumiNotifON(true);
+        updateRoomNotifSettings();
     }
 
     /**
      * Turns humidity notifications off for the current room.
      * @param actionEvent The event that triggered this action.
      */
-    public void humidityTurnOFFButton(ActionEvent actionEvent) {
-        Room currentRoom = instanceUser.getCurrentRoom();
+    public void humidityTurnOFFButton(ActionEvent actionEvent) throws SQLException {
         instanceUser.getCurrentRoom().setHumiNotifON(false);
+        updateRoomNotifSettings();
     }
 
     /**
      * Turns noise notifications on for the current room.
      * @param actionEvent The event that triggered this action.
      */
-    public void noiseTurnONButton(ActionEvent actionEvent) {
-        Room currentRoom = instanceUser.getCurrentRoom();
+    public void noiseTurnONButton(ActionEvent actionEvent) throws SQLException {
         instanceUser.getCurrentRoom().setNoiseNotifON(true);
+        updateRoomNotifSettings();
     }
 
     /**
      * Turns noise notifications off for the current room.
      * @param actionEvent The event that triggered this action.
      */
-    public void noiseTurnOFFButton(ActionEvent actionEvent) {
-        Room currentRoom = instanceUser.getCurrentRoom();
+    public void noiseTurnOFFButton(ActionEvent actionEvent) throws SQLException {
         instanceUser.getCurrentRoom().setNoiseNotifON(false);
+        updateRoomNotifSettings();
+    }
+
+    public void updateRoomNotifSettings() throws SQLException {
+        Room currentRoom = instanceUser.getCurrentRoom();
+        database.updateAlertToggle(currentRoom.getUserId(), currentRoom.getRoomName(), currentRoom.isNoiseNotif(),currentRoom.isTempNotif(),currentRoom.isHumiNotif());
     }
 
 }
