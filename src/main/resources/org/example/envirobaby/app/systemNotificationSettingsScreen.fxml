@@ -59,13 +59,13 @@
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                      <children>
-                        <Button fx:id="tempTurnONButton" layoutX="523.0" layoutY="20.0" mnemonicParsing="false" onAction="#temperatureTurnONButton" prefHeight="54.0" prefWidth="169.0" text="Turn ON">
+                        <Button fx:id="tempNotiTurnOnButton" layoutX="523.0" layoutY="20.0" mnemonicParsing="false" onAction="#tempNotiOn" prefHeight="54.0" prefWidth="169.0" text="Turn ON">
                            <styleClass>
                               <String fx:value="dataOverviewPane" />
                               <String fx:value="dropShadow" />
                               <String fx:value="font" />
                            </styleClass></Button>
-                        <Button fx:id="tempTurnOFFButton" layoutX="758.0" layoutY="18.0" mnemonicParsing="false" onAction="#temperatureTurnOFFButton" prefHeight="54.0" prefWidth="169.0" text="Turn OFF">
+                        <Button fx:id="tempNotiTurnOffButton" layoutX="758.0" layoutY="18.0" mnemonicParsing="false" onAction="#tempNotiOff" prefHeight="54.0" prefWidth="169.0" text="Turn OFF">
                            <styleClass>
                               <String fx:value="dataOverviewPane" />
                               <String fx:value="dropShadow" />
@@ -94,13 +94,13 @@
                               <Font size="25.0" />
                            </font>
                         </Text>
-                        <Button fx:id="noiseTurnONButton" layoutX="523.0" layoutY="130.0" mnemonicParsing="false" onAction="#noiseTurnONButton" prefHeight="54.0" prefWidth="169.0" text="Turn ON">
+                        <Button fx:id="noiseNotiTurnOnButton" layoutX="523.0" layoutY="130.0" mnemonicParsing="false" onAction="#noiseNotiOn" prefHeight="54.0" prefWidth="169.0" text="Turn ON">
                            <styleClass>
                               <String fx:value="dataOverviewPane" />
                               <String fx:value="dropShadow" />
                               <String fx:value="font" />
                            </styleClass></Button>
-                        <Button fx:id="noiseTurnOFFButton" layoutX="758.0" layoutY="130.0" mnemonicParsing="false" onAction="#noiseTurnOFFButton" prefHeight="54.0" prefWidth="169.0" text="Turn OFF">
+                        <Button fx:id="noiseNotiTurnOffButton" layoutX="758.0" layoutY="130.0" mnemonicParsing="false" onAction="#noiseNotiOff" prefHeight="54.0" prefWidth="169.0" text="Turn OFF">
                            <styleClass>
                               <String fx:value="dataOverviewPane" />
                               <String fx:value="dropShadow" />
@@ -111,13 +111,13 @@
                               <Font size="25.0" />
                            </font>
                         </Text>
-                        <Button fx:id="humiTurnONButton" layoutX="523.0" layoutY="31.0" mnemonicParsing="false" onAction="#humidityTurnONButton" prefHeight="54.0" prefWidth="169.0" text="Turn ON">
+                        <Button fx:id="humiNotiTurnOnButton" layoutX="523.0" layoutY="31.0" mnemonicParsing="false" onAction="#humiNotiOn" prefHeight="54.0" prefWidth="169.0" text="Turn ON">
                            <styleClass>
                               <String fx:value="dataOverviewPane" />
                               <String fx:value="dropShadow" />
                               <String fx:value="font" />
                            </styleClass></Button>
-                        <Button fx:id="humiTurnOFFButton" layoutX="758.0" layoutY="28.0" mnemonicParsing="false" onAction="#humidityTurnOFFButton" prefHeight="54.0" prefWidth="169.0" text="Turn OFF">
+                        <Button fx:id="humiNotiTurnOffButton" layoutX="758.0" layoutY="28.0" mnemonicParsing="false" onAction="#humiNotiOff" prefHeight="54.0" prefWidth="169.0" text="Turn OFF">
                            <styleClass>
                               <String fx:value="dataOverviewPane" />
                               <String fx:value="dropShadow" />

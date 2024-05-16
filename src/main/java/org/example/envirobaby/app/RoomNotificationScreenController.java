@@ -30,6 +30,11 @@ public class RoomNotificationScreenController {
     @FXML
     private RowConstraints overviewRow;
 
+    private static final int FIRST_ROOM = 1;
+    private static final int SECOND_ROOM = 2;
+    private static final int THIRD_ROOM = 3;
+    private static final int FOURTH_ROOM = 4;
+
     @FXML
     private Button room1;
 
@@ -86,7 +91,7 @@ public class RoomNotificationScreenController {
     // Display the room buttons based on how many rooms the current user has
         switch (currentUser.getRooms().size()) {
         case 1 -> {
-            room1.setText(currentUser.getRoom(1).getRoomName());
+            room1.setText(currentUser.getRoom(FIRST_ROOM).getRoomName());
             room1.setVisible(true);
             turnOnTempNotifButton.setVisible(true);
             turnOffTempNotifButton.setVisible(true);
@@ -101,9 +106,9 @@ public class RoomNotificationScreenController {
             room4IsActive = false;
         }
         case 2 -> {
-            room1.setText(currentUser.getRoom(1).getRoomName());
+            room1.setText(currentUser.getRoom(FIRST_ROOM).getRoomName());
             room1.setVisible(true);
-            room2.setText(currentUser.getRoom(2).getRoomName());
+            room2.setText(currentUser.getRoom(SECOND_ROOM).getRoomName());
             room2.setVisible(true);
             turnOnTempNotifButton.setVisible(true);
             turnOffTempNotifButton.setVisible(true);
@@ -118,11 +123,11 @@ public class RoomNotificationScreenController {
             room4IsActive = false;
         }
         case 3 -> {
-            room1.setText(currentUser.getRoom(1).getRoomName());
+            room1.setText(currentUser.getRoom(FIRST_ROOM).getRoomName());
             room1.setVisible(true);
-            room2.setText(currentUser.getRoom(2).getRoomName());
+            room2.setText(currentUser.getRoom(SECOND_ROOM).getRoomName());
             room2.setVisible(true);
-            room3.setText(currentUser.getRoom(3).getRoomName());
+            room3.setText(currentUser.getRoom(THIRD_ROOM).getRoomName());
             room3.setVisible(true);
             turnOnTempNotifButton.setVisible(true);
             turnOffTempNotifButton.setVisible(true);
@@ -137,13 +142,13 @@ public class RoomNotificationScreenController {
             room4IsActive = false;
         }
         case 4 -> {
-            room1.setText(currentUser.getRoom(1).getRoomName());
+            room1.setText(currentUser.getRoom(FIRST_ROOM).getRoomName());
             room1.setVisible(true);
-            room2.setText(currentUser.getRoom(2).getRoomName());
+            room2.setText(currentUser.getRoom(SECOND_ROOM).getRoomName());
             room2.setVisible(true);
-            room3.setText(currentUser.getRoom(3).getRoomName());
+            room3.setText(currentUser.getRoom(THIRD_ROOM).getRoomName());
             room3.setVisible(true);
-            room4.setText(currentUser.getRoom(4).getRoomName());
+            room4.setText(currentUser.getRoom(FOURTH_ROOM).getRoomName());
             room4.setVisible(true);
             turnOnTempNotifButton.setVisible(true);
             turnOffTempNotifButton.setVisible(true);
@@ -177,7 +182,7 @@ public class RoomNotificationScreenController {
      * @param event The event that triggered this action.
      */
     public void moveToRoom1(ActionEvent event) {
-        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRooms().get(1));
+        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRooms().get(FIRST_ROOM));
     }
 
     /**
@@ -186,7 +191,7 @@ public class RoomNotificationScreenController {
      */
 
     public void moveToRoom2(ActionEvent event) {
-        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRooms().get(2));
+        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRooms().get(SECOND_ROOM));
     }
 
     /**
@@ -195,7 +200,7 @@ public class RoomNotificationScreenController {
      */
 
     public void moveToRoom3(ActionEvent event) {
-        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRooms().get(3));
+        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRooms().get(THIRD_ROOM));
     }
 
     /**
@@ -204,7 +209,7 @@ public class RoomNotificationScreenController {
      */
 
     public void moveToRoom4(ActionEvent event) {
-        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRooms().get(4));
+        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRooms().get(FOURTH_ROOM));
     }
 
     public RoomNotificationScreenController() {
@@ -215,7 +220,7 @@ public class RoomNotificationScreenController {
      * Turns temperature notifications on for the current room.
      * @param actionEvent The event that triggered this action.
      */
-    public void temperatureTurnONButton(ActionEvent actionEvent) throws SQLException {
+    public void tempNotiOn(ActionEvent actionEvent) throws SQLException {
         instanceUser.getCurrentRoom().settTempNotifON(true);
         updateRoomNotifSettings();
     }
@@ -224,7 +229,7 @@ public class RoomNotificationScreenController {
      * Turns temperature notifications off for the current room.
      * @param actionEvent The event that triggered this action.
      */
-    public void temperatureTurnOFFButton(ActionEvent actionEvent) throws SQLException {
+    public void tempNotiOff(ActionEvent actionEvent) throws SQLException {
         instanceUser.getCurrentRoom().settTempNotifON(false);
         updateRoomNotifSettings();
     }
@@ -233,7 +238,7 @@ public class RoomNotificationScreenController {
      * Turns humidity notifications on for the current room.
      * @param actionEvent The event that triggered this action.
      */
-    public void humidityTurnONButton(ActionEvent actionEvent) throws SQLException {
+    public void humiNotiOn(ActionEvent actionEvent) throws SQLException {
         instanceUser.getCurrentRoom().setHumiNotifON(true);
         updateRoomNotifSettings();
     }
@@ -242,7 +247,7 @@ public class RoomNotificationScreenController {
      * Turns humidity notifications off for the current room.
      * @param actionEvent The event that triggered this action.
      */
-    public void humidityTurnOFFButton(ActionEvent actionEvent) throws SQLException {
+    public void humiNotiOff(ActionEvent actionEvent) throws SQLException {
         instanceUser.getCurrentRoom().setHumiNotifON(false);
         updateRoomNotifSettings();
     }
@@ -251,7 +256,7 @@ public class RoomNotificationScreenController {
      * Turns noise notifications on for the current room.
      * @param actionEvent The event that triggered this action.
      */
-    public void noiseTurnONButton(ActionEvent actionEvent) throws SQLException {
+    public void noiseNotiOn(ActionEvent actionEvent) throws SQLException {
         instanceUser.getCurrentRoom().setNoiseNotifON(true);
         updateRoomNotifSettings();
     }
@@ -260,7 +265,7 @@ public class RoomNotificationScreenController {
      * Turns noise notifications off for the current room.
      * @param actionEvent The event that triggered this action.
      */
-    public void noiseTurnOFFButton(ActionEvent actionEvent) throws SQLException {
+    public void noiseNotiOff(ActionEvent actionEvent) throws SQLException {
         instanceUser.getCurrentRoom().setNoiseNotifON(false);
         updateRoomNotifSettings();
     }

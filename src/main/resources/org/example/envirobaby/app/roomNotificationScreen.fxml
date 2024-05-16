@@ -101,7 +101,7 @@
                            <children>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                  <children>
-                                    <Button fx:id="turnOnTempNotifButton" layoutX="154.0" layoutY="44.0" mnemonicParsing="false" onAction="#temperatureTurnONButton" prefHeight="116.0" prefWidth="728.0" text="Turn ON" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <Button fx:id="turnOnTempNotifButton" layoutX="154.0" layoutY="44.0" mnemonicParsing="false" onAction="#tempNotiOn" prefHeight="116.0" prefWidth="728.0" text="Turn ON" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <styleClass>
                                           <String fx:value="dropShadow" />
                                           <String fx:value="dataOverviewPane" />
@@ -112,7 +112,7 @@
                               </AnchorPane>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                                  <children>
-                                    <Button fx:id="turnOffTempNotifButton" layoutX="154.0" layoutY="44.0" mnemonicParsing="false" onAction="#temperatureTurnOFFButton" prefHeight="116.0" prefWidth="728.0" text="Turn OFF" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <Button fx:id="turnOffTempNotifButton" layoutX="154.0" layoutY="44.0" mnemonicParsing="false" onAction="#tempNotiOff" prefHeight="116.0" prefWidth="728.0" text="Turn OFF" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <styleClass>
                                           <String fx:value="dropShadow" />
                                           <String fx:value="dataOverviewPane" />
@@ -159,7 +159,7 @@
                            <children>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                  <children>
-                                    <Button fx:id="turnOnNoiseNotifButton" layoutX="154.0" layoutY="44.0" mnemonicParsing="false" onAction="#noiseTurnONButton" prefHeight="116.0" prefWidth="728.0" text="Turn ON" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <Button fx:id="turnOnNoiseNotifButton" layoutX="154.0" layoutY="44.0" mnemonicParsing="false" onAction="#noiseNotiOn" prefHeight="116.0" prefWidth="728.0" text="Turn ON" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <styleClass>
                                           <String fx:value="dropShadow" />
                                           <String fx:value="dataOverviewPane" />
@@ -170,7 +170,7 @@
                               </AnchorPane>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                                  <children>
-                                    <Button fx:id="turnOffNoiseNotifButton" layoutX="154.0" layoutY="44.0" mnemonicParsing="false" onAction="#noiseTurnOFFButton" prefHeight="116.0" prefWidth="728.0" text="Turn OFF" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <Button fx:id="turnOffNoiseNotifButton" layoutX="154.0" layoutY="44.0" mnemonicParsing="false" onAction="#noiseNotiOff" prefHeight="116.0" prefWidth="728.0" text="Turn OFF" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <styleClass>
                                           <String fx:value="dropShadow" />
                                           <String fx:value="dataOverviewPane" />
@@ -217,7 +217,7 @@
                            <children>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                  <children>
-                                    <Button fx:id="turnOnHumiNotifButton" layoutX="154.0" layoutY="44.0" mnemonicParsing="false" onAction="#humidityTurnONButton" prefHeight="116.0" prefWidth="728.0" text="Turn ON" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <Button fx:id="turnOnHumiNotifButton" layoutX="154.0" layoutY="44.0" mnemonicParsing="false" onAction="#humiNotiOn" prefHeight="116.0" prefWidth="728.0" text="Turn ON" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <styleClass>
                                           <String fx:value="dropShadow" />
                                           <String fx:value="dataOverviewPane" />
@@ -228,7 +228,7 @@
                               </AnchorPane>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                                  <children>
-                                    <Button fx:id="turnOffHumiNotifButton" layoutX="154.0" layoutY="44.0" mnemonicParsing="false" onAction="#humidityTurnOFFButton" prefHeight="116.0" prefWidth="728.0" text="Turn OFF" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <Button fx:id="turnOffHumiNotifButton" layoutX="154.0" layoutY="44.0" mnemonicParsing="false" onAction="#humiNotiOff" prefHeight="116.0" prefWidth="728.0" text="Turn OFF" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <styleClass>
                                           <String fx:value="dropShadow" />
                                           <String fx:value="dataOverviewPane" />

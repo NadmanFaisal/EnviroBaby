@@ -22,22 +22,17 @@ public class SystemNotificationSettingsScreenController {
     @FXML
     private Button homebutton;
     @FXML
-    private Button tempTurnOFFButton;
-
+    private Button tempNotiTurnOffButton;
     @FXML
-    private Button tempTurnONButton;
-
-
+    private Button tempNotiTurnOnButton;
     @FXML
-    private Button humiTurnONButton;
+    private Button humiNotiTurnOnButton;
     @FXML
-    private Button humiTurnOFFButton;
+    private Button humiNotiTurnOffButton;
     @FXML
-    private Button noiseTurnONButton;
-
+    private Button noiseNotiTurnOnButton;
     @FXML
-    private Button noiseTurnOFFButton;
-
+    private Button noiseNotiTurnOffButton;
     @FXML
     private Button roomNotificationSettings;
 
@@ -74,34 +69,34 @@ public class SystemNotificationSettingsScreenController {
         stage.setScene(scene);
     }
 
-    public void temperatureTurnONButton(ActionEvent actionEvent) throws SQLException {
+    public void tempNotiOn(ActionEvent actionEvent) throws SQLException {
         instanceUser.getInstanceUser().setTempNotiStatus(true);
         updateDatabaseSettings();
     }
 
-    public void temperatureTurnOFFButton(ActionEvent actionEvent) throws SQLException {
+    public void tempNotiOff(ActionEvent actionEvent) throws SQLException {
 
         instanceUser.getInstanceUser().setTempNotiStatus(false);
         updateDatabaseSettings();
     }
 
-    public void humidityTurnONButton(ActionEvent actionEvent) throws SQLException {
+    public void humiNotiOn(ActionEvent actionEvent) throws SQLException {
 
         instanceUser.getInstanceUser().setHumiNotiStatus(true);
         updateDatabaseSettings();
     }
 
-    public void humidityTurnOFFButton(ActionEvent actionEvent) throws SQLException {
+    public void humiNotiOff(ActionEvent actionEvent) throws SQLException {
         instanceUser.getInstanceUser().setHumiNotiStatus(false);
         updateDatabaseSettings();
     }
 
-    public void noiseTurnONButton(ActionEvent actionEvent) throws SQLException {
+    public void noiseNotiOn(ActionEvent actionEvent) throws SQLException {
         instanceUser.getInstanceUser().setNoiseNotiStatus(true);
         updateDatabaseSettings();
     }
 
-    public void noiseTurnOFFButton(ActionEvent actionEvent) throws SQLException {
+    public void noiseNotiOff(ActionEvent actionEvent) throws SQLException {
         instanceUser.getInstanceUser().setNoiseNotiStatus(false);
         updateDatabaseSettings();
     }
