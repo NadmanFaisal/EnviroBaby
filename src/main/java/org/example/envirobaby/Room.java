@@ -23,13 +23,16 @@ public class Room {
     private int capacity;
     private String ageGroup;
     private Notification alerts;
+    private boolean tempNotif;
+    private boolean humiNotif;
+    private boolean noiseNotif;
 
 
 
     DecimalFormat df = new DecimalFormat("#.00");
 
 
-    public Room(String userId, String roomName, int capacity, String ageGroup, String loud, String temp, String humi) throws MqttException, SQLException {
+    public Room(String userId, String roomName, int capacity, String ageGroup, String loud, String temp, String humi, boolean tempNotif, boolean humiNotif, boolean noiseNotif) throws MqttException, SQLException {
         this.userId = userId;
         this.roomName = roomName;
         this.capacity = capacity;
@@ -38,6 +41,10 @@ public class Room {
         this.thresholds = new NotificationThreshold();
         this.client = new MQTTReceiver(userId, loud, temp, humi);
         this.sensorReading = client.getReadings();
+        this.tempNotif = tempNotif;
+        this.humiNotif = humiNotif;
+        this.noiseNotif = noiseNotif;
+
 
         database = new DatabaseControl();
         
@@ -109,4 +116,30 @@ public class Room {
     public void setAgeGroup(String ageGroup) {
         this.ageGroup = ageGroup;
     }
+
+
+
+    public void settTempNotifON(boolean TempNotif){ //sets the temperature notification status
+        this.tempNotif=TempNotif;
+    }
+    public void setHumiNotifON(boolean humiNotif){ //sets the humidity notification status
+        this.humiNotif=humiNotif;
+    }
+    public void setNoiseNotifON(boolean noiseNotif){ //sets the noise notification status
+        this.noiseNotif=noiseNotif;
+    }
+
+    public boolean isTempNotif() { //Returns the current status of temperature notifications.
+        return this.tempNotif;
+    }
+
+    public boolean isHumiNotif() { //Returns the current status of humidity notifications.
+        return this.humiNotif;
+    }
+
+    public boolean isNoiseNotif() { ////Returns the current status of noise notifications.
+        return this.noiseNotif;
+    }
+
+
 }

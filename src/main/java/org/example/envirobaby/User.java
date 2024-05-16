@@ -28,15 +28,15 @@ public class User implements Runnable {
     DecimalFormat df = new DecimalFormat("#.00");
 
 
-    public User(String userId) throws SQLException, MqttException {
+    public User(String userId, boolean tempNotiStatus, boolean humiNotiStatus, boolean noiseNotiStatus) throws SQLException, MqttException {
         database = new DatabaseControl();
         this.userID = userId;
         this.alerts = new Notification();
         this.celsius = true;
         setRooms(userId);
-        this.tempNotiStatus = true; //default settings for the system temperature notifications
-        this.humiNotiStatus = true; //default settings for the system humidity notifications
-        this.noiseNotiStatus = true; //default settings for the system noise notifications
+        this.tempNotiStatus = tempNotiStatus; //default settings for the system temperature notifications
+        this.humiNotiStatus = humiNotiStatus; //default settings for the system humidity notifications
+        this.noiseNotiStatus = noiseNotiStatus; //default settings for the system noise notifications
     }
 
     public void setRooms(String userID) throws SQLException, MqttException {
@@ -58,7 +58,7 @@ public class User implements Runnable {
             boolean tempAlerts = roomResults.getBoolean("temp_alerts");
             boolean humAlerts = roomResults.getBoolean("hum_alerts");
 
-            Room newRoom = new Room(userID,roomName,capacity,ageGroup, "/envirobaby/room" + (registeredRooms.size() + 1) + "/loud", "/envirobaby/room" +( registeredRooms.size() +1) + "/temp", "/envirobaby/room" + (registeredRooms.size() +1) + "/humi"); //create new room object using these instances
+            Room newRoom = new Room(userID,roomName,capacity,ageGroup, "/envirobaby/room" + (registeredRooms.size() + 1) + "/loud", "/envirobaby/room" +( registeredRooms.size() +1) + "/temp", "/envirobaby/room" + (registeredRooms.size() +1) + "/humi", tempAlerts, humAlerts, noiseAlerts); //create new room object using these instances
             newRoom.getThresholds().setAllThresholds(maxNoise,maxtemp,mintemp,maxHum,minHum); //update the new room objects thresholds to the stored value
 
             //initialise notification toggle and celsius when implemented
@@ -73,12 +73,11 @@ public class User implements Runnable {
     // Creates a room based on the specified parameters, adds it to the user's rooms, and stores it to the database
     public Room createRoom(String roomName, String userId, int capacity, String ageGroup,
                                                             int maxNoise, double maxTemp, double minTemp, double maxHum,
-                                                            double minHum, boolean celsius, boolean noiseAlert,
-                                                            boolean tempAlert, boolean humAlert) throws SQLException, MqttException {
-        Room room = new Room(userId, roomName, capacity, ageGroup, "/envirobaby/room" + (rooms.size() + 1) + "/loud", "/envirobaby/room" + (rooms.size() + 1) + "/temp", "/envirobaby/room" + (rooms.size() + 1) + "/humi");
+                                                            double minHum, boolean celsius) throws SQLException, MqttException {
+        Room room = new Room(userId, roomName, capacity, ageGroup, "/envirobaby/room" + (rooms.size() + 1) + "/loud", "/envirobaby/room" + (rooms.size() + 1) + "/temp", "/envirobaby/room" + (rooms.size() + 1) + "/humi", true,true,true);
         room.getThresholds().setAllThresholds(maxNoise, maxTemp, minTemp, maxHum, minHum);
         database.addRoom(roomName, userID, capacity, ageGroup, maxNoise, maxTemp,
-                minTemp, maxHum, minHum, celsius, noiseAlert, tempAlert, humAlert);
+                minTemp, maxHum, minHum, celsius, true, true, true);
 
         // Generates a room number and adds the room to the user's rooms
         Integer roomCount= rooms.size() + 1;
@@ -101,7 +100,7 @@ public class User implements Runnable {
 
             //only send notifications if above/below threshold AND if it isn't the same value as the last sent notification to avoid duplicates
             // temperature alerts
-            if (tempNotiStatus) { //Condition triggers the temperature notifications
+            if (tempNotiStatus && room.isTempNotif()) { //Condition triggers the temperature notifications
                 if (tempLvl > room.getThresholds().getTempUpperBound() && tempLvl != alerts.getLastMaxTempAlert()) {
                 alerts.createNotification("Temperature notification", "TEMPERATURE IN " + room.getRoomName().toUpperCase() + " EXCEEDS THRESHOLD: " + tempMsg);
                 alerts.setLastMaxTempAlert(tempLvl);
@@ -112,7 +111,7 @@ public class User implements Runnable {
             }
 
             // humidity alerts
-            if (humiNotiStatus) { //Condition triggers the humidity notifications
+            if (humiNotiStatus && room.isHumiNotif()) { //Condition triggers the humidity notifications
                 if (humLvl > room.getThresholds().getHumUpperBound() && humLvl != alerts.getLastMaxHumAlert()) {
                 alerts.createNotification("Humidity notification", "HUMIDITY IN "  + room.getRoomName().toUpperCase() +  " EXCEEDS THRESHOLD: " + df.format(humLvl) + "%");
                 alerts.setLastMaxHumAlert(humLvl);
@@ -123,7 +122,7 @@ public class User implements Runnable {
             }
 
             // noise alerts
-            if (noiseNotiStatus) { //Condition triggers the noise notifications
+            if (noiseNotiStatus && room.isNoiseNotif()) { //Condition triggers the noise notifications
                 if (noiseLvl > room.getThresholds().getLoudThreshold() && noiseLvl != alerts.getLastNoiseAlert()) {
                 alerts.createNotification("Noise notification", "NOISE THRESHOLD IN "  + room.getRoomName().toUpperCase() + " CROSSED: " + noiseLvl + " db");
                 alerts.setLastNoiseAlert(noiseLvl);
@@ -152,28 +151,28 @@ public class User implements Runnable {
         return celsius;
     }
 
-    public void tempNotiON(){
-        tempNotiStatus = true;
+    public void setTempNotiStatus(boolean tempNotiStatus) {
+        this.tempNotiStatus = tempNotiStatus;
     }
 
-    public void tempNotiOFF(){
-        tempNotiStatus = false;
+    public void setNoiseNotiStatus(boolean noiseNotiStatus) {
+        this.noiseNotiStatus = noiseNotiStatus;
     }
 
-    public void humiNotiON(){
-        humiNotiStatus = true;
+    public void setHumiNotiStatus(boolean humiNotiStatus) {
+        this.humiNotiStatus = humiNotiStatus;
     }
 
-    public void humiNotiOFF(){
-        humiNotiStatus = false;
+    public boolean isTempNotiStatus() {
+        return tempNotiStatus;
     }
 
-    public void noiseNotiON(){
-        noiseNotiStatus = true;
+    public boolean isHumiNotiStatus() {
+        return humiNotiStatus;
     }
 
-    public void noiseNotiOFF(){
-        noiseNotiStatus = false;
+    public boolean isNoiseNotiStatus() {
+        return noiseNotiStatus;
     }
 
     @Override

@@ -3,11 +3,11 @@ package org.example.envirobaby;
 import java.sql.*;
 
 public class DatabaseControl {
-     String jdbcURL = "";
-     String username = "";
-     String password = "";
-     Connection connection;
-     Statement statement;
+    String jdbcURL = "";
+    String username = "";
+    String password = "";
+    Connection connection;
+    Statement statement;
 
     public DatabaseControl() throws SQLException {
         connection = DriverManager.getConnection(jdbcURL,username,password);
@@ -17,7 +17,7 @@ public class DatabaseControl {
     public boolean signUpUser(String userID, String userPassword) throws SQLException {
         boolean userNotAvailable;
 
-        String availabilityQuery = String.format("SELECT * FROM USERS WHERE id= '%s'", userID); // check if the username the user is trying to register already exists
+        String availabilityQuery = String.format("SELECT id, password FROM USERS WHERE id= '%s'", userID); // check if the username the user is trying to register already exists
 
         ResultSet rs = statement.executeQuery(availabilityQuery);
         userNotAvailable = rs.next(); //equals true if query returned results (username already exists)
@@ -60,8 +60,8 @@ public class DatabaseControl {
     }
 
     public void updateAlertToggle(String userId, String roomName, boolean noiseAlert, boolean tempAlert, boolean humAlert) throws SQLException {
-        String updateQuery = String.format("UPDATE ROOM SET noise_alerts='%s', temp_alerts='%s',hum_alerts='%s'" +
-                "WHERE userid='%s' AND room_name='%s'",noiseAlert,tempAlert,humAlert,userId,roomName);
+        String updateQuery = String.format("UPDATE ROOM SET noise_alerts=%s, temp_alerts=%s,hum_alerts=%s" +
+                " WHERE userid='%s' AND room_name='%s'",noiseAlert,tempAlert,humAlert,userId,roomName);
         statement.executeUpdate(updateQuery); //update preferences for receiving notifications
     }
 
@@ -95,6 +95,18 @@ public class DatabaseControl {
         String sqlQuery = String.format("SELECT * FROM CHILDREN WHERE userid='%s' AND room='%s' ORDER BY child ASC", userId,roomName);
         ResultSet rs = statement.executeQuery(sqlQuery);
         return rs; //return all children data for a specific room owned by the user
+    }
+
+    public ResultSet retrieveSystemNotificationSettings(String userId) throws SQLException {
+        String sqlQuery = String.format("SELECT noise_alert_setting, temp_alert_setting, hum_alert_setting FROM USERS WHERE id='%s'", userId);
+        ResultSet rs = statement.executeQuery(sqlQuery);
+        return rs;
+    }
+
+    public void updateSystemNotificationSettings(String userId, boolean noiseAlert, boolean tempAlert, boolean humAlert) throws SQLException {
+        String updateQuery = String.format("UPDATE USERS SET noise_alert_setting=%s, temp_alert_setting=%s,hum_alert_setting=%s" +
+                " WHERE id='%s'",noiseAlert,tempAlert,humAlert,userId);
+        statement.executeUpdate(updateQuery); //update preferences for receiving notifications
     }
 
 }
