@@ -10,13 +10,14 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
+import org.example.envirobaby.Room;
 import org.example.envirobaby.User;
 import org.example.envirobaby.UserExchanger;
 
 import java.io.IOException;
 
 /**
- * Controller for the system for toggling notifications settings in specific rooms selection.
+ * Controller for toggling notifications settings in specific rooms selection.
  */
 
 public class RoomNotificationScreenController {
@@ -64,6 +65,7 @@ public class RoomNotificationScreenController {
 
     public void initialize () throws IOException { // based on user`s data , after the FXML file loaded, configures visibility and startup settings.
 
+        // Hide all buttons initially
         room1.setVisible(false);
         room2.setVisible(false);
         room3.setVisible(false);
@@ -152,13 +154,12 @@ public class RoomNotificationScreenController {
         }
     }
     }
-    /**
-     * after clicking on the button "Room 1",
-     * the screen switches to the Room 1 screen.
-     * @param event
-     * @throws IOException
-     */
 
+    /**
+     * Navigates back to the home screen.
+     * @param event The event that triggered this action.
+     * @throws IOException if unable to load the home screen FXML.
+     */
     public void homeButtonClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("homeScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -167,85 +168,96 @@ public class RoomNotificationScreenController {
     }
 
     /**
-     * after clicking on the button "Room 2",
-     * the screen triggers room1 flag to be true,
-     * indicating that the user is in room 1
-     * @param event
+     * Sets the current room to the first room.
+     * @param event The event that triggered this action.
      */
     public void moveToRoom1(ActionEvent event) {
-        room1IsActive = true;
-        room2IsActive = false;
-        room3IsActive = false;
-        room4IsActive = false;
+        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRooms().get(1));
     }
 
     /**
-     * after clicking on the button "Room 2",
-     * the screen triggers room2 flag to be true,
-     * indicating that the user is in room 2
-     * @param event
+     * Sets the current room to the second room.
+     * @param event The event that triggered this action.
      */
 
     public void moveToRoom2(ActionEvent event) {
-        room1IsActive = false;
-        room2IsActive = true;
-        room3IsActive = false;
-        room4IsActive = false;
+        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRooms().get(2));
     }
 
     /**
-     * after clicking on the button "Room 3",
-     * the screen triggeers room 3 flag to be true,
-     * indicating that the user is in room 3.
-     * @param event
+     * Sets the current room to the third room.
+     * @param event The event that triggered this action.
      */
 
     public void moveToRoom3(ActionEvent event) {
-        room1IsActive = false;
-        room2IsActive = false;
-        room3IsActive = true;
-        room4IsActive = false;
+        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRooms().get(3));
     }
 
     /**
-     * after clicking on the button "Room 4",
-     * the screen triggers room4 flag to be true,
-     * indicating that the user is in room 4.
-     * @param event
+     * Sets the current room to the fourth room.
+     * @param event The event that triggered this action.
      */
 
     public void moveToRoom4(ActionEvent event) {
-        room1IsActive = false;
-        room2IsActive = false;
-        room3IsActive = false;
-        room4IsActive = true;
+        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRooms().get(4));
     }
+
     public RoomNotificationScreenController() {
         this.instanceUser = UserExchanger.getInstance();
     }
 
-    public void temperatureTurnONButton(ActionEvent actionEvent) { // enable temperature notifications
-        instanceUser.tempNotiON();
+    /**
+     * Turns temperature notifications on for the current room.
+     * @param actionEvent The event that triggered this action.
+     */
+    public void temperatureTurnONButton(ActionEvent actionEvent) {
+        Room currentRoom = instanceUser.getCurrentRoom();
+        instanceUser.getCurrentRoom().settTempNotifON(true);
     }
 
-    public void temperatureTurnOFFButton(ActionEvent actionEvent) { // disable temperature notifications
-        instanceUser.tempNotiOFF();
+    /**
+     * Turns temperature notifications off for the current room.
+     * @param actionEvent The event that triggered this action.
+     */
+    public void temperatureTurnOFFButton(ActionEvent actionEvent) {
+        Room currentRoom = instanceUser.getCurrentRoom();
+        instanceUser.getCurrentRoom().settTempNotifON(false);
     }
 
-    public void humidityTurnONButton(ActionEvent actionEvent) { // enable humidity notifications
-        instanceUser.humiNotiON();
+    /**
+     * Turns humidity notifications on for the current room.
+     * @param actionEvent The event that triggered this action.
+     */
+    public void humidityTurnONButton(ActionEvent actionEvent) {
+        Room currentRoom = instanceUser.getCurrentRoom();
+        instanceUser.getCurrentRoom().setHumiNotifON(true);
     }
 
-    public void humidityTurnOFFButton(ActionEvent actionEvent) { // disable humidity notifications
-        instanceUser.humiNotiOFF();
+    /**
+     * Turns humidity notifications off for the current room.
+     * @param actionEvent The event that triggered this action.
+     */
+    public void humidityTurnOFFButton(ActionEvent actionEvent) {
+        Room currentRoom = instanceUser.getCurrentRoom();
+        instanceUser.getCurrentRoom().setHumiNotifON(false);
     }
 
-    public void noiseTurnONButton(ActionEvent actionEvent) { // enable noise notifications
-        instanceUser.noiseNotiON();
+    /**
+     * Turns noise notifications on for the current room.
+     * @param actionEvent The event that triggered this action.
+     */
+    public void noiseTurnONButton(ActionEvent actionEvent) {
+        Room currentRoom = instanceUser.getCurrentRoom();
+        instanceUser.getCurrentRoom().setNoiseNotifON(true);
     }
 
-    public void noiseTurnOFFButton(ActionEvent actionEvent) { // disable noise notifications
-        instanceUser.noiseNotiOFF();
+    /**
+     * Turns noise notifications off for the current room.
+     * @param actionEvent The event that triggered this action.
+     */
+    public void noiseTurnOFFButton(ActionEvent actionEvent) {
+        Room currentRoom = instanceUser.getCurrentRoom();
+        instanceUser.getCurrentRoom().setNoiseNotifON(false);
     }
 
 }

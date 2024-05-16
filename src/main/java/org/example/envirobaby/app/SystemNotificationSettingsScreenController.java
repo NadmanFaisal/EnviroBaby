@@ -71,32 +71,30 @@ public class SystemNotificationSettingsScreenController {
     }
 
     public void temperatureTurnONButton(ActionEvent actionEvent) {
-        instanceUser.tempNotiON();
+        instanceUser.getInstanceUser().tempNotiON();
     }
 
     public void temperatureTurnOFFButton(ActionEvent actionEvent) {
-        instanceUser.tempNotiOFF();
+
+        instanceUser.getInstanceUser().tempNotiOFF();
     }
 
     public void humidityTurnONButton(ActionEvent actionEvent) {
-        instanceUser.humiNotiON();
+
+        instanceUser.getInstanceUser().humiNotiON();
     }
 
     public void humidityTurnOFFButton(ActionEvent actionEvent) {
-        instanceUser.humiNotiOFF();
+        instanceUser.getInstanceUser().humiNotiOFF();
     }
 
     public void noiseTurnONButton(ActionEvent actionEvent) {
-        instanceUser.noiseNotiON();
+        instanceUser.getInstanceUser().noiseNotiON();
     }
 
     public void noiseTurnOFFButton(ActionEvent actionEvent) {
-        instanceUser.noiseNotiOFF();
+        instanceUser.getInstanceUser().noiseNotiOFF();
     }
-
-
-
-
     public void moveToRoom1Screen(ActionEvent actionEvent)  throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("RoomNotificationScreen.fxml"));
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();

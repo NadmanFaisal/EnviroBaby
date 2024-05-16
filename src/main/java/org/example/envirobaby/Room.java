@@ -23,6 +23,9 @@ public class Room {
     private int capacity;
     private String ageGroup;
     private Notification alerts;
+    private boolean tempNotif;
+    private boolean humiNotif;
+    private boolean noiseNotif;
 
 
 
@@ -38,6 +41,10 @@ public class Room {
         this.thresholds = new NotificationThreshold();
         this.client = new MQTTReceiver(userId, loud, temp, humi);
         this.sensorReading = client.getReadings();
+        this.tempNotif=true;
+        this.humiNotif=true;
+        this.noiseNotif=true;
+
 
         database = new DatabaseControl();
         
@@ -109,4 +116,30 @@ public class Room {
     public void setAgeGroup(String ageGroup) {
         this.ageGroup = ageGroup;
     }
+
+
+
+    public void settTempNotifON(boolean TempNotif){ //sets the temperature notification status
+        this.tempNotif=TempNotif;
+    }
+    public void setHumiNotifON(boolean humiNotif){ //sets the humidity notification status
+        this.humiNotif=humiNotif;
+    }
+    public void setNoiseNotifON(boolean noiseNotif){ //sets the noise notification status
+        this.noiseNotif=noiseNotif;
+    }
+
+    public boolean isTempNotif() { //Returns the current status of temperature notifications.
+        return this.tempNotif;
+    }
+
+    public boolean isHumiNotif() { //Returns the current status of humidity notifications.
+        return this.humiNotif;
+    }
+
+    public boolean isNoiseNotif() { ////Returns the current status of noise notifications.
+        return this.noiseNotif;
+    }
+
+
 }

@@ -101,7 +101,7 @@ public class User implements Runnable {
 
             //only send notifications if above/below threshold AND if it isn't the same value as the last sent notification to avoid duplicates
             // temperature alerts
-            if (tempNotiStatus) { //Condition triggers the temperature notifications
+            if (tempNotiStatus && room.isTempNotif()) { //Condition triggers the temperature notifications
                 if (tempLvl > room.getThresholds().getTempUpperBound() && tempLvl != alerts.getLastMaxTempAlert()) {
                 alerts.createNotification("Temperature notification", "TEMPERATURE IN " + room.getRoomName().toUpperCase() + " EXCEEDS THRESHOLD: " + tempMsg);
                 alerts.setLastMaxTempAlert(tempLvl);
@@ -112,7 +112,7 @@ public class User implements Runnable {
             }
 
             // humidity alerts
-            if (humiNotiStatus) { //Condition triggers the humidity notifications
+            if (humiNotiStatus && room.isHumiNotif()) { //Condition triggers the humidity notifications
                 if (humLvl > room.getThresholds().getHumUpperBound() && humLvl != alerts.getLastMaxHumAlert()) {
                 alerts.createNotification("Humidity notification", "HUMIDITY IN "  + room.getRoomName().toUpperCase() +  " EXCEEDS THRESHOLD: " + df.format(humLvl) + "%");
                 alerts.setLastMaxHumAlert(humLvl);
@@ -123,7 +123,7 @@ public class User implements Runnable {
             }
 
             // noise alerts
-            if (noiseNotiStatus) { //Condition triggers the noise notifications
+            if (noiseNotiStatus && room.isNoiseNotif()) { //Condition triggers the noise notifications
                 if (noiseLvl > room.getThresholds().getLoudThreshold() && noiseLvl != alerts.getLastNoiseAlert()) {
                 alerts.createNotification("Noise notification", "NOISE THRESHOLD IN "  + room.getRoomName().toUpperCase() + " CROSSED: " + noiseLvl + " db");
                 alerts.setLastNoiseAlert(noiseLvl);
@@ -152,27 +152,28 @@ public class User implements Runnable {
         return celsius;
     }
 
-    public void tempNotiON(){
+    public void tempNotiON(){ //Enables temperature notifications for a specific room.
         tempNotiStatus = true;
     }
 
-    public void tempNotiOFF(){
+    public void tempNotiOFF(){ //Disables temperature notifications for a specific room.
+
         tempNotiStatus = false;
     }
 
-    public void humiNotiON(){
+    public void humiNotiON(){ //Enables humidity notifications for a specific room.
         humiNotiStatus = true;
     }
 
-    public void humiNotiOFF(){
+    public void humiNotiOFF(){ //Disables humidity notifications for a specific room.
         humiNotiStatus = false;
     }
 
-    public void noiseNotiON(){
+    public void noiseNotiON(){ //Enables noise notifications for a specific room.
         noiseNotiStatus = true;
     }
 
-    public void noiseNotiOFF(){
+    public void noiseNotiOFF(){ //Disables noise notifications for a specific room.
         noiseNotiStatus = false;
     }
 
