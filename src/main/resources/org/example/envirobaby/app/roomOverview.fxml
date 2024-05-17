@@ -98,7 +98,7 @@
                                     <children>
                                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                             <children>
-                                                <Button fx:id="tempGraph" layoutX="16.0" layoutY="16.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="70.0" text="Temperature" wrapText="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="16.0">
+                                                <Button fx:id="tempGraph" onAction="#displayTempGraph" layoutX="16.0" layoutY="16.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="70.0" text="Temperature" wrapText="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="16.0">
                                                     <styleClass>
                                                         <String fx:value="dataOverviewPane" />
                                                         <String fx:value="dropShadow" />
@@ -109,7 +109,7 @@
                                         </AnchorPane>
                                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                                             <children>
-                                                <Button fx:id="humGraph" layoutX="16.0" layoutY="16.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="70.0" text="Humidity" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="16.0">
+                                                <Button fx:id="humGraph" onAction="#displayHumGraph" layoutX="16.0" layoutY="16.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="70.0" text="Humidity" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="16.0">
                                                     <styleClass>
                                                         <String fx:value="simpleFont" />
                                                         <String fx:value="dataOverviewPane" />
@@ -120,7 +120,7 @@
                                         </AnchorPane>
                                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                                             <children>
-                                                <Button fx:id="loudGraph" layoutX="16.0" layoutY="16.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="70.0" text="Loudness" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="16.0">
+                                                <Button fx:id="loudGraph" onAction="#displayLoudGraph" layoutX="16.0" layoutY="16.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="70.0" text="Loudness" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="16.0">
                                                     <styleClass>
                                                         <String fx:value="simpleFont" />
                                                         <String fx:value="dataOverviewPane" />

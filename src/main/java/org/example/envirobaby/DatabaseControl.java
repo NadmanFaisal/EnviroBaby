@@ -10,6 +10,9 @@ public class DatabaseControl {
     Statement statement;
 
     public DatabaseControl() throws SQLException {
+        String jdbcURL = "";
+        String username = "";
+        String password = "";
         connection = DriverManager.getConnection(jdbcURL,username,password);
         statement = connection.createStatement(); //initialise statement
     }
