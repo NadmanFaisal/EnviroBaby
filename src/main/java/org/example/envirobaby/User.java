@@ -6,6 +6,9 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -25,6 +28,8 @@ public class User implements Runnable {
     private boolean humiNotiStatus;
     private boolean noiseNotiStatus;
 
+    private String selectedDataView; //store which data display the user created for this instance, allow consistency across pages
+
     DecimalFormat df = new DecimalFormat("#.00");
 
 
@@ -37,6 +42,7 @@ public class User implements Runnable {
         this.tempNotiStatus = tempNotiStatus; //default settings for the system temperature notifications
         this.humiNotiStatus = humiNotiStatus; //default settings for the system humidity notifications
         this.noiseNotiStatus = noiseNotiStatus; //default settings for the system noise notifications
+        this.selectedDataView="temp"; //ensure the user always initially views the temp graph (default option)
     }
 
     public void setRooms(String userID) throws SQLException, MqttException {
@@ -131,6 +137,36 @@ public class User implements Runnable {
         }
     }
 
+    public void recordData() {
+        for (int i =1 ; i <= rooms.size(); i++){
+            Room room = rooms.get(i);
+
+            String userId = room.getUserId();
+            String roomName = room.getRoomName();
+            String recordTime = String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES));
+            String recordDate = String.valueOf(LocalDate.now());
+            int loudVal = room.getSensorReading().getLoudValue();
+            double tempVal = room.getSensorReading().getTempValue();
+            double humVal = room.getSensorReading().getHumValue();
+
+            try {
+                database.recordData(userId,roomName,recordDate,recordTime,loudVal,tempVal,humVal);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+
+    public String getSelectedDataView() {
+        return selectedDataView;
+    }
+
+    public void setSelectedDataView(String selectedDataView) {
+        this.selectedDataView = selectedDataView;
+    }
+
+
     public HashMap<Integer, Room> getRooms() {
         return rooms;
     }
@@ -175,11 +211,28 @@ public class User implements Runnable {
         return noiseNotiStatus;
     }
 
+
+
     @Override
     public void run() {
+        int delay=0;
+        int currentTime = LocalTime.now().getMinute();
+
+        if (currentTime>30) {
+            delay = 60-currentTime;
+        } else if(currentTime!=0 && currentTime!=30) {
+            delay=30-currentTime;
+        } // set delay so that we start recording data only when the clock is at HH:00 or HH:30
+
         // Create a ScheduledExecutorService for notifications
         ScheduledExecutorService notificationScheduler = Executors.newSingleThreadScheduledExecutor();
         //Schedule sendAlerts with initial delay of 101 to avoid notifications during initialisation
         notificationScheduler.scheduleAtFixedRate(this::sendAlerts, 101, 100, TimeUnit.MILLISECONDS);
+
+        // Create a ScheduleExecutorService for storing records
+        ScheduledExecutorService storeData = Executors.newSingleThreadScheduledExecutor();
+        notificationScheduler.scheduleAtFixedRate(this::recordData, delay, 30, TimeUnit.MINUTES);
+        // starts recording data every 30 minutes after an initial delay.
     }
 }
+

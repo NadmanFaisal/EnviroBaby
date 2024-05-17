@@ -1,11 +1,16 @@
 package org.example.envirobaby;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -26,6 +31,8 @@ public class Room {
     private boolean tempNotif;
     private boolean humiNotif;
     private boolean noiseNotif;
+    private ObservableList<Record> records;
+    private String recordViewDate; //allow user to view the same date through different data displays
 
 
 
@@ -85,6 +92,25 @@ public class Room {
         }
     }
 
+    public void updateRecordList(String selectedDate) throws SQLException { //retrieve recorded data to display in graph and table
+        List<Record> recordsList = new ArrayList<>();
+        ResultSet recordedData = database.recieveRecordedData(this.userId, this.roomName, selectedDate);
+
+        while (recordedData.next()){
+            String recordTime = recordedData.getString("record_time");
+            int noiseLvl = recordedData.getInt("loud_data");
+            double tempLvl = recordedData.getDouble("temp_data");
+            double humLvl = recordedData.getDouble("hum_data");
+
+            Record newRecord = new Record(recordTime.substring(0,5),noiseLvl,tempLvl,humLvl); //substring used to put sql.Time in HH:MM format
+
+            recordsList.add(newRecord);
+        }
+
+        this.records = FXCollections.observableArrayList(recordsList); //must be observableArrayList for table
+    }
+
+
     public String getRoomName() {
         return roomName;
     }
@@ -117,6 +143,10 @@ public class Room {
         this.ageGroup = ageGroup;
     }
 
+    public ObservableList<Record> getRecords() {
+        return records;
+    }
+
 
 
     public void settTempNotifON(boolean TempNotif){ //sets the temperature notification status
@@ -140,6 +170,15 @@ public class Room {
     public boolean isNoiseNotif() { ////Returns the current status of noise notifications.
         return this.noiseNotif;
     }
+
+    public String getRecordViewDate() {
+        return recordViewDate;
+    }
+
+    public void setRecordViewDate(String recordViewDate) {
+        this.recordViewDate = recordViewDate;
+    }
+
 
 
 }

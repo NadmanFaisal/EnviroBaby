@@ -81,6 +81,20 @@ public class DatabaseControl {
         statement.executeUpdate(recordQuery); //create new data record row in record table
     }
 
+    public ResultSet recieveRecordDates(String userId, String roomName) throws SQLException {
+        String sqlQuery = String.format("SELECT DISTINCT record_date FROM RECORD WHERE userid='%s' AND room_name='%s' ORDER BY record_date DESC",userId,roomName);
+        ResultSet rs = statement.executeQuery(sqlQuery);
+        return rs;
+    }
+
+    public ResultSet recieveRecordedData(String userId, String roomName, String recordDate) throws SQLException {
+        String sqlQuery = String.format("SELECT record_time, loud_data, temp_data, hum_data FROM RECORD" +
+                " WHERE userid='%s' AND room_name='%s' AND record_date='%s' ORDER BY record_time", userId,roomName,recordDate);
+        ResultSet rs = statement.executeQuery(sqlQuery);
+        return rs;
+    }
+
+
     public void addChild(String userId, String roomName, String childName, int age) throws SQLException {
         String insertQuery = String.format("INSERT INTO CHILDREN(userid,room,child,age) VALUES('%s','%s','%s',%d)", userId,roomName,childName,age);
         statement.executeUpdate(insertQuery); //create new row in children table. childId is declared automatically in table
@@ -101,7 +115,7 @@ public class DatabaseControl {
         String sqlQuery = String.format("SELECT noise_alert_setting, temp_alert_setting, hum_alert_setting FROM USERS WHERE id='%s'", userId);
         ResultSet rs = statement.executeQuery(sqlQuery);
         return rs;
-    }
+    } //return the stored notification settings for the users system
 
     public void updateSystemNotificationSettings(String userId, boolean noiseAlert, boolean tempAlert, boolean humAlert) throws SQLException {
         String updateQuery = String.format("UPDATE USERS SET noise_alert_setting=%s, temp_alert_setting=%s,hum_alert_setting=%s" +
