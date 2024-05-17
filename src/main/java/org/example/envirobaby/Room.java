@@ -33,13 +33,14 @@ public class Room {
     private boolean noiseNotif;
     private ObservableList<Record> records;
     private String recordViewDate; //allow user to view the same date through different data displays
+    private int terminalTopic;
 
 
 
     DecimalFormat df = new DecimalFormat("#.00");
 
 
-    public Room(String userId, String roomName, int capacity, String ageGroup, String loud, String temp, String humi, boolean tempNotif, boolean humiNotif, boolean noiseNotif) throws MqttException, SQLException {
+    public Room(String userId, String roomName, int capacity, String ageGroup, String loud, String temp, String humi, boolean tempNotif, boolean humiNotif, boolean noiseNotif, int terminalTopic) throws MqttException, SQLException {
         this.userId = userId;
         this.roomName = roomName;
         this.capacity = capacity;
@@ -108,6 +109,13 @@ public class Room {
         }
 
         this.records = FXCollections.observableArrayList(recordsList); //must be observableArrayList for table
+    }
+
+    public void updateRoom(String userId, String newRoomName, String ageGroup, int capacity) throws SQLException {
+        database.updateRoom(this.userId,this.roomName,newRoomName,capacity,ageGroup); //update edited data into db
+        this.roomName=newRoomName; //update current room object
+        this.ageGroup=ageGroup;
+        this.capacity=capacity;
     }
 
 
@@ -179,6 +187,11 @@ public class Room {
         this.recordViewDate = recordViewDate;
     }
 
+    public int getTerminalTopic() {
+        return terminalTopic;
+    }
 
-
+    public void setTerminalTopic(int terminalTopic) {
+        this.terminalTopic = terminalTopic;
+    }
 }
