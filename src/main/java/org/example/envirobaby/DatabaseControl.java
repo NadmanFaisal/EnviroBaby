@@ -115,7 +115,7 @@ public class DatabaseControl {
         String sqlQuery = String.format("SELECT noise_alert_setting, temp_alert_setting, hum_alert_setting FROM USERS WHERE id='%s'", userId);
         ResultSet rs = statement.executeQuery(sqlQuery);
         return rs;
-    }
+    } //return the stored notification settings for the users system
 
     public void updateSystemNotificationSettings(String userId, boolean noiseAlert, boolean tempAlert, boolean humAlert) throws SQLException {
         String updateQuery = String.format("UPDATE USERS SET noise_alert_setting=%s, temp_alert_setting=%s,hum_alert_setting=%s" +

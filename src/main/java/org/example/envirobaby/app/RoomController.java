@@ -47,6 +47,7 @@ public class RoomController {
     private Room currentRoom;
     private MQTTSender sender;
     private DatabaseControl database;
+    private User currentUser;
 
 
     @FXML
@@ -54,6 +55,7 @@ public class RoomController {
         database = new DatabaseControl();
         instanceUser= UserExchanger.getInstance();
         currentRoom = instanceUser.getCurrentRoom();
+        currentUser = instanceUser.getInstanceUser();
         sender = new MQTTSender();
         roomOverview = new OverviewManager(noiseLabel,tempLabel,humLabel, currentRoom); //initialise room object which implements runnable
 
@@ -68,7 +70,7 @@ public class RoomController {
         roomCapLabel.setText("Capacity: " + currentRoom.getCapacity());
 
 
-        if(instanceUser.getInstanceUser().getSelectedDataView().equals("table")){ //display table view for all rooms if that's what the user has last selected
+        if(currentUser.getSelectedDataView().equals("table")){ //display table view for all rooms if that's what the user has last selected
             AnchorPane newTablePane = FXMLLoader.load(getClass().getResource("dataTable.fxml"));
             dataGraphing.add(newTablePane, 1, 0);
             currentDataView = newTablePane;
@@ -111,11 +113,11 @@ public class RoomController {
     @FXML
     public void convertToCelsius (ActionEvent actionEvent) throws MqttException, InterruptedException, SQLException, IOException {
         sender.sendMessage("C", "/envirobaby/tempunit");
-        instanceUser.getInstanceUser().setCelsius(true);
-        database.updateTempUnit(instanceUser.getInstanceUser().getUserID(),true);
+        currentUser.setCelsius(true);
+        database.updateTempUnit(currentUser.getUserID(),true);
 
-        if(instanceUser.getInstanceUser().getSelectedDataView().equals("temp")){ //set temp units for graph view (to be implemented)
-        } else if (instanceUser.getInstanceUser().getSelectedDataView().equals("table")) { //else, set for table view
+        if(currentUser.getSelectedDataView().equals("temp")){ //set temp units for graph view (to be implemented)
+        } else if (currentUser.getSelectedDataView().equals("table")) { //else, set for table view
             displayDataTable(actionEvent);
         }
     }
@@ -123,11 +125,11 @@ public class RoomController {
     @FXML
     public void convertToFahrenheit (ActionEvent actionEvent) throws MqttException, InterruptedException, SQLException, IOException {
         sender.sendMessage("F", "/envirobaby/tempunit");
-        instanceUser.getInstanceUser().setCelsius(false);
-        database.updateTempUnit(instanceUser.getInstanceUser().getUserID(),false);
+        currentUser.setCelsius(false);
+        database.updateTempUnit(currentUser.getUserID(),false);
 
-        if(instanceUser.getInstanceUser().getSelectedDataView().equals("temp")){ //set temp units for graph view (to be implemented)
-        } else if (instanceUser.getInstanceUser().getSelectedDataView().equals("table")) { //else set for table view
+        if(currentUser.getSelectedDataView().equals("temp")){ //set temp units for graph view (to be implemented)
+        } else if (currentUser.getSelectedDataView().equals("table")) { //else set for table view
             displayDataTable(actionEvent);
         }
     }
