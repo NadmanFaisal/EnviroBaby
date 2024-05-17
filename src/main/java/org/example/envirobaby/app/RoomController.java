@@ -74,7 +74,10 @@ public class RoomController {
             AnchorPane newTablePane = FXMLLoader.load(getClass().getResource("dataTable.fxml"));
             dataGraphing.add(newTablePane, 1, 0);
             currentDataView = newTablePane;
-        } else { //otherwise display whichever graph the user has last selected, to be implemented
+        } else { //otherwise display whichever graph the user has last selected
+            AnchorPane newGraphPane = FXMLLoader.load(getClass().getResource("dataGraph.fxml"));
+            dataGraphing.add(newGraphPane, 1, 0);
+            currentDataView = newGraphPane;
         }
 
         thread.start(); //start thread
@@ -116,7 +119,8 @@ public class RoomController {
         currentUser.setCelsius(true);
         database.updateTempUnit(currentUser.getUserID(),true);
 
-        if(currentUser.getSelectedDataView().equals("temp")){ //set temp units for graph view (to be implemented)
+        if(currentUser.getSelectedDataView().equals("temp")){ //set temp units for graph view
+            displayTempGraph(actionEvent);
         } else if (currentUser.getSelectedDataView().equals("table")) { //else, set for table view
             displayDataTable(actionEvent);
         }
@@ -128,7 +132,8 @@ public class RoomController {
         currentUser.setCelsius(false);
         database.updateTempUnit(currentUser.getUserID(),false);
 
-        if(currentUser.getSelectedDataView().equals("temp")){ //set temp units for graph view (to be implemented)
+        if(currentUser.getSelectedDataView().equals("temp")){ //set temp units for graph view
+            displayTempGraph(actionEvent);
         } else if (currentUser.getSelectedDataView().equals("table")) { //else set for table view
             displayDataTable(actionEvent);
         }
@@ -136,11 +141,36 @@ public class RoomController {
 
     @FXML
     public void displayDataTable(ActionEvent actionEvent) throws IOException {
-        instanceUser.getInstanceUser().setSelectedDataView("table"); // set for consistency on data view when switching rooms
+        currentUser.setSelectedDataView("table"); // set for consistency on data view when switching rooms
         AnchorPane newTablePane = FXMLLoader.load(getClass().getResource("dataTable.fxml"));
         dataGraphing.getChildren().remove(currentDataView);
         dataGraphing.add(newTablePane, 1, 0);
         currentDataView=newTablePane;
-    }
+    } //show table view
+
+    @FXML
+    public void displayLoudGraph(ActionEvent actionEvent) throws IOException {
+        instanceUser.getInstanceUser().setSelectedDataView("loud");
+        AnchorPane newPane = FXMLLoader.load(getClass().getResource("dataGraph.fxml"));
+        dataGraphing.getChildren().remove(currentDataView);
+        dataGraphing.add(newPane, 1, 0);
+        currentDataView=newPane;
+    } //show loudness graph view
+    @FXML
+    public void displayHumGraph(ActionEvent actionEvent) throws IOException {
+        instanceUser.getInstanceUser().setSelectedDataView("hum");
+        AnchorPane newPane = FXMLLoader.load(getClass().getResource("dataGraph.fxml"));
+        dataGraphing.getChildren().remove(currentDataView);
+        dataGraphing.add(newPane, 1, 0);
+        currentDataView=newPane;
+    } // show hum graph view
+    @FXML
+    public void displayTempGraph(ActionEvent actionEvent) throws IOException {
+        instanceUser.getInstanceUser().setSelectedDataView("temp");
+        AnchorPane newPane = FXMLLoader.load(getClass().getResource("dataGraph.fxml"));
+        dataGraphing.getChildren().remove(currentDataView);
+        dataGraphing.add(newPane, 1, 0);
+        currentDataView=newPane;
+    } // show temp graph view
 }
 
