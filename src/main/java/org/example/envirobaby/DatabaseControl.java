@@ -3,9 +3,9 @@ package org.example.envirobaby;
 import java.sql.*;
 
 public class DatabaseControl {
-    String jdbcURL = "jdbc:postgresql://65.19.141.67:5432/alevka_envirobaby";
-    String username = "alevka_envbUser";
-    String password = "Vzb3_783r";
+    String jdbcURL = "";
+    String username = "";
+    String password = "";
     Connection connection;
     Statement statement;
 
