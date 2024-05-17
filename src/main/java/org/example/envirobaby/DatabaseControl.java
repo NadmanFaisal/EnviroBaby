@@ -3,9 +3,9 @@ package org.example.envirobaby;
 import java.sql.*;
 
 public class DatabaseControl {
-    String jdbcURL = "";
-    String username = "";
-    String password = "";
+    String jdbcURL = "jdbc:postgresql://65.19.141.67:5432/alevka_envirobaby";
+    String username = "alevka_envbUser";
+    String password = "Vzb3_783r";
     Connection connection;
     Statement statement;
 
@@ -80,6 +80,20 @@ public class DatabaseControl {
                 "VALUES('%s','%s','%s','%s',%d,%f,%f)", userId,roomName,recordDate,recordTime,loudVal,tempVal,humVal);
         statement.executeUpdate(recordQuery); //create new data record row in record table
     }
+
+    public ResultSet recieveRecordDates(String userId, String roomName) throws SQLException {
+        String sqlQuery = String.format("SELECT DISTINCT record_date FROM RECORD WHERE userid='%s' AND room_name='%s' ORDER BY record_date DESC",userId,roomName);
+        ResultSet rs = statement.executeQuery(sqlQuery);
+        return rs;
+    }
+
+    public ResultSet recieveRecordedData(String userId, String roomName, String recordDate) throws SQLException {
+        String sqlQuery = String.format("SELECT record_time, loud_data, temp_data, hum_data FROM RECORD" +
+                " WHERE userid='%s' AND room_name='%s' AND record_date='%s' ORDER BY record_time", userId,roomName,recordDate);
+        ResultSet rs = statement.executeQuery(sqlQuery);
+        return rs;
+    }
+
 
     public void addChild(String userId, String roomName, String childName, int age) throws SQLException {
         String insertQuery = String.format("INSERT INTO CHILDREN(userid,room,child,age) VALUES('%s','%s','%s',%d)", userId,roomName,childName,age);
