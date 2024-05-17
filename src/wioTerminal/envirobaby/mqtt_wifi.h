@@ -17,7 +17,7 @@ extern const char* ssid; // ssid of wifi
 extern const char* password; //password of wifi
 
 extern const char* mqttServer; // mqtt server address
-extern const int mqttPort; // deafault port for hivemq broker
+extern const int mqttPort; // default port for hivemq broker
 extern const char* mqttUsername; // username for mqtt broker, not needed if public
 extern const char* mqttPassword; // password for mqtt broker, not needed if public
 extern const char* mqttMainTopic; // mqtt broker topic

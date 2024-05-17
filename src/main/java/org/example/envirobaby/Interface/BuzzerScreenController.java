@@ -126,10 +126,7 @@ public class BuzzerScreenController {
      * @param event
      */
     public void moveToRoom1(ActionEvent event) {
-        room1IsActive = true;
-        room2IsActive = false;
-        room3IsActive = false;
-        room4IsActive = false;
+        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRoom(1));
     }
 
     /**
@@ -140,10 +137,7 @@ public class BuzzerScreenController {
      */
 
     public void moveToRoom2(ActionEvent event) {
-        room1IsActive = false;
-        room2IsActive = true;
-        room3IsActive = false;
-        room4IsActive = false;
+        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRoom(2));
     }
 
     /**
@@ -154,10 +148,7 @@ public class BuzzerScreenController {
      */
 
     public void moveToRoom3(ActionEvent event) {
-        room1IsActive = false;
-        room2IsActive = false;
-        room3IsActive = true;
-        room4IsActive = false;
+        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRoom(3));
     }
 
     /**
@@ -168,10 +159,7 @@ public class BuzzerScreenController {
      */
 
     public void moveToRoom4(ActionEvent event) {
-        room1IsActive = false;
-        room2IsActive = false;
-        room3IsActive = false;
-        room4IsActive = true;
+        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRoom(4));
     }
 
     /**
@@ -180,7 +168,7 @@ public class BuzzerScreenController {
      */
     public void sendMQTTMessage(String message) throws MqttException, InterruptedException {
         String topicSection = "/envirobaby/room";
-        String topic = topicSection + (room1IsActive ? "1" : room2IsActive ? "2" : room3IsActive ? "3" : "4") + "/buzzer";
+        String topic = topicSection + instanceUser.getCurrentRoom().getTerminalTopic() + "/buzzer";
         sender.sendMessage(message, topic);
     }
 

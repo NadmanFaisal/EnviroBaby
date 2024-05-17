@@ -24,3 +24,20 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.15), 10, 0.5, 0.0, 0.0);
 }
 
+.table-view{
+}
+
+.table-view .column-header{
+    -fx-background-color: #F3B197;
+    -fx-border-color: #F1A080;
+}
+
+.table-view .column-header .label{
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 1.3em;
+}
+
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+

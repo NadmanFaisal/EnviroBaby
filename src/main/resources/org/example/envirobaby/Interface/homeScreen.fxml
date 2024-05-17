@@ -30,17 +30,17 @@
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
          <children>
             <GridPane layoutX="7.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                  <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="10.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="10.0" vgrow="ALWAYS" />
-              </rowConstraints>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="10.0" prefHeight="26.0" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="10.0" prefHeight="26.0" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="10.0" prefHeight="26.0" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="10.0" prefHeight="26.0" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="10.0" prefHeight="26.0" vgrow="ALWAYS" />
+               </rowConstraints>
                <children>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                      <children>
@@ -66,7 +66,7 @@
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                      <children>
-                        <Button fx:id="roomEdit" layoutX="123.0" layoutY="-17.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="780.0" text="Edit Rooms" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="128.0" AnchorPane.rightAnchor="117.0" AnchorPane.topAnchor="-17.0">
+                        <Button fx:id="roomEdit" onAction="#editRoomsClick" layoutX="123.0" layoutY="-17.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="780.0" text="Edit Rooms" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="128.0" AnchorPane.rightAnchor="117.0" AnchorPane.topAnchor="-17.0">
                            <styleClass>
                               <String fx:value="dataOverviewPane" />
                               <String fx:value="dropShadow" />
@@ -88,7 +88,7 @@
                   </AnchorPane>
                   <AnchorPane layoutX="200.0" layoutY="200.0" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5">
                      <children>
-                        <Button fx:id="notificationSettings" layoutX="123.0" layoutY="-29.0" mnemonicParsing="false" onAction="#notificationSettingsClick" prefHeight="60.0" prefWidth="786.0" stylesheets="@roomStylesheet.css" text="Notification Settings">
+                        <Button fx:id="notificationSettings" layoutX="123.0" layoutY="-29.0" mnemonicParsing="false" onAction="#notificationSettingsClick" prefHeight="66.0" prefWidth="780.0" stylesheets="@roomStylesheet.css" text="Notification Settings" AnchorPane.bottomAnchor="67.2" AnchorPane.leftAnchor="124.8" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="-28.8">
                            <styleClass>
                               <String fx:value="dataOverviewPane" />
                               <String fx:value="dropShadow" />

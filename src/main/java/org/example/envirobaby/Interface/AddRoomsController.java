@@ -113,7 +113,7 @@ public class AddRoomsController {
             String userId = currentUser.getUserID();
 
             //Creates the new room
-            Room room = currentUser.createRoom(roomName, userId, capacity, ageGroup, maxNoiseLevel, maxTemp, minTemp, maxHum, minHum, currentUser.isCelsius(), false, false, false);
+            Room room = currentUser.createRoom(roomName, userId, capacity, ageGroup, maxNoiseLevel, maxTemp, minTemp, maxHum, minHum, currentUser.isCelsius());
             userExchanger.setCurrentRoom(room);
 
             //Loads the "View rooms" screen

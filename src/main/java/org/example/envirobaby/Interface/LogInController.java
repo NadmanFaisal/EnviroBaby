@@ -16,6 +16,7 @@ import org.example.envirobaby.Entity.User;
 import org.example.envirobaby.Entity.UserExchanger;
 
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LogInController {
@@ -47,7 +48,15 @@ public class LogInController {
                 database = new DatabaseControl();
 
                 if (database.attemptLogIn(userId, userPass)) { //checks if log in is successful
-                    user = new User(userId);
+                    //get stored notification settings from db
+                    ResultSet notifSettings = database.retrieveSystemNotificationSettings(userId);
+                    notifSettings.next();
+                    boolean tempSettings = notifSettings.getBoolean("temp_alert_setting");
+                    boolean humSettings = notifSettings.getBoolean("hum_alert_setting");
+                    boolean noiseSettings = notifSettings.getBoolean("noise_alert_setting");
+
+                    user = new User(userId,tempSettings,humSettings,noiseSettings);
+
                     transferable = UserExchanger.getInstance(); //initialize instance
                     transferable.setInstanceUser(user); // store user in instance to be accessed by all classes
                     homeScreenRedirect(actionEvent);

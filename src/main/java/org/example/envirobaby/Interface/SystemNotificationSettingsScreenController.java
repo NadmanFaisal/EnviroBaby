@@ -9,30 +9,31 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import org.example.envirobaby.Database.DatabaseControl;
+import org.example.envirobaby.Entity.User;
 import org.example.envirobaby.Entity.UserExchanger;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class SystemNotificationSettingsScreenController {
 
     @FXML
     private Button homebutton;
     @FXML
-    private Button tempTurnOFFButton;
-
+    private Button tempNotiTurnOffButton;
     @FXML
-    private Button tempTurnONButton;
-
-
+    private Button tempNotiTurnOnButton;
     @FXML
-    private Button humiTurnONButton;
+    private Button humiNotiTurnOnButton;
     @FXML
-    private Button humiTurnOFFButton;
+    private Button humiNotiTurnOffButton;
     @FXML
-    private Button noiseTurnONButton;
-
+    private Button noiseNotiTurnOnButton;
     @FXML
-    private Button noiseTurnOFFButton;
+    private Button noiseNotiTurnOffButton;
+    @FXML
+    private Button roomNotificationSettings;
 
     @FXML
     private Label tempTXT;
@@ -44,10 +45,12 @@ public class SystemNotificationSettingsScreenController {
     private Label noiseTXT;
 
     private UserExchanger instanceUser;
+    private DatabaseControl database;
 
     @FXML
-    void initialize() {
+    void initialize() throws SQLException {
         instanceUser= UserExchanger.getInstance();
+        database = new DatabaseControl();
     }
     @FXML
     void loadHomeScreen(ActionEvent event) throws IOException {
@@ -65,39 +68,46 @@ public class SystemNotificationSettingsScreenController {
         stage.setScene(scene);
     }
 
-    public void temperatureTurnONButton(ActionEvent actionEvent) {
-        instanceUser.tempNotiON();
+    public void tempNotiOn(ActionEvent actionEvent) throws SQLException {
+        instanceUser.getInstanceUser().setTempNotiStatus(true);
+        updateDatabaseSettings();
     }
 
-    public void temperatureTurnOFFButton(ActionEvent actionEvent) {
-        instanceUser.tempNotiOFF();
+    public void tempNotiOff(ActionEvent actionEvent) throws SQLException {
+
+        instanceUser.getInstanceUser().setTempNotiStatus(false);
+        updateDatabaseSettings();
     }
 
-    public void humidityTurnONButton(ActionEvent actionEvent) {
-        instanceUser.humiNotiON();
+    public void humiNotiOn(ActionEvent actionEvent) throws SQLException {
+
+        instanceUser.getInstanceUser().setHumiNotiStatus(true);
+        updateDatabaseSettings();
     }
 
-    public void humidityTurnOFFButton(ActionEvent actionEvent) {
-        instanceUser.humiNotiOFF();
+    public void humiNotiOff(ActionEvent actionEvent) throws SQLException {
+        instanceUser.getInstanceUser().setHumiNotiStatus(false);
+        updateDatabaseSettings();
     }
 
-    public void noiseTurnONButton(ActionEvent actionEvent) {
-        instanceUser.noiseNotiON();
+    public void noiseNotiOn(ActionEvent actionEvent) throws SQLException {
+        instanceUser.getInstanceUser().setNoiseNotiStatus(true);
+        updateDatabaseSettings();
     }
 
-    public void noiseTurnOFFButton(ActionEvent actionEvent) {
-        instanceUser.noiseNotiOFF();
+    public void noiseNotiOff(ActionEvent actionEvent) throws SQLException {
+        instanceUser.getInstanceUser().setNoiseNotiStatus(false);
+        updateDatabaseSettings();
     }
 
-
-
-    /**
-     * Handles click events for the room notification settings.
-     * Currently, this method does not perform any actions but can be used to implement
-     * functionality related to room settings notifications in the future.
-     *
-     * @param actionEvent the event triggered by clicking the notification settings control
-     */
-
-    public void roomNotificationSettingsClick(ActionEvent actionEvent) {}
+    public void updateDatabaseSettings() throws SQLException {
+        User currentUser = instanceUser.getInstanceUser();
+        database.updateSystemNotificationSettings(currentUser.getUserID(),currentUser.isNoiseNotiStatus(),currentUser.isTempNotiStatus(),currentUser.isHumiNotiStatus());
+    }
+    public void moveToRoom1Screen(ActionEvent actionEvent)  throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("RoomNotificationScreen.fxml"));
+        Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+    }
 }

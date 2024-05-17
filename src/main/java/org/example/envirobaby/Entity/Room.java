@@ -1,5 +1,7 @@
 package org.example.envirobaby.Entity;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.TextField;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.example.envirobaby.Database.DatabaseControl;
@@ -8,7 +10,11 @@ import org.example.envirobaby.Notification.Notification;
 import org.example.envirobaby.Notification.NotificationThreshold;
 import org.example.envirobaby.SensorInteractor.ParameterData;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Room {
@@ -23,9 +29,17 @@ public class Room {
     private int capacity;
     private String ageGroup;
     private Notification alerts;
+    private boolean tempNotif;
+    private boolean humiNotif;
+    private boolean noiseNotif;
+    private ObservableList<Record> records;
+    private String recordViewDate; //allow user to view the same date through different data displays
+    private int terminalTopic;
+
+    DecimalFormat df = new DecimalFormat("#.00");
 
 
-    public Room(String userId, String roomName, int capacity, String ageGroup, String loud, String temp, String humi) throws MqttException, SQLException {
+    public Room(String userId, String roomName, int capacity, String ageGroup, String loud, String temp, String humi, boolean tempNotif, boolean humiNotif, boolean noiseNotif, int terminalTopic) throws MqttException, SQLException {
         this.userId = userId;
         this.roomName = roomName;
         this.capacity = capacity;
@@ -34,6 +48,10 @@ public class Room {
         this.thresholds = new NotificationThreshold();
         this.client = new MQTTReceiver(userId, loud, temp, humi);
         this.sensorReading = client.getReadings();
+        this.tempNotif = tempNotif;
+        this.humiNotif = humiNotif;
+        this.noiseNotif = noiseNotif;
+        this.terminalTopic = terminalTopic;
 
         database = new DatabaseControl();
         
@@ -74,6 +92,32 @@ public class Room {
         }
     }
 
+    public void updateRecordList(String selectedDate) throws SQLException { //retrieve recorded data to display in graph and table
+        List<Record> recordsList = new ArrayList<>();
+        ResultSet recordedData = database.recieveRecordedData(this.userId, this.roomName, selectedDate);
+
+        while (recordedData.next()){
+            String recordTime = recordedData.getString("record_time");
+            int noiseLvl = recordedData.getInt("loud_data");
+            double tempLvl = recordedData.getDouble("temp_data");
+            double humLvl = recordedData.getDouble("hum_data");
+
+            Record newRecord = new Record(recordTime.substring(0,5),noiseLvl,tempLvl,humLvl); //substring used to put sql.Time in HH:MM format
+
+            recordsList.add(newRecord);
+        }
+
+        this.records = FXCollections.observableArrayList(recordsList); //must be observableArrayList for table
+    }
+
+    public void updateRoom(String userId, String newRoomName, String ageGroup, int capacity) throws SQLException {
+        database.updateRoom(this.userId,this.roomName,newRoomName,capacity,ageGroup); //update edited data into db
+        this.roomName=newRoomName; //update current room object
+        this.ageGroup=ageGroup;
+        this.capacity=capacity;
+    }
+
+
     public String getRoomName() {
         return roomName;
     }
@@ -104,5 +148,49 @@ public class Room {
 
     public void setAgeGroup(String ageGroup) {
         this.ageGroup = ageGroup;
+    }
+
+    public ObservableList<Record> getRecords() {
+        return records;
+    }
+
+
+
+    public void settTempNotifON(boolean TempNotif){ //sets the temperature notification status
+        this.tempNotif=TempNotif;
+    }
+    public void setHumiNotifON(boolean humiNotif){ //sets the humidity notification status
+        this.humiNotif=humiNotif;
+    }
+    public void setNoiseNotifON(boolean noiseNotif){ //sets the noise notification status
+        this.noiseNotif=noiseNotif;
+    }
+
+    public boolean isTempNotif() { //Returns the current status of temperature notifications.
+        return this.tempNotif;
+    }
+
+    public boolean isHumiNotif() { //Returns the current status of humidity notifications.
+        return this.humiNotif;
+    }
+
+    public boolean isNoiseNotif() { ////Returns the current status of noise notifications.
+        return this.noiseNotif;
+    }
+
+    public String getRecordViewDate() {
+        return recordViewDate;
+    }
+
+    public void setRecordViewDate(String recordViewDate) {
+        this.recordViewDate = recordViewDate;
+    }
+
+    public int getTerminalTopic() {
+        return terminalTopic;
+    }
+
+    public void setTerminalTopic(int terminalTopic) {
+        this.terminalTopic = terminalTopic;
     }
 }

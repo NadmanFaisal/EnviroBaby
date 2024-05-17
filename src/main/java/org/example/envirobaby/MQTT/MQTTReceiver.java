@@ -21,6 +21,10 @@ public class MQTTReceiver {
     private static final String TEMP_TOPIC_3 = "/envirobaby/room3/temp";
     private static final String HUM_TOPIC_3 = "/envirobaby/room3/humi";
 
+    private static final String LOUD_TOPIC_4 = "/envirobaby/room4/loud";
+    private static final String TEMP_TOPIC_4 = "/envirobaby/room4/temp";
+    private static final String HUM_TOPIC_4 = "/envirobaby/room4/humi";
+
 
     private MQTTClient client;
     private ParameterData readings;
@@ -44,15 +48,15 @@ public class MQTTReceiver {
 
             public void messageArrived(String topic, MqttMessage message){
                     switch (topic) {
-                        case LOUD_TOPIC, LOUD_TOPIC_2, LOUD_TOPIC_3 -> {
+                        case LOUD_TOPIC, LOUD_TOPIC_2, LOUD_TOPIC_3, LOUD_TOPIC_4 -> {
                             readings.setLoudValue(Integer.parseInt(new String(message.getPayload()))); //send received messages to readings object
                             break;
                         }
-                        case TEMP_TOPIC, TEMP_TOPIC_2, TEMP_TOPIC_3 -> {
+                        case TEMP_TOPIC, TEMP_TOPIC_2, TEMP_TOPIC_3, TEMP_TOPIC_4 -> {
                             readings.setTempValue(Double.parseDouble(new String(message.getPayload())));
                             break;
                         }
-                        case HUM_TOPIC, HUM_TOPIC_2, HUM_TOPIC_3 -> {
+                        case HUM_TOPIC, HUM_TOPIC_2, HUM_TOPIC_3, HUM_TOPIC_4 -> {
                             readings.setHumValue(Double.parseDouble(new String(message.getPayload())));
                             break;
                         }
