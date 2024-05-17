@@ -49,19 +49,20 @@ public class DataTableController {
             dateSelect.getSelectionModel().select(0);
         } else { //otherwise, display the selected date
             dateSelect.setValue(currentRoom.getRecordViewDate());
+            setTable(dateSelect.getValue());
         }
-
-        setTable(dateSelect.getValue());
     }
 
-    public void setDateSelect() throws SQLException { //get the dates where data has been recorded for the room and put them as options in the combobox
+    public void setDateSelect() throws SQLException {
+        currentRoom = instanceUser.getCurrentRoom();
 
+        dateSelect.getItems().add("--Select Date--");
         ResultSet rs = database.recieveRecordDates(currentRoom.getUserId(), currentRoom.getRoomName());
         while (rs.next()) {
             String date = rs.getString("record_date");
             dateSelect.getItems().add(date);
         }
-    }
+    } //set up combo box values
 
     public void setTable(String date) throws SQLException{
         instanceUser.getCurrentRoom().updateRecordList(date); //ensure most recent version of recordList
@@ -79,9 +80,11 @@ public class DataTableController {
     }
 
     public void updateDate(ActionEvent actionEvent) throws SQLException { //when user selects a date from the combobox
-        String date = dateSelect.getValue();
-        instanceUser.getCurrentRoom().setRecordViewDate(date);
-        instanceUser.getCurrentRoom().updateRecordList(date); //update observable array to contain records from that date
-        records.setItems(instanceUser.currentRoom.getRecords()); //display records from that date
+        if(!dateSelect.getValue().equals("--Select Date--")) {
+            String date = dateSelect.getValue();
+            instanceUser.getCurrentRoom().setRecordViewDate(date);
+            instanceUser.getCurrentRoom().updateRecordList(date); //update observable array to contain records from that date
+            records.setItems(instanceUser.currentRoom.getRecords()); //display records from that date
+        }
     }
 }

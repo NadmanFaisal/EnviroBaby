@@ -33,9 +33,9 @@ public class DataGraphController {
             dateSelect.getSelectionModel().select(0);
         } else {  //else display selected date's records
             dateSelect.setValue(currentRoom.getRecordViewDate());
+            setRecordsGraph(dateSelect.getValue());
         }
 
-        setRecordsGraph(dateSelect.getValue());
     }
 
     public void setRecordsGraph(String date) throws SQLException {
@@ -45,27 +45,31 @@ public class DataGraphController {
         XYChart.Data<String,Number> plotGraph;
 
         XYChart.Series graphData = new XYChart.Series();
+        String selectedView = currentUser.getInstanceUser().getSelectedDataView();
 
 
-            if(currentUser.getInstanceUser().getSelectedDataView().equals("loud")) {  //if selectedDataView is the loud graph, set data to display noise records
-                for(int i=0; i<currentRoom.getRecords().size(); i++) { // for each record
-                    String time = currentRoom.getRecords().get(i).getRecordTime();
-                    int noise = currentRoom.getRecords().get(i).getRecordNoise();
-                    plotGraph = new XYChart.Data<>(time, noise);
-                    graphData.getData().add(plotGraph);
+            switch (selectedView) {
+                case "loud" -> {  //if selectedDataView is the loud graph, set data to display noise records
+                    for (int i = 0; i < currentRoom.getRecords().size(); i++) { // for each record
+                        String time = currentRoom.getRecords().get(i).getRecordTime();
+                        int noise = currentRoom.getRecords().get(i).getRecordNoise();
+                        plotGraph = new XYChart.Data<>(time, noise);
+                        graphData.getData().add(plotGraph);
+                    }
                 }
-            } else if (currentUser.getInstanceUser().getSelectedDataView().equals("hum")) { //else if selectedDataView is the hum graph, set data to display hum records
-                for(int i=0; i<currentRoom.getRecords().size(); i++) { // for each record
-                    String time = currentRoom.getRecords().get(i).getRecordTime();
-                    double hum = currentRoom.getRecords().get(i).getRecordHum();
-                    plotGraph = new XYChart.Data<>(time, hum);
-                    graphData.getData().add(plotGraph);
+                case "hum" -> { //else if selectedDataView is the hum graph, set data to display hum records
+                    for (int i = 0; i < currentRoom.getRecords().size(); i++) { // for each record
+                        String time = currentRoom.getRecords().get(i).getRecordTime();
+                        double hum = currentRoom.getRecords().get(i).getRecordHum();
+                        plotGraph = new XYChart.Data<>(time, hum);
+                        graphData.getData().add(plotGraph);
+                    }
                 }
-            } else if(currentUser.getInstanceUser().getSelectedDataView().equals("temp")) {  //else if selectedDataView is the temp graph, set data to display temp records
+                case "temp" -> {  //else if selectedDataView is the temp graph, set data to display temp records
 
                     if (currentUser.getInstanceUser().isCelsius()) { //display temp values depending on temperature unit format
 
-                        for(int i=0; i<currentRoom.getRecords().size(); i++) { // for each record
+                        for (int i = 0; i < currentRoom.getRecords().size(); i++) { // for each record
                             String time = currentRoom.getRecords().get(i).getRecordTime();
                             double tempC = currentRoom.getRecords().get(i).getRecordTemp();
                             plotGraph = new XYChart.Data<>(time, tempC);
@@ -73,13 +77,14 @@ public class DataGraphController {
                         }
                     } else {
 
-                        for(int i=0; i<currentRoom.getRecords().size(); i++) { // for each record
+                        for (int i = 0; i < currentRoom.getRecords().size(); i++) { // for each record
                             String time = currentRoom.getRecords().get(i).getRecordTime();
                             double tempF = currentRoom.getRecords().get(i).getRecordTempF();
                             plotGraph = new XYChart.Data<>(time, tempF);
                             graphData.getData().add(plotGraph);
                         }
                     }
+                }
             }
             recordsGraph.getData().setAll(graphData); //plot graph
         }
@@ -87,17 +92,20 @@ public class DataGraphController {
     public void setDateSelect() throws SQLException {
         currentRoom = currentUser.getCurrentRoom();
 
+        dateSelect.getItems().add("--Select Date--");
         ResultSet rs = database.recieveRecordDates(currentRoom.getUserId(), currentRoom.getRoomName());
         while (rs.next()) {
             String date = rs.getString("record_date");
             dateSelect.getItems().add(date);
         }
-    } //set up combo box values
+    } //set up combo box values //set up combo box values
 
     @FXML
     public void updateDate(ActionEvent actionEvent) throws SQLException {
-        String date = dateSelect.getValue();
-        currentUser.getCurrentRoom().setRecordViewDate(date);
-        setRecordsGraph(date);
+        if (!dateSelect.getValue().equals("--Select Date--")) {
+            String date = dateSelect.getValue();
+            currentUser.getCurrentRoom().setRecordViewDate(date);
+            setRecordsGraph(date);
+        }
     } //show graph depicting data from selected date
 }
