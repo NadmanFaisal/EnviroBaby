@@ -3,16 +3,16 @@ package org.example.envirobaby;
 import java.sql.*;
 
 public class DatabaseControl {
-    String jdbcURL;
-    String username;
-    String password;
+    String jdbcURL = "";
+    String username = "";
+    String password = "";
     Connection connection;
     Statement statement;
 
     public DatabaseControl() throws SQLException {
-        String jdbcURL = "";
-        String username = "";
-        String password = "";
+        String jdbcURL = "jdbc:postgresql://65.19.141.67:5432/alevka_envirobaby";
+        String username = "alevka_envbUser";
+        String password = "Vzb3_783r";
         connection = DriverManager.getConnection(jdbcURL,username,password);
         statement = connection.createStatement(); //initialise statement
     }
@@ -44,10 +44,10 @@ public class DatabaseControl {
         return rs;
     }
 
-    public void addRoom(String roomName, String userID, int capacity, String ageGroup, int maxNoise, double maxTemp, double minTemp, double maxHum, double minHum, boolean celsius, boolean noiseAlert, boolean tempAlert, boolean humAlert) throws SQLException {
+    public void addRoom(String roomName, String userID, int capacity, String ageGroup, int maxNoise, double maxTemp, double minTemp, double maxHum, double minHum, boolean celsius, boolean noiseAlert, boolean tempAlert, boolean humAlert, int topicNum) throws SQLException {
 
-        String insertSQL = String.format("INSERT INTO ROOM(room_name, userid,capacity,age_group,maxnoise,maxtemp,mintemp,maxhum,minhum,celsius, noise_alerts,temp_alerts,hum_alerts) " +
-                "VALUES('%s','%s',%d,'%s',%d,%f,%f,%f,%f,%s,%s,%s,%s)", roomName,userID,capacity,ageGroup,maxNoise,maxTemp,minTemp,maxHum,minHum,celsius,noiseAlert,tempAlert,humAlert);
+        String insertSQL = String.format("INSERT INTO ROOM(room_name, userid,capacity,age_group,maxnoise,maxtemp,mintemp,maxhum,minhum,celsius, noise_alerts,temp_alerts,hum_alerts,terminal_topic_num) " +
+                "VALUES('%s','%s',%d,'%s',%d,%f,%f,%f,%f,%s,%s,%s,%s,%d)", roomName,userID,capacity,ageGroup,maxNoise,maxTemp,minTemp,maxHum,minHum,celsius,noiseAlert,tempAlert,humAlert,topicNum);
         statement.executeUpdate(insertSQL); //save room data and settings into row
     }
 
@@ -60,6 +60,11 @@ public class DatabaseControl {
         String updateQuery = String.format("UPDATE ROOM SET room_name='%s', capacity=%d,age_group='%s'" +
                 "WHERE userid='%s' AND room_name='%s'", roomName,capacity,ageGroup,userId,currentRoom);
         statement.executeUpdate(updateQuery); //edit room data
+    }
+    public ResultSet recieveRegisteredTerminalTopics(String userId) throws SQLException {
+        String sqlQuery = String.format("SELECT terminal_topic_num FROM ROOM WHERE userid='%s'",userId);
+        ResultSet rs = statement.executeQuery(sqlQuery);
+        return rs;
     }
 
     public void updateAlertToggle(String userId, String roomName, boolean noiseAlert, boolean tempAlert, boolean humAlert) throws SQLException {
@@ -95,7 +100,7 @@ public class DatabaseControl {
                 " WHERE userid='%s' AND room_name='%s' AND record_date='%s' ORDER BY record_time", userId,roomName,recordDate);
         ResultSet rs = statement.executeQuery(sqlQuery);
         return rs;
-    }
+    } //return data stored in the db
 
 
     public void addChild(String userId, String roomName, String childName, int age) throws SQLException {

@@ -9,7 +9,9 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -63,8 +65,9 @@ public class User implements Runnable {
             boolean noiseAlerts = roomResults.getBoolean("noise_alerts");
             boolean tempAlerts = roomResults.getBoolean("temp_alerts");
             boolean humAlerts = roomResults.getBoolean("hum_alerts");
+            int terminalNum= roomResults.getInt("terminal_topic_num");
 
-            Room newRoom = new Room(userID,roomName,capacity,ageGroup, "/envirobaby/room" + (registeredRooms.size() + 1) + "/loud", "/envirobaby/room" +( registeredRooms.size() +1) + "/temp", "/envirobaby/room" + (registeredRooms.size() +1) + "/humi", tempAlerts, humAlerts, noiseAlerts); //create new room object using these instances
+            Room newRoom = new Room(userID,roomName,capacity,ageGroup, "/envirobaby/room" + terminalNum + "/loud", "/envirobaby/room" + terminalNum + "/temp", "/envirobaby/room" + terminalNum + "/humi", tempAlerts, humAlerts, noiseAlerts, terminalNum); //create new room object using these instances
             newRoom.getThresholds().setAllThresholds(maxNoise,maxtemp,mintemp,maxHum,minHum); //update the new room objects thresholds to the stored value
 
             //initialise notification toggle and celsius when implemented
@@ -80,16 +83,43 @@ public class User implements Runnable {
     public Room createRoom(String roomName, String userId, int capacity, String ageGroup,
                                                             int maxNoise, double maxTemp, double minTemp, double maxHum,
                                                             double minHum, boolean celsius) throws SQLException, MqttException {
-        Room room = new Room(userId, roomName, capacity, ageGroup, "/envirobaby/room" + (rooms.size() + 1) + "/loud", "/envirobaby/room" + (rooms.size() + 1) + "/temp", "/envirobaby/room" + (rooms.size() + 1) + "/humi", true,true,true);
+
+        ResultSet usedTopics = database.recieveRegisteredTerminalTopics(this.userID);
+        List<Integer> topicsInUse = new ArrayList<>();
+        int topicNum=0;
+        for (int i=1; i<=4; i++) {
+            while (usedTopics.next()){
+                topicsInUse.add(usedTopics.getInt("terminal_topic_num"));
+            }
+
+            if(!topicsInUse.contains(i)) {
+                topicNum = i;
+                break;
+            }
+        }
+
+        Room room = new Room(userId, roomName, capacity, ageGroup, "/envirobaby/room" + topicNum + "/loud", "/envirobaby/room" + topicNum + "/temp", "/envirobaby/room" + topicNum + "/humi", true,true,true, topicNum);
         room.getThresholds().setAllThresholds(maxNoise, maxTemp, minTemp, maxHum, minHum);
         database.addRoom(roomName, userID, capacity, ageGroup, maxNoise, maxTemp,
-                minTemp, maxHum, minHum, celsius, true, true, true);
+                minTemp, maxHum, minHum, celsius, true, true, true, topicNum);
 
         // Generates a room number and adds the room to the user's rooms
         Integer roomCount= rooms.size() + 1;
         rooms.put(roomCount, room);
 
         return room;
+    }
+
+    public void deleteRoom(int roomHashmapKey) throws SQLException { // take the hashmap index of the room
+        database.removeRoom(rooms.get(roomHashmapKey).getRoomName(),this.userID);
+        rooms.remove(roomHashmapKey);
+
+        for(int i= roomHashmapKey; i<=rooms.size(); i++){ //when room is removed, reorder hashmap indexes following it
+            int oldKey=i+1;
+            Room room= rooms.get(oldKey);
+            rooms.remove(oldKey);
+            rooms.put(i,room);
+        }
     }
 
     public void sendAlerts(){
