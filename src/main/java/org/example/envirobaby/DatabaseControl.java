@@ -10,9 +10,9 @@ public class DatabaseControl {
     Statement statement;
 
     public DatabaseControl() throws SQLException {
-        String jdbcURL = "jdbc:postgresql://65.19.141.67:5432/alevka_envirobaby";
-        String username = "alevka_envbUser";
-        String password = "Vzb3_783r";
+        String jdbcURL = "";
+        String username = "";
+        String password = "";
         connection = DriverManager.getConnection(jdbcURL,username,password);
         statement = connection.createStatement(); //initialise statement
     }
@@ -65,7 +65,7 @@ public class DatabaseControl {
         String sqlQuery = String.format("SELECT terminal_topic_num FROM ROOM WHERE userid='%s'",userId);
         ResultSet rs = statement.executeQuery(sqlQuery);
         return rs;
-    }
+    } //return the room numbers the user already has in use for terminal topics
 
     public void updateAlertToggle(String userId, String roomName, boolean noiseAlert, boolean tempAlert, boolean humAlert) throws SQLException {
         String updateQuery = String.format("UPDATE ROOM SET noise_alerts=%s, temp_alerts=%s,hum_alerts=%s" +
