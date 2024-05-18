@@ -56,10 +56,10 @@ public class Notification {
     public void createNotification(String title, String message, String notifType) {
 
         long currentTime = System.currentTimeMillis();
-        long tempHumMinNotificationInterval = 10000L;
+        long notificationInterval = 10000L;
         long timeDif = 0L;
 
-        switch (notifType) {
+        switch (notifType) { // Calculates the time difference between the current time and the last notification time, based on the notification type
             case "maxTemp":
                 timeDif= currentTime-lastMaxTempAlert;
             case "minTemp":
@@ -72,14 +72,14 @@ public class Notification {
                 timeDif= currentTime-lastNoiseAlert;
                 }
 
-        if (timeDif > tempHumMinNotificationInterval) {
+        if (timeDif > notificationInterval) { // Checks if the time difference exceeds the minimum notification interval
             Platform.runLater(() -> {
 
                 // Source for the code:- https://javadoc.io/doc/org.controlsfx/controlsfx/8.40.16/org/controlsfx/control/Notifications.html
                 Notifications notifications = Notifications.create().title(title).text(message).graphic(null).hideAfter(Duration.seconds(7)).position(Pos.BOTTOM_RIGHT);
                 notifications.showWarning();
             });
-            switch (notifType) {
+            switch (notifType) { // Updates the last notification time to the current time, based on the notification type
                 case "maxTemp":
                     lastMaxTempAlert = currentTime;
                 case "minTemp":
