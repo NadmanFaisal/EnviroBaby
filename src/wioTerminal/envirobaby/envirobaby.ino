@@ -24,8 +24,8 @@ String room4BuzzerCommand;
 DHT dht(DHTPIN, DHTTYPE);  // initialize DHT sensor
 TFT_eSPI tft;              // initialize TFT display
 
-WiFiClient enviroClient;            // calling wifi obeject
-PubSubClient client(enviroClient);  // calling mqtt obejct
+WiFiClient enviroClient;            // calling wifi object
+PubSubClient client(enviroClient);  // calling mqtt object
 
 
 /***********************Setup******************************/
@@ -174,7 +174,7 @@ void updateScreen(float temp, float humi, int loud) {
   tft.setCursor((tft.width() - tft.textWidth(projectTITLE)) / 2, 10);  // set the text position
   tft.println(projectTITLE);
 
-  // draw three little boxes for temperature, humidity, and loudness
+  // draw three little boxes for temperature, humidity and loudness
   int boxWidth = tft.width() - 20;  // adjusted to leave some margin
   int boxHeight = 50;
   int startX = 10;  // adjusted to leave some margin
@@ -278,7 +278,7 @@ void drawValueBox(int x, int y, int width, int height, String label, String valu
 
 /***********************mqtt callback******************************/
 
-void callback(char* topic, byte* payload, unsigned int length) {  // callback method in order to recieve messages from mqtt 
+void callback(char* topic, byte* payload, unsigned int length) {  // callback method in order to receive messages from mqtt
 
   Serial.print("Message arrived [");
   Serial.print(topic);

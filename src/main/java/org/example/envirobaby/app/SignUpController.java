@@ -47,7 +47,7 @@ public class SignUpController {
             if (userId.length() <= 15) {
                 boolean signUpSuccessful = database.signUpUser(userId,userPass);
                 if (signUpSuccessful) {  //checks if username is available and creates new User row in database if it is
-                    user = new User(userId);
+                    user = new User(userId, true,true,true);
                     transferable = UserExchanger.getInstance(); //initialize instance
                     transferable.setInstanceUser(user); // store user in instance to be accessed by all classes
                     homeScreenRedirect(actionEvent);
