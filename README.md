@@ -58,13 +58,13 @@ let's follow the step to establish a pin connection between the sensors and Wio 
 - Now we have enough knowledge about the pin connections.
 - Below we can see the defined pin in Arduino code specifically in the wio_pin.h tab.
 
-<img height="200" src="D:\GitLab Home\EnviroBaby\pictures\Screenshot 2024-05-18 155739.png" width="600"/>
+<img height="200" src="pictures/Screenshot 2024-05-18 155739.png" width="600"/>
 
 - Loudness sensor should be connected to pin A0, and Temp&Hum sensor should be connected to A4 pin.
 Now, let’s connect the sensor to Wio according to the pin declaration.
 - As we know ([Get started with Wio Terminal](https://wiki.seeedstudio.com/Wio-Terminal-Getting-Started/)) PIN A0 is located on the right port of Wio Terminal, lets connect the Loudness sensor to it (snippet below for better understanding).
 
-<img height="300" src="D:\GitLab Home\EnviroBaby\pictures\20240518_142948986_iOS.jpg" width="200"/>
+<img height="300" src="pictures/20240518_142948986_iOS.jpg" width="200"/>
 
 - Let’s connect our second sensor Temp&Humi Sensor to PIN A4, assuming we don’t have the Wio Accessories (Battery) we have to connect the PINs manually, kindly refer to Pinout Diagram in [Get started with Wio Terminal](https://wiki.seeedstudio.com/Wio-Terminal-Getting-Started/).
 - Steps to connect the Temp&Humi sensor;  <br> let’s have the format in this way (_Wire Color, Pinout Number_),
@@ -73,11 +73,11 @@ Now, let’s connect the sensor to Wio according to the pin declaration.
   <br>- (White, 18);
   <br>- (Yellow, 22);
 
-<img height="300" src="D:\GitLab Home\EnviroBaby\pictures\20240518_143438794_iOS.jpg" width="200"/>
+<img height="300" src="pictures/20240518_143438794_iOS.jpg" width="200"/>
 
 - Assuming we have the Wio Accessories (Battery), we connect the sensor to the right side in the first port (PIN A4).
 
-<img height="300" src="D:\GitLab Home\EnviroBaby\pictures\20240518_150148727_iOS.jpg" width="200"/>
+<img height="300" src="pictures/20240518_150148727_iOS.jpg" width="200"/>
 
 - We are ready for the next step!
 
@@ -91,7 +91,7 @@ Here is a step by step guide: <br>
 - Navigate to the tab named ‘_mqtt_wifi.cpp_’.
 - Lets notice the ‘_variable declarations_’ part:
 
-<img height="200" src="D:\GitLab Home\EnviroBaby\pictures\Screenshot 2024-05-18 142620.png" width="600"/>
+<img height="200" src="pictures/Screenshot 2024-05-18 142620.png" width="600"/>
 
 - The above snippet part is declared for one singular Wio terminal, specifically room 1. 
 We can notice it by looking through the variable declarations:
@@ -105,13 +105,13 @@ Additionally SSID and PASSWORD should be declared, protected wifi networks won't
 - Next step involves connecting the Wio Terminal to your computer, make sure to have your Wio Terminal turned on.
 - Once connected to the computer, Arduino IDE should show the specific port the Wio Terminal is connected to, simply select that port by clicking on the option.
 
-<img height="200" src="D:\GitLab Home\EnviroBaby\pictures\Screenshot 2024-05-18 145736.png" width="600"/>
+<img height="200" src="pictures/Screenshot 2024-05-18 145736.png" width="600"/>
 
 - It's time to compile, once the WiFi variables are declared and topics are updated according to rooms (topic change step below) click the arrow button (red box) on top left corner of Arduino IDE.
 - Once compiled the output terminal should print a message saying ‘_Verify successful_’.
 - Next part is opening the ‘_Serial Monitor_’ window in order to start the setup, the button to start the serial monitor (marked in red below) is on the top right corner of Arduino IDE.
 
-<img height="200" src="D:\GitLab Home\EnviroBaby\pictures\Screenshot 2024-05-18 151345.png" width="600"/>
+<img height="200" src="pictures/Screenshot 2024-05-18 151345.png" width="600"/>
 
 - **CONGRATULATION!** The Wio Terminal should start once connected to the WiFi.
 
@@ -127,18 +127,18 @@ const char* mqttRoomBuzzer = "/envirobaby/room1/buzzer";
 
 - Let's install it for room 2, we follow the same steps as **Wio Terminal** but we make few changes in these ‘_variable declarations_’ in ‘_mqtt_wifi.cpp_’.
 <br >Here is a solved version of the code snippet that needs to be replaced for room 2;
-````
+```
 const char* mqttMainTopic = "/envirobaby/room2/";
 const char* mqttClientId = "EnviroBabyWIoRoom2";
 const char* mqttRoomBuzzer = "/envirobaby/room2/buzzer";
-````
+```
 
 - For Room 3:
-````
+```
 const char* mqttMainTopic = "/envirobaby/room3/";
 const char* mqttClientId = "EnviroBabyWIoRoom3";
 const char* mqttRoomBuzzer = "/envirobaby/room3/buzzer";
-````
+```
 If we notice carefully we can see that every time we try to install a new Wio Terminal we change the room number according to the room in the real world.
 
 **N.B.:** Let’s start with an example; we have three rooms 1, 2 and 3.
