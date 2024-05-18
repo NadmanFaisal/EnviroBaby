@@ -6,7 +6,7 @@ PubSubClient client(enviroClient);  // calling mqtt obejct using wifi client
 /*-------------------------------------------------------------------------*/
 
 const char* ssid = "ssid"; // ssid of wifi
-const char* password = "pass"; //password of wifi
+const char* password = "password"; //password of wifi
 
 const char* mqttServer = "broker.hivemq.com"; // mqtt server address
 const int mqttPort = 1883; // default port for hivemq broker
@@ -43,21 +43,20 @@ void connectWiFi() {
 // establish connection with mqtt broker function
 void connectMQTT() { 
 
+  while (!client.connected()) {
+
   Serial.println("Connecting to MQTT...");
-  client.connect(mqttClientId, mqttUsername, mqttPassword); // connects to MQTT broker
-  client.subscribe(mqttSubTempUnit); // subscribe to broker for temp. change unit
-  client.subscribe(mqttRoomBuzzer); // subscribe to broker for buzzer
-  Serial.println("Connected to MQTT broker");
-  Serial.println(String("Broker Info- ") + "Server: " + mqttServer + " Port: " + mqttPort); // printing mqtt broker connection info
 
-
-  while (!client.connected()) { // attempt to connect to the MQTT broker
-    client.connect(mqttClientId, mqttUsername, mqttPassword); // connects to MQTT broker
+  if (client.connect(mqttClientId, mqttUsername, mqttPassword)) { // connects to MQTT broker
     client.subscribe(mqttSubTempUnit); // subscribe to broker for temp. change unit
     client.subscribe(mqttRoomBuzzer); // subscribe to broker for buzzer
-    Serial.println("Connected to MQTT broker");
+    Serial.println("Connected to MQTT broker"); // connetion status
+    Serial.println(String("Broker Info- ") + "Server: " + mqttServer + " Port: " + mqttPort); // printing mqtt broker connection info
+    } else {
+      Serial.print("Failed connection to MQTT.");
+      delay(3000);
+    } 
   }
-  delay(3000);
 }
 
 /*-------------------------------------------------------------------------*/
