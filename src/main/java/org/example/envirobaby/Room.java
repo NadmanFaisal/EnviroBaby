@@ -13,8 +13,6 @@ import java.util.concurrent.TimeUnit;
 
 public class Room {
     private static DatabaseControl database;
-
-
     private final NotificationThreshold thresholds;
     private final ParameterData sensorReading;
     private final MQTTReceiver client;
@@ -23,8 +21,6 @@ public class Room {
     private int capacity;
     private String ageGroup;
     private Notification alerts;
-    private long lastNotificationTime;
-
 
 
     DecimalFormat df = new DecimalFormat("#.00");
@@ -39,11 +35,11 @@ public class Room {
         this.thresholds = new NotificationThreshold();
         this.client = new MQTTReceiver(userId, loud, temp, humi);
         this.sensorReading = client.getReadings();
-        this.lastNotificationTime = 0L;
 
         database = new DatabaseControl();
-        
+
     }
+
     public void updateThreshold(TextField textField) throws SQLException { // method that updates the threshold value
         String thresholdTextValue = textField.getText(); // gets and stores the string value from textField
 
@@ -112,10 +108,6 @@ public class Room {
         this.ageGroup = ageGroup;
     }
 
-    public long getLastNotificationTime() { return lastNotificationTime; }
+    public Notification getAlerts() { return alerts; }
 
-    public Notification getAlerts() {return alerts; }
-
-    public void setLastNotificationTime(long lastNotificationTime) { this.lastNotificationTime = lastNotificationTime; }
 }
-
