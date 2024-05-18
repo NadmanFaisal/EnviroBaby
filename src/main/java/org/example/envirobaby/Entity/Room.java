@@ -19,8 +19,6 @@ import java.util.List;
 
 public class Room {
     private static DatabaseControl database;
-
-
     private final NotificationThreshold thresholds;
     private final ParameterData sensorReading;
     private final MQTTReceiver client;
@@ -54,8 +52,9 @@ public class Room {
         this.terminalTopic = terminalTopic;
 
         database = new DatabaseControl();
-        
+
     }
+
     public void updateThreshold(TextField textField) throws SQLException { // method that updates the threshold value
         String thresholdTextValue = textField.getText(); // gets and stores the string value from textField
 
@@ -150,6 +149,8 @@ public class Room {
         this.ageGroup = ageGroup;
     }
 
+    public Notification getAlerts() { return alerts; }
+
     public ObservableList<Record> getRecords() {
         return records;
     }
@@ -193,4 +194,5 @@ public class Room {
     public void setTerminalTopic(int terminalTopic) {
         this.terminalTopic = terminalTopic;
     }
+
 }

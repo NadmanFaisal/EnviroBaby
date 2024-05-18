@@ -1,5 +1,7 @@
 package org.example.envirobaby.Entity;
 
+import javafx.application.Platform;
+import javafx.scene.control.Button;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.example.envirobaby.Database.DatabaseControl;
 import org.example.envirobaby.MQTT.MQTTSender;
@@ -24,7 +26,6 @@ public class User implements Runnable {
     private DatabaseControl database;
     private HashMap<Integer,Room> rooms;
     private Room room;
-    private Notification alerts;
     private boolean celsius;
 
     private MQTTSender sender;
@@ -40,7 +41,6 @@ public class User implements Runnable {
     public User(String userId, boolean tempNotiStatus, boolean humiNotiStatus, boolean noiseNotiStatus) throws SQLException, MqttException {
         database = new DatabaseControl();
         this.userID = userId;
-        this.alerts = new Notification();
         this.celsius = true;
         setRooms(userId);
         this.tempNotiStatus = tempNotiStatus; //default settings for the system temperature notifications
@@ -83,8 +83,8 @@ public class User implements Runnable {
 
     // Creates a room based on the specified parameters, adds it to the user's rooms, and stores it to the database
     public Room createRoom(String roomName, String userId, int capacity, String ageGroup,
-                                                            int maxNoise, double maxTemp, double minTemp, double maxHum,
-                                                            double minHum, boolean celsius) throws SQLException, MqttException {
+                           int maxNoise, double maxTemp, double minTemp, double maxHum,
+                           double minHum, boolean celsius) throws SQLException, MqttException {
 
         ResultSet usedTopics = database.recieveRegisteredTerminalTopics(this.userID);
         List<Integer> topicsInUse = new ArrayList<>();
@@ -132,38 +132,35 @@ public class User implements Runnable {
             double humLvl = room.getSensorReading().getHumValue();
             String tempMsg = df.format(tempLvl) +"C";
 
+
+
             if (!celsius) {
                 tempMsg = df.format((tempLvl * (9/5)) + 32) + "F";
             }
 
             //only send notifications if above/below threshold AND if it isn't the same value as the last sent notification to avoid duplicates
             // temperature alerts
-            if (tempNotiStatus && room.isTempNotif()) { //Condition triggers the temperature notifications
-                if (tempLvl > room.getThresholds().getTempUpperBound() && tempLvl != alerts.getLastMaxTempAlert()) {
-                alerts.createNotification("Temperature notification", "TEMPERATURE IN " + room.getRoomName().toUpperCase() + " EXCEEDS THRESHOLD: " + tempMsg);
-                alerts.setLastMaxTempAlert(tempLvl);
-                } else if (tempLvl < room.getThresholds().getTempLowerBound() && tempLvl != alerts.getLastMinTempAlert()) {
-                alerts.createNotification("Temperature notification", "TEMPERATURE IN " + room.getRoomName().toUpperCase() +  " BELOW THRESHOLD: " + tempMsg);
-                alerts.setLastMinTempAlert(tempLvl);
+            if (tempNotiStatus && room.getAlerts().isTempNotifOn()) { //Condition triggers the temperature notifications
+                if (tempLvl > room.getThresholds().getTempUpperBound()) {
+                    room.getAlerts().createNotification("Temperature notification", "TEMPERATURE IN " + room.getRoomName().toUpperCase() + " EXCEEDS THRESHOLD: " + tempMsg,"maxTemp");
+                } else if (tempLvl < room.getThresholds().getTempLowerBound()) {
+                    room.getAlerts().createNotification("Temperature notification", "TEMPERATURE IN " + room.getRoomName().toUpperCase() + " EXCEEDS THRESHOLD: " + tempMsg, "minTemp");
                 }
             }
 
             // humidity alerts
-            if (humiNotiStatus && room.isHumiNotif()) { //Condition triggers the humidity notifications
-                if (humLvl > room.getThresholds().getHumUpperBound() && humLvl != alerts.getLastMaxHumAlert()) {
-                alerts.createNotification("Humidity notification", "HUMIDITY IN "  + room.getRoomName().toUpperCase() +  " EXCEEDS THRESHOLD: " + df.format(humLvl) + "%");
-                alerts.setLastMaxHumAlert(humLvl);
-                } else if (humLvl < room.getThresholds().getHumLowerBound() && humLvl != alerts.getLastMinHumAlert()) {
-                alerts.createNotification("Humidity notification", "HUMIDITY IN "  + room.getRoomName().toUpperCase() +  " BELOW THRESHOLD: " + df.format(humLvl) + "%");
-                alerts.setLastMinHumAlert(humLvl);
+            if (humiNotiStatus && room.getAlerts().isHumiNotifOn()) { //Condition triggers the humidity notifications
+                if (humLvl > room.getThresholds().getHumUpperBound()) {
+                    room.getAlerts().createNotification("Humidity notification", "HUMIDITY IN "  + room.getRoomName().toUpperCase() +  " EXCEEDS THRESHOLD: " + df.format(humLvl) + "%","maxHum");
+                } else if (humLvl < room.getThresholds().getHumLowerBound()) {
+                    room.getAlerts().createNotification("Humidity notification", "HUMIDITY IN "  + room.getRoomName().toUpperCase() +  " EXCEEDS THRESHOLD: " + df.format(humLvl) + "%","minHum");
                 }
             }
 
             // noise alerts
-            if (noiseNotiStatus && room.isNoiseNotif()) { //Condition triggers the noise notifications
-                if (noiseLvl > room.getThresholds().getLoudThreshold() && noiseLvl != alerts.getLastNoiseAlert()) {
-                alerts.createNotification("Noise notification", "NOISE THRESHOLD IN "  + room.getRoomName().toUpperCase() + " CROSSED: " + noiseLvl + " db");
-                alerts.setLastNoiseAlert(noiseLvl);
+            if (noiseNotiStatus && room.getAlerts().isNoiseNotifOn()) { //Condition triggers the noise notifications
+                if (noiseLvl > room.getThresholds().getLoudThreshold()) {
+                    room.getAlerts().createNotification("Noise notification", "NOISE THRESHOLD IN "  + room.getRoomName().toUpperCase() + " CROSSED: " + noiseLvl + " db", "maxNoise");
                 }
             }
         }
@@ -263,7 +260,7 @@ public class User implements Runnable {
 
         // Create a ScheduleExecutorService for storing records
         ScheduledExecutorService storeData = Executors.newSingleThreadScheduledExecutor();
-        notificationScheduler.scheduleAtFixedRate(this::recordData, delay, 30, TimeUnit.MINUTES);
+        storeData.scheduleAtFixedRate(this::recordData, delay, 30, TimeUnit.MINUTES);
         // starts recording data every 30 minutes after an initial delay.
     }
 }
