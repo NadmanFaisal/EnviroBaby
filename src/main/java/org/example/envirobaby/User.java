@@ -22,7 +22,6 @@ public class User implements Runnable {
     private DatabaseControl database;
     private HashMap<Integer,Room> rooms;
     private Room room;
-    private Notification alerts;
     private boolean celsius;
 
     private MQTTSender sender;
@@ -38,7 +37,6 @@ public class User implements Runnable {
     public User(String userId, boolean tempNotiStatus, boolean humiNotiStatus, boolean noiseNotiStatus) throws SQLException, MqttException {
         database = new DatabaseControl();
         this.userID = userId;
-        this.alerts = new Notification();
         this.celsius = true;
         setRooms(userId);
         this.tempNotiStatus = tempNotiStatus; //default settings for the system temperature notifications
@@ -144,7 +142,6 @@ public class User implements Runnable {
                 alerts.createNotification("Temperature notification", "TEMPERATURE IN " + room.getRoomName().toUpperCase() +  " BELOW THRESHOLD: " + tempMsg);
                 alerts.setLastMinTempAlert(tempLvl);
                 }
-            }
 
             // humidity alerts
             if (humiNotiStatus && room.isHumiNotif()) { //Condition triggers the humidity notifications
@@ -155,7 +152,6 @@ public class User implements Runnable {
                 alerts.createNotification("Humidity notification", "HUMIDITY IN "  + room.getRoomName().toUpperCase() +  " BELOW THRESHOLD: " + df.format(humLvl) + "%");
                 alerts.setLastMinHumAlert(humLvl);
                 }
-            }
 
             // noise alerts
             if (noiseNotiStatus && room.isNoiseNotif()) { //Condition triggers the noise notifications
@@ -165,7 +161,6 @@ public class User implements Runnable {
                 }
             }
         }
-    }
 
     public void recordData() {
         for (int i =1 ; i <= rooms.size(); i++){

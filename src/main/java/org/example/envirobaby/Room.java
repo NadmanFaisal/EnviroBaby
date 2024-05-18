@@ -18,8 +18,6 @@ import java.util.concurrent.TimeUnit;
 
 public class Room {
     private static DatabaseControl database;
-
-
     private final NotificationThreshold thresholds;
     private final ParameterData sensorReading;
     private final MQTTReceiver client;
@@ -34,7 +32,6 @@ public class Room {
     private ObservableList<Record> records;
     private String recordViewDate; //allow user to view the same date through different data displays
     private int terminalTopic;
-
 
 
     DecimalFormat df = new DecimalFormat("#.00");
@@ -55,8 +52,9 @@ public class Room {
 
 
         database = new DatabaseControl();
-        
+
     }
+
     public void updateThreshold(TextField textField) throws SQLException { // method that updates the threshold value
         String thresholdTextValue = textField.getText(); // gets and stores the string value from textField
 
@@ -151,6 +149,8 @@ public class Room {
         this.ageGroup = ageGroup;
     }
 
+    public Notification getAlerts() { return alerts; }
+
     public ObservableList<Record> getRecords() {
         return records;
     }
@@ -194,4 +194,5 @@ public class Room {
     public void setTerminalTopic(int terminalTopic) {
         this.terminalTopic = terminalTopic;
     }
+
 }
