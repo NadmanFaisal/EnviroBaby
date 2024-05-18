@@ -14,9 +14,9 @@ stages:
 
 # Arduino build job
 compile_Arduino:
-  stage: build_Arduino
+  stage: build_Arduino #define the stage for job
   tags:
-    - docker
+    - docker #specifies to run on docker
   script:
     - apt-get update -qq
     - echo "Building Arduino project"
@@ -34,13 +34,13 @@ compile_Arduino:
 
 # JavaFX build job
 compile_JavaFX:
-  stage: build_JavaFX
+  stage: build_JavaFX #define the stage for job
   tags:
-    - docker
+    - docker #specifies to run on docker
   script:
-    - apt-get update -qq
-    - apt-get install -y openjfx
+    - apt-get update -qq #package list is updated
+    - apt-get install -y openjfx #openjfx dependencies are installed
     - echo "Building JavaFX project"
     - mvn clean compile
-  only:
+  except:
     - tags  # Build only on tag creation
