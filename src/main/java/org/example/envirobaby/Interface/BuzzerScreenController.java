@@ -26,10 +26,10 @@ public class BuzzerScreenController {
     private UserExchanger instanceUser = UserExchanger.getInstance();
     private User currentUser = instanceUser.getInstanceUser();
 
-    private boolean room1IsActive = false;
-    private boolean room2IsActive = false;
-    private boolean room3IsActive = false;
-    private boolean room4IsActive = false;
+    private static final int FIRST_ROOM = 1;
+    private static final int SECOND_ROOM = 2;
+    private static final int THIRD_ROOM = 3;
+    private static final int FOURTH_ROOM = 4;
 
 
     public void initialize () throws IOException, MqttException {
@@ -47,60 +47,48 @@ public class BuzzerScreenController {
         // Display the room buttons based on how many rooms the current user has
         switch (currentUser.getRooms().size()) {
             case 1 -> {
-                room1.setText(currentUser.getRoom(1).getRoomName());
+                room1.setText(currentUser.getRoom(FIRST_ROOM).getRoomName());
                 room1.setVisible(true);
                 playSoundButton.setVisible(true);
                 stopSoundButton.setVisible(true);
 
-                room1IsActive = true;
-                room2IsActive = false;
-                room3IsActive = false;
-                room4IsActive = false;
+                instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRoom(FIRST_ROOM));
             }
             case 2 -> {
-                room1.setText(currentUser.getRoom(1).getRoomName());
+                room1.setText(currentUser.getRoom(FIRST_ROOM).getRoomName());
                 room1.setVisible(true);
-                room2.setText(currentUser.getRoom(2).getRoomName());
+                room2.setText(currentUser.getRoom(SECOND_ROOM).getRoomName());
                 room2.setVisible(true);
                 playSoundButton.setVisible(true);
                 stopSoundButton.setVisible(true);
 
-                room1IsActive = true;
-                room2IsActive = false;
-                room3IsActive = false;
-                room4IsActive = false;
+                instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRoom(FIRST_ROOM));
             }
             case 3 -> {
-                room1.setText(currentUser.getRoom(1).getRoomName());
+                room1.setText(currentUser.getRoom(FIRST_ROOM).getRoomName());
                 room1.setVisible(true);
-                room2.setText(currentUser.getRoom(2).getRoomName());
+                room2.setText(currentUser.getRoom(SECOND_ROOM).getRoomName());
                 room2.setVisible(true);
-                room3.setText(currentUser.getRoom(3).getRoomName());
+                room3.setText(currentUser.getRoom(THIRD_ROOM).getRoomName());
                 room3.setVisible(true);
                 playSoundButton.setVisible(true);
                 stopSoundButton.setVisible(true);
 
-                room1IsActive = true;
-                room2IsActive = false;
-                room3IsActive = false;
-                room4IsActive = false;
+                instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRoom(FIRST_ROOM));
             }
             case 4 -> {
-                room1.setText(currentUser.getRoom(1).getRoomName());
+                room1.setText(currentUser.getRoom(FIRST_ROOM).getRoomName());
                 room1.setVisible(true);
-                room2.setText(currentUser.getRoom(2).getRoomName());
+                room2.setText(currentUser.getRoom(SECOND_ROOM).getRoomName());
                 room2.setVisible(true);
-                room3.setText(currentUser.getRoom(3).getRoomName());
+                room3.setText(currentUser.getRoom(THIRD_ROOM).getRoomName());
                 room3.setVisible(true);
-                room4.setText(currentUser.getRoom(4).getRoomName());
+                room4.setText(currentUser.getRoom(FOURTH_ROOM).getRoomName());
                 room4.setVisible(true);
                 playSoundButton.setVisible(true);
                 stopSoundButton.setVisible(true);
 
-                room1IsActive = true;
-                room2IsActive = false;
-                room3IsActive = false;
-                room4IsActive = false;
+                instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRoom(FIRST_ROOM));
             }
         }
     }
@@ -126,7 +114,7 @@ public class BuzzerScreenController {
      * @param event
      */
     public void moveToRoom1(ActionEvent event) {
-        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRoom(1));
+        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRoom(FIRST_ROOM));
     }
 
     /**
@@ -137,7 +125,7 @@ public class BuzzerScreenController {
      */
 
     public void moveToRoom2(ActionEvent event) {
-        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRoom(2));
+        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRoom(SECOND_ROOM));
     }
 
     /**
@@ -148,7 +136,7 @@ public class BuzzerScreenController {
      */
 
     public void moveToRoom3(ActionEvent event) {
-        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRoom(3));
+        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRoom(THIRD_ROOM));
     }
 
     /**
@@ -159,7 +147,7 @@ public class BuzzerScreenController {
      */
 
     public void moveToRoom4(ActionEvent event) {
-        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRoom(4));
+        instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRoom(FOURTH_ROOM));
     }
 
     /**
