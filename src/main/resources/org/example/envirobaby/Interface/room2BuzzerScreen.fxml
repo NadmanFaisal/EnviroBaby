@@ -1,0 +1,105 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+
+<!--<?import java.lang.String?>-->
+<!--<?import javafx.scene.Cursor?>-->
+<!--<?import javafx.scene.control.Button?>-->
+<!--<?import javafx.scene.layout.AnchorPane?>-->
+<!--<?import javafx.scene.layout.ColumnConstraints?>-->
+<!--<?import javafx.scene.layout.GridPane?>-->
+<!--<?import javafx.scene.layout.RowConstraints?>-->
+
+<!--<GridPane fx:id="overview" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="1025.0" style="-fx-background-color: #fef5e1;" stylesheets="@roomStylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.envirobaby.Interface.Room2BuzzerScreenController">-->
+<!--   <columnConstraints>-->
+<!--      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />-->
+<!--   </columnConstraints>-->
+<!--   <rowConstraints>-->
+<!--      <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="116.0" vgrow="ALWAYS" />-->
+<!--      <RowConstraints fx:id="overviewRow" minHeight="10.0" prefHeight="512.0" vgrow="ALWAYS" />-->
+<!--   </rowConstraints>-->
+<!--   <children>-->
+<!--      <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="headDropShadow">-->
+<!--         <children>-->
+<!--            <GridPane layoutX="221.0" layoutY="13.0" style="-fx-background-color: #F3B197;" styleClass="headDropShadow" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">-->
+<!--               <columnConstraints>-->
+<!--                  <ColumnConstraints hgrow="ALWAYS" maxWidth="150.0" minWidth="10.0" prefWidth="101.0" />-->
+<!--                  <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="924.0" />-->
+<!--               </columnConstraints>-->
+<!--               <rowConstraints>-->
+<!--                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />-->
+<!--               </rowConstraints>-->
+<!--               <children>-->
+<!--                  <AnchorPane prefHeight="200.0" prefWidth="200.0">-->
+<!--                     <children>-->
+<!--                        <Button alignment="CENTER" layoutX="11.0" layoutY="22.0" mnemonicParsing="false" onAction="#homeButtonClick" prefHeight="73.0" prefWidth="79.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #f19f7f; -fx-border-color: #EC7D51;" styleClass="simpleFont, dropShadow" text="Home" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="22.0">-->
+<!--                           <cursor>-->
+<!--                              <Cursor fx:constant="HAND" />-->
+<!--                           </cursor>-->
+<!--                        </Button>-->
+<!--                     </children>-->
+<!--                  </AnchorPane>-->
+<!--                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">-->
+<!--                     <children>-->
+<!--                        <Button fx:id="room1" alignment="CENTER" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" onAction="#room1BuzzerScreen" prefHeight="73.0" prefWidth="158.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #f19f7f; -fx-border-color: #EC7D51;" styleClass="simpleFont, dropShadow" text="Room 1" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="22.0">-->
+<!--                           <cursor>-->
+<!--                              <Cursor fx:constant="HAND" />-->
+<!--                           </cursor>-->
+<!--                        </Button>-->
+<!--                        <Button fx:id="room2" alignment="CENTER" layoutX="198.0" layoutY="22.0" mnemonicParsing="false" onAction="#room2BuzzerScreen" prefHeight="73.0" prefWidth="158.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #EC7D51; -fx-border-color: #EC7D51;" styleClass="simpleFont, dropShadow" text="Room 2" AnchorPane.bottomAnchor="21.0" AnchorPane.topAnchor="22.0">-->
+<!--                           <cursor>-->
+<!--                              <Cursor fx:constant="HAND" />-->
+<!--                           </cursor>-->
+<!--                        </Button>-->
+<!--                        <Button fx:id="room3" alignment="CENTER" layoutX="383.0" layoutY="22.0" mnemonicParsing="false" onAction="#room3BuzzerScreen" prefHeight="73.0" prefWidth="158.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #f19f7f; -fx-border-color: #EC7D51;" styleClass="simpleFont, dropShadow" text="Room 3" AnchorPane.bottomAnchor="21.0" AnchorPane.topAnchor="22.0">-->
+<!--                           <cursor>-->
+<!--                              <Cursor fx:constant="HAND" />-->
+<!--                           </cursor>-->
+<!--                        </Button>-->
+<!--                        <Button fx:id="room4" alignment="CENTER" layoutX="565.0" layoutY="22.0" mnemonicParsing="false" onAction="#room4BuzzerScreen" prefHeight="73.0" prefWidth="158.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #f19f7f; -fx-border-color: #EC7D51;" styleClass="simpleFont, dropShadow" text="Room 4" AnchorPane.bottomAnchor="21.0" AnchorPane.topAnchor="22.0">-->
+<!--                           <cursor>-->
+<!--                              <Cursor fx:constant="HAND" />-->
+<!--                           </cursor>-->
+<!--                        </Button>-->
+<!--                     </children>-->
+<!--                  </AnchorPane>-->
+<!--               </children>-->
+<!--            </GridPane>-->
+<!--         </children>-->
+<!--      </AnchorPane>-->
+<!--      <GridPane GridPane.rowIndex="1">-->
+<!--         <columnConstraints>-->
+<!--            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />-->
+<!--         </columnConstraints>-->
+<!--         <rowConstraints>-->
+<!--            <RowConstraints maxHeight="90.0" minHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />-->
+<!--            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />-->
+<!--            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />-->
+<!--            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />-->
+<!--            <RowConstraints maxHeight="90.0" minHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />-->
+<!--         </rowConstraints>-->
+<!--         <children>-->
+<!--            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">-->
+<!--               <children>-->
+<!--                  <Button fx:id="playSoundButton" layoutX="149.0" layoutY="43.0" mnemonicParsing="false" onAction="#playSound" prefHeight="116.0" prefWidth="728.0" text="Play sound" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="149.0" AnchorPane.rightAnchor="148.0" AnchorPane.topAnchor="43.0">-->
+<!--                     <styleClass>-->
+<!--                        <String fx:value="dropShadow" />-->
+<!--                        <String fx:value="dataOverviewPane" />-->
+<!--                        <String fx:value="font" />-->
+<!--                     </styleClass>-->
+<!--                  </Button>-->
+<!--               </children>-->
+<!--            </AnchorPane>-->
+<!--            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">-->
+<!--               <children>-->
+<!--                  <Button fx:id="stopSoundButton" layoutX="149.0" layoutY="42.0" mnemonicParsing="false" onAction="#stopSound" prefHeight="116.0" prefWidth="728.0" text="Stop sound" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="149.0" AnchorPane.rightAnchor="148.0" AnchorPane.topAnchor="43.0">-->
+<!--                     <styleClass>-->
+<!--                        <String fx:value="dataOverviewPane" />-->
+<!--                        <String fx:value="dropShadow" />-->
+<!--                        <String fx:value="font" />-->
+<!--                     </styleClass>-->
+<!--                  </Button>-->
+<!--               </children>-->
+<!--            </AnchorPane>-->
+<!--         </children>-->
+<!--      </GridPane>-->
+<!--   </children>-->
+<!--</GridPane>-->

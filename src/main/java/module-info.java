@@ -6,8 +6,16 @@ module org.example.envirobaby {
     requires java.sql;
 
 
-    opens org.example.envirobaby to javafx.fxml;
-    exports org.example.envirobaby;
-    exports org.example.envirobaby.app;
-    opens org.example.envirobaby.app to javafx.fxml;
+    exports org.example.envirobaby.Interface;
+    opens org.example.envirobaby.Interface to javafx.fxml;
+    exports org.example.envirobaby.Database;
+    opens org.example.envirobaby.Database to javafx.fxml;
+    exports org.example.envirobaby.MQTT;
+    opens org.example.envirobaby.MQTT to javafx.fxml;
+    exports org.example.envirobaby.Entity;
+    opens org.example.envirobaby.Entity to javafx.fxml;
+    exports org.example.envirobaby.SensorInteractor;
+    opens org.example.envirobaby.SensorInteractor to javafx.fxml;
+    exports org.example.envirobaby.Notification;
+    opens org.example.envirobaby.Notification to javafx.fxml;
 }
