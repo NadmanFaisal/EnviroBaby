@@ -1,53 +1,46 @@
 image: ubuntu:latest
 
 before_script:
-  # run shell script for installing arduino-cli, Wio Terminal core, and project libraries
-  - chmod +x setup-build-env.sh               # change permissions to execute bash shell script
-  - ./setup-build-env.sh                      # execute bash shell script
+  # Run shell script for installing arduino-cli, Wio Terminal core, and project libraries
+  - chmod +x setup-build-env.sh  # Change permissions to execute bash shell script
+  - ./setup-build-env.sh  # Execute bash shell script
+  - apt-get update -qq
+  - apt-get install -y maven  # Maven installs
 
 stages:
-  - build
+  - build_JavaFX
+  - build_Arduino
   - deploy
 
-compile:
-  stage: build
+# Arduino build job
+compile_Arduino:
+  stage: build_Arduino #define the stage for job
   tags:
-    - docker
+    - docker #specifies to run on docker
   script:
-    - export PATH=$PATH:/root/bin             # set the path to arduino-cli installation folder
-    - pwd                                     # print the current working directory
-    - cd wioTerminal/envirobaby           # change the directory to arduino folder
-    - echo "$SECRETS_H" > Secrets.h           # import secrets from GitLAB CI/CD Settings -> Variables
-    #- echo "$NETWORK_INFO_H" > NetworkInfo.h  # import secrets for WiFi from Gitlab CI/CD Settings -> Variables
-    #- echo "$BROKER_INFO_H" > BrokerInfo.h    # import secrets for MQTT from Gitlab CI/CD Settings -> Variables
-    - arduino-cli lib list                    # check that libraries are installed
-    
+    - apt-get update -qq
+    - echo "Building Arduino project"
+    - export PATH=$PATH:/root/bin  # Set the path to arduino-cli installation folder
+    - pwd  # Print the current working directory
+    - cd wioTerminal/envirobaby  # Change the directory to arduino folder
+    - echo "$SECRETS_H" > Secrets.h  # Import secrets from GitLab CI/CD Settings -> Variables
+    - arduino-cli lib list  # Check that libraries are installed
     # Compile
     - arduino-cli compile --fqbn Seeeduino:samd:seeed_wio_terminal
-
     # Upload
-    - arduino-cli board list                  # Check if device is connected
+    - arduino-cli board list  # Check if device is connected
   except:
     - tags
 
-release:
-  stage: deploy
+# JavaFX build job
+compile_JavaFX:
+  stage: build_JavaFX #define the stage for job
   tags:
-    - upload
+    - docker #specifies to run on docker
   script:
-    - export PATH=$PATH:/root/bin             # set the path to arduino-cli installation folder
-    - pwd                                     # print the current working directory
-    - cd wioTerminal/envirobaby           # change the directory to arduino folder
-    - echo "$SECRETS_H" > Secrets.h           # import secrets from GitLAB CI/CD Settings -> Variables
-    #- echo "$NETWORK_INFO_H" > NetworkInfo.h  # import secrets for WiFi from Gitlab CI/CD Settings -> Variables
-    #- echo "$BROKER_INFO_H" > BrokerInfo.h    # import secrets for MQTT from Gitlab CI/CD Settings -> Variables
-    - arduino-cli lib list                    # check that libraries are installed
-    
-    # Compile
-    - arduino-cli compile --fqbn Seeeduino:samd:seeed_wio_terminal
-
-    # Upload
-    - arduino-cli board list                  # Check if device is connected
-    - arduino-cli upload -p $COM_PORT --fqbn Seeeduino:samd:seeed_wio_terminal           # if runnner is on local machine
-  only:
-    - tags
+    - apt-get update -qq #package list is updated
+    - apt-get install -y openjfx #openjfx dependencies are installed
+    - echo "Building JavaFX project"
+    - mvn clean compile
+  except:
+    - tags  # Build only on tag creation
