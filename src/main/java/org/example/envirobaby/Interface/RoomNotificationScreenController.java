@@ -89,6 +89,7 @@ public class RoomNotificationScreenController {
     public void goBackButtonClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("SystemNotificationSettingsScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage.resizableProperty().setValue(false);
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }

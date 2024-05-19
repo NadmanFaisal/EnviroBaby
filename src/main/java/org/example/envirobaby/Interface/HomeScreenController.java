@@ -38,6 +38,7 @@ public class HomeScreenController {
     private void findMeClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("buzzerScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage.resizableProperty().setValue(false);
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
@@ -46,6 +47,7 @@ public class HomeScreenController {
     private void AddRoomsClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("addRooms.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage.resizableProperty().setValue(false);
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
@@ -53,6 +55,7 @@ public class HomeScreenController {
     private void editRoomsClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("editRooms.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage.resizableProperty().setValue(false);
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
@@ -61,6 +64,7 @@ public class HomeScreenController {
     private void ViewRoomsClick(ActionEvent event) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("viewRooms.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage.resizableProperty().setValue(false);
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
@@ -68,6 +72,7 @@ public class HomeScreenController {
     void notificationSettingsClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("systemNotificationSettingsScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage.resizableProperty().setValue(false);
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }

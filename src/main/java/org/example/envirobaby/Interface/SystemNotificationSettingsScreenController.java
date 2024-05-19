@@ -76,6 +76,7 @@ public class SystemNotificationSettingsScreenController {
     void loadHomeScreen(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("homeScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage.resizableProperty().setValue(false);
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
@@ -131,6 +132,7 @@ public class SystemNotificationSettingsScreenController {
     public void moveToRoom1Screen(ActionEvent actionEvent)  throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("RoomNotificationScreen.fxml"));
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+        stage.resizableProperty().setValue(false);
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }

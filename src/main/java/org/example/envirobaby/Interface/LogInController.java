@@ -87,7 +87,7 @@ public class LogInController {
         Parent root = FXMLLoader.load(getClass().getResource("homeScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
-        stage.setResizable(true); //allow changing application size
+        stage.resizableProperty().setValue(false); //allow changing application size
         stage.setScene(scene);
     }
 }

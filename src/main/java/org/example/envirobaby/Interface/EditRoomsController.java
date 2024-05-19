@@ -103,6 +103,7 @@ public class EditRoomsController {
 
             Parent root = FXMLLoader.load(getClass().getResource("editRooms.fxml")); //refresh editRooms screen so it initialises again and hides the button for the deleted room
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.resizableProperty().setValue(false);
             Scene scene = new Scene(root);
             stage.setScene(scene);
         }
@@ -134,6 +135,7 @@ public class EditRoomsController {
     void homeButtonClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("homeScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage.resizableProperty().setValue(false);
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
@@ -176,6 +178,7 @@ public class EditRoomsController {
     public void addRoomClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("addRooms.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage.resizableProperty().setValue(false);
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
