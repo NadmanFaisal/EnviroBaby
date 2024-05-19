@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -20,167 +19,274 @@
       <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
    </rowConstraints>
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F3B197;" styleClass="headDropShadow" stylesheets="@roomStylesheet.css">
-         <children>
-            <Label alignment="CENTER" layoutX="317.0" layoutY="18.0" prefHeight="90.0" prefWidth="392.0" style="-fx-font-family: &quot;Gill Sans Ultra Bold Condensed&quot;; -fx-font-size: 6em;" text="EnviroBaby" textFill="#460a0aa3" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="317.0" AnchorPane.rightAnchor="316.0" AnchorPane.topAnchor="18.0">
-               <font>
-                  <Font name="Gill Sans Ultra Bold Condensed" size="70.0" />
-               </font>
-            </Label>
-            <Button fx:id="homebutton" layoutX="8.0" layoutY="61.0" mnemonicParsing="false" onAction="#loadHomeScreen" prefHeight="44.0" prefWidth="189.0" text="HOME">
-               <styleClass>
-                  <String fx:value="dataOverviewPane" />
-                  <String fx:value="dropShadow" />
-                  <String fx:value="font" />
-               </styleClass>
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-         </children>
-      </AnchorPane>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F3B197;" styleClass="headDropShadow" stylesheets="@roomStylesheet.css" />
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
          <children>
-            <GridPane layoutX="7.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints maxHeight="77.32725524902344" minHeight="10.0" percentHeight="10.0" prefHeight="66.39634704589844" vgrow="ALWAYS" />
-                  <RowConstraints maxHeight="42.712738037109375" minHeight="10.0" percentHeight="10.0" prefHeight="33.60365295410156" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="10.0" vgrow="ALWAYS" />
+                  <RowConstraints maxHeight="90.0" minHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="90.0" minHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                      <children>
-                        <Button fx:id="tempNotiTurnOnButton" layoutX="523.0" layoutY="20.0" mnemonicParsing="false" onAction="#tempNotiOn" prefHeight="54.0" prefWidth="169.0" text="Turn ON">
-                           <styleClass>
-                              <String fx:value="dataOverviewPane" />
-                              <String fx:value="dropShadow" />
-                              <String fx:value="font" />
-                           </styleClass></Button>
-                        <Button fx:id="tempNotiTurnOffButton" layoutX="758.0" layoutY="18.0" mnemonicParsing="false" onAction="#tempNotiOff" prefHeight="54.0" prefWidth="169.0" text="Turn OFF">
-                           <styleClass>
-                              <String fx:value="dataOverviewPane" />
-                              <String fx:value="dropShadow" />
-                              <String fx:value="font" />
-                           </styleClass></Button>
-                        <Pane fx:id="tempTXTbox" layoutX="166.0" layoutY="16.0" prefHeight="80.0" prefWidth="126.0">
+                        <GridPane layoutX="157.0" layoutY="22.0" prefHeight="102.0" prefWidth="712.0" vgap="10.0" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="157.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="22.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="44.76673889160156" minHeight="10.0" prefHeight="37.80552673339844" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="68.74441528320312" minHeight="10.0" prefHeight="64.69447326660156" vgrow="SOMETIMES" />
+                           </rowConstraints>
                            <children>
-                              <Label fx:id="tempTXT" alignment="CENTER" layoutX="1.0" layoutY="12.0" prefHeight="49.0" prefWidth="126.0" styleClass="font" text="Temperature" textAlignment="CENTER">
+                              <GridPane hgap="30.0" GridPane.rowIndex="1">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                       <children>
+                                          <Button fx:id="tempNotiTurnOnButton" layoutX="154.0" layoutY="44.0" mnemonicParsing="false" onAction="#tempNotiOn" prefHeight="116.0" prefWidth="728.0" text="Turn ON" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <styleClass>
+                                                <String fx:value="dropShadow" />
+                                                <String fx:value="dataOverviewPane" />
+                                                <String fx:value="font" />
+                                                <String fx:value="defaultButton" />
+                                             </styleClass>
+                                          </Button>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                       <children>
+                                          <Button fx:id="tempNotiTurnOffButton" layoutX="154.0" layoutY="44.0" mnemonicParsing="false" onAction="#tempNotiOff" prefHeight="116.0" prefWidth="728.0" text="Turn OFF" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <styleClass>
+                                                <String fx:value="dropShadow" />
+                                                <String fx:value="dataOverviewPane" />
+                                                <String fx:value="font" />
+                                                <String fx:value="defaultButton" />
+                                             </styleClass>
+                                          </Button>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </GridPane>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="TEMPERATURE">
                                  <font>
-                                    <Font name="Segoe UI Semibold" size="13.0" />
+                                    <Font size="23.0" />
                                  </font>
-                              </Label>
+                                 <styleClass>
+                                    <String fx:value="dropShadow" />
+                                    <String fx:value="dropShadow" />
+                                    <String fx:value="dataOverviewPane" />
+                                 </styleClass>
+                              </Text>
                            </children>
-                           <styleClass>
-                              <String fx:value="dataOverviewPane" />
-                              <String fx:value="dropShadow" />
-                           </styleClass>
-                        </Pane>
+                        </GridPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="6" />
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5">
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                      <children>
-                        <Text layoutX="119.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0">
-                           <font>
-                              <Font size="25.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="noiseNotiTurnOnButton" layoutX="523.0" layoutY="130.0" mnemonicParsing="false" onAction="#noiseNotiOn" prefHeight="54.0" prefWidth="169.0" text="Turn ON">
-                           <styleClass>
-                              <String fx:value="dataOverviewPane" />
-                              <String fx:value="dropShadow" />
-                              <String fx:value="font" />
-                           </styleClass></Button>
-                        <Button fx:id="noiseNotiTurnOffButton" layoutX="758.0" layoutY="130.0" mnemonicParsing="false" onAction="#noiseNotiOff" prefHeight="54.0" prefWidth="169.0" text="Turn OFF">
-                           <styleClass>
-                              <String fx:value="dataOverviewPane" />
-                              <String fx:value="dropShadow" />
-                              <String fx:value="font" />
-                           </styleClass></Button>
-                        <Text layoutX="163.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0">
-                           <font>
-                              <Font size="25.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="humiNotiTurnOnButton" layoutX="523.0" layoutY="31.0" mnemonicParsing="false" onAction="#humiNotiOn" prefHeight="54.0" prefWidth="169.0" text="Turn ON">
-                           <styleClass>
-                              <String fx:value="dataOverviewPane" />
-                              <String fx:value="dropShadow" />
-                              <String fx:value="font" />
-                           </styleClass></Button>
-                        <Button fx:id="humiNotiTurnOffButton" layoutX="758.0" layoutY="28.0" mnemonicParsing="false" onAction="#humiNotiOff" prefHeight="54.0" prefWidth="169.0" text="Turn OFF">
-                           <styleClass>
-                              <String fx:value="dataOverviewPane" />
-                              <String fx:value="dropShadow" />
-                              <String fx:value="font" />
-                           </styleClass></Button>
-                        <Pane fx:id="humidityTXTBox" layoutX="166.0" layoutY="20.0" prefHeight="80.0" prefWidth="126.0">
+                        <GridPane layoutX="157.0" layoutY="14.0" prefHeight="102.0" prefWidth="712.0" vgap="10.0" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="157.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="14.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="44.76673889160156" minHeight="10.0" prefHeight="37.80552673339844" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="68.74441528320312" minHeight="10.0" prefHeight="64.69447326660156" vgrow="SOMETIMES" />
+                           </rowConstraints>
                            <children>
-                              <Label fx:id="humiTXT" alignment="CENTER" layoutX="1.0" layoutY="12.0" prefHeight="49.0" prefWidth="126.0" styleClass="font" text="Humidity" textAlignment="CENTER">
+                              <GridPane hgap="30.0" GridPane.rowIndex="1">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                       <children>
+                                          <Button fx:id="noiseNotiTurnOnButton" layoutX="154.0" layoutY="44.0" mnemonicParsing="false" onAction="#noiseNotiOn" prefHeight="116.0" prefWidth="728.0" text="Turn ON" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <styleClass>
+                                                <String fx:value="dropShadow" />
+                                                <String fx:value="dataOverviewPane" />
+                                                <String fx:value="font" />
+                                                <String fx:value="defaultButton" />
+                                             </styleClass>
+                                          </Button>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                       <children>
+                                          <Button fx:id="noiseNotiTurnOffButton" layoutX="154.0" layoutY="44.0" mnemonicParsing="false" onAction="#noiseNotiOff" prefHeight="116.0" prefWidth="728.0" text="Turn OFF" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <styleClass>
+                                                <String fx:value="dropShadow" />
+                                                <String fx:value="dataOverviewPane" />
+                                                <String fx:value="font" />
+                                                <String fx:value="defaultButton" />
+                                             </styleClass>
+                                          </Button>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </GridPane>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="NOISE">
                                  <font>
-                                    <Font name="Segoe UI Semibold" size="13.0" />
+                                    <Font size="23.0" />
                                  </font>
-                              </Label>
+                                 <styleClass>
+                                    <String fx:value="dropShadow" />
+                                    <String fx:value="dropShadow" />
+                                    <String fx:value="dataOverviewPane" />
+                                 </styleClass>
+                              </Text>
                            </children>
-                           <styleClass>
-                              <String fx:value="dataOverviewPane" />
-                              <String fx:value="dropShadow" />
-                              <String fx:value="font" />
-                           </styleClass>
-                        </Pane>
-                        <Pane fx:id="noiseTXTbox" layoutX="166.0" layoutY="115.0" prefHeight="80.0" prefWidth="126.0">
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                     <children>
+                        <GridPane layoutX="157.0" layoutY="14.0" prefHeight="102.0" prefWidth="712.0" vgap="10.0" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="157.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="22.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="44.76673889160156" minHeight="10.0" prefHeight="37.80552673339844" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="68.74441528320312" minHeight="10.0" prefHeight="64.69447326660156" vgrow="SOMETIMES" />
+                           </rowConstraints>
                            <children>
-                              <Label fx:id="noiseTXT" alignment="CENTER" layoutX="1.0" layoutY="12.0" prefHeight="49.0" prefWidth="126.0" styleClass="font" text="Noise" textAlignment="CENTER">
+                              <GridPane hgap="30.0" GridPane.rowIndex="1">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                       <children>
+                                          <Button fx:id="humiNotiTurnOnButton" layoutX="154.0" layoutY="44.0" mnemonicParsing="false" onAction="#humiNotiOn" prefHeight="116.0" prefWidth="728.0" text="Turn ON" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <styleClass>
+                                                <String fx:value="dropShadow" />
+                                                <String fx:value="dataOverviewPane" />
+                                                <String fx:value="font" />
+                                                <String fx:value="defaultButton" />
+                                             </styleClass>
+                                          </Button>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                       <children>
+                                          <Button fx:id="humiNotiTurnOffButton" layoutX="154.0" layoutY="44.0" mnemonicParsing="false" onAction="#humiNotiOff" prefHeight="116.0" prefWidth="728.0" text="Turn OFF" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <styleClass>
+                                                <String fx:value="dropShadow" />
+                                                <String fx:value="dataOverviewPane" />
+                                                <String fx:value="font" />
+                                                <String fx:value="defaultButton" />
+                                             </styleClass>
+                                          </Button>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </GridPane>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="HUMIDITY">
                                  <font>
-                                    <Font name="Segoe UI Semibold" size="13.0" />
+                                    <Font size="23.0" />
                                  </font>
-                              </Label>
+                                 <styleClass>
+                                    <String fx:value="dropShadow" />
+                                    <String fx:value="dropShadow" />
+                                    <String fx:value="dataOverviewPane" />
+                                 </styleClass>
+                              </Text>
                            </children>
-                           <styleClass>
-                              <String fx:value="dataOverviewPane" />
-                              <String fx:value="dropShadow" />
-                              <String fx:value="font" />
-                           </styleClass>
-                        </Pane>
+                        </GridPane>
                      </children>
                   </AnchorPane>
                </children>
             </GridPane>
-            <Text layoutX="97.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-border-color: #460a0a;">
-               <font>
-                  <Font size="25.0" />
-               </font>
-            </Text>
-            <Button fx:id="roomNotificationSettings" layoutX="655.0" layoutY="51.0" mnemonicParsing="false" onAction="#moveToRoom1Screen" prefHeight="62.0" prefWidth="230.0" stylesheets="@roomStylesheet.css" text="Room Notifications">
-               <font>
-                  <Font size="19.0" />
-               </font>
-               <styleClass>
-                  <String fx:value="dataOverviewPane" />
-                  <String fx:value="dropShadow" />
-                  <String fx:value="font" />
-               </styleClass>
-            </Button>
-            <Button fx:id="systemsettings" layoutX="200.0" layoutY="51.0" mnemonicParsing="false" onAction="#systemSettingsClick" prefHeight="62.0" prefWidth="230.0" stylesheets="@roomStylesheet.css" text="System Notifications">
-               <font>
-                  <Font size="19.0" />
-               </font>
-               <styleClass>
-                  <String fx:value="dataOverviewPane" />
-                  <String fx:value="dropShadow" />
-                  <String fx:value="font" />
-               </styleClass>
-            </Button>
          </children>
       </AnchorPane>
+      <GridPane fx:id="roomHeader" style="-fx-background-color: #F3B197;" styleClass="headDropShadow">
+         <columnConstraints>
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="180.0" minWidth="10.0" percentWidth="15.0" prefWidth="110.0" />
+            <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="805.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Button alignment="CENTER" layoutX="11.0" layoutY="18.0" mnemonicParsing="false" onAction="#loadHomeScreen" prefHeight="81.0" prefWidth="79.0" text="Home" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="18.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <styleClass>
+                        <String fx:value="simpleFont" />
+                        <String fx:value="dropShadow" />
+                        <String fx:value="headerButton" />
+                     </styleClass>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+               <children>
+                  <GridPane layoutX="70.0" layoutY="43.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <AnchorPane GridPane.columnIndex="1">
+                           <children>
+                              <Button fx:id="roomNotificationSettings" layoutX="69.0" layoutY="18.0" mnemonicParsing="false" onAction="#moveToRoom1Screen" prefHeight="91.0" prefWidth="300.0" stylesheets="@roomStylesheet.css" text="Room Notifications" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="69.0" AnchorPane.rightAnchor="68.0" AnchorPane.topAnchor="18.0">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                                 <styleClass>
+                                    <String fx:value="headerButton" />
+                                    <String fx:value="dropShadow" />
+                                    <String fx:value="font" />
+                                    <String fx:value="defaultButton" />
+                                 </styleClass>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane>
+                           <children>
+                              <Button fx:id="systemsettings" layoutX="69.0" layoutY="18.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="300.0" stylesheets="@roomStylesheet.css" text="System Notifications" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="69.0" AnchorPane.rightAnchor="69.0" AnchorPane.topAnchor="18.0">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                                 <styleClass>
+                                    <String fx:value="headerButton" />
+                                    <String fx:value="dropShadow" />
+                                    <String fx:value="font" />
+                                    <String fx:value="defaultButton" />
+                                 </styleClass>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </GridPane>
    </children>
 </GridPane>

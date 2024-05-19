@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class User implements Runnable {
+public class User {
 
     private String userID;
     private DatabaseControl database;
@@ -241,9 +241,7 @@ public class User implements Runnable {
     }
 
 
-
-    @Override
-    public void run() {
+    public void runBackgroundFunctions() {
         int delay=0;
         int currentTime = LocalTime.now().getMinute();
 

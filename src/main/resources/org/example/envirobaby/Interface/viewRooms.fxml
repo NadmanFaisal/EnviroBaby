@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<GridPane fx:id="overview" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="1025.0" stylesheets="@roomStylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.envirobaby.Interface.ViewRoomsController">
+<GridPane fx:id="overview" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="1025.0" style="-fx-background-color: #fef5e1;" stylesheets="@roomStylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.envirobaby.Interface.ViewRoomsController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     </columnConstraints>
@@ -18,10 +24,11 @@
     <children>
         <AnchorPane prefHeight="200.0" prefWidth="200.0">
             <children>
-                <GridPane layoutX="221.0" layoutY="13.0" style="-fx-background-color: #F3B197;" styleClass="headDropShadow" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <GridPane fx:id="roomHeader" layoutX="221.0" layoutY="13.0" style="-fx-background-color: #F3B197;" styleClass="headDropShadow" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="ALWAYS" maxWidth="150.0" minWidth="10.0" prefWidth="101.0" />
-                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="924.0" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="150.0" minWidth="10.0" prefWidth="110.0" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="805.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="150.0" minWidth="10.0" prefWidth="110.0" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -29,40 +36,486 @@
                     <children>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                             <children>
-                                <Button alignment="CENTER" layoutX="11.0" layoutY="22.0" mnemonicParsing="false" onAction="#homeButtonClick" prefHeight="73.0" prefWidth="79.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #f19f7f; -fx-border-color: #EC7D51;" styleClass="simpleFont, dropShadow" text="Home" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="22.0">
+                                <Button alignment="CENTER" layoutX="11.0" layoutY="18.0" mnemonicParsing="false" onAction="#homeButtonClick" prefHeight="81.0" prefWidth="79.0" text="Home" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="18.0">
 
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
+                           <styleClass>
+                              <String fx:value="simpleFont" />
+                              <String fx:value="dropShadow" />
+                              <String fx:value="headerButton" />
+                           </styleClass>
                                 </Button>
                             </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-                            <children>
-                                <Button fx:id="Room1_Button" alignment="CENTER" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" onAction="#Room1ButtonClick" prefHeight="73.0" prefWidth="158.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #f19f7f; -fx-border-color: #EC7D51;" styleClass="simpleFont, dropShadow" text="Room 1" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="22.0">
-                                    <cursor>
-                                        <Cursor fx:constant="HAND" />
-                                    </cursor>
-                                </Button>
-                                <Button fx:id="Room2_Button" alignment="CENTER" layoutX="198.0" layoutY="22.0" mnemonicParsing="false" onAction="#Room2ButtonClick" prefHeight="73.0" prefWidth="158.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #f19f7f; -fx-border-color: #EC7D51;" styleClass="simpleFont, dropShadow" text="Room 2" AnchorPane.bottomAnchor="21.0" AnchorPane.topAnchor="22.0">
-                                    <cursor>
-                                        <Cursor fx:constant="HAND" />
-                                    </cursor>
-                                </Button>
-                                <Button fx:id="Room3_Button" alignment="CENTER" layoutX="383.0" layoutY="22.0" mnemonicParsing="false" onAction="#Room3ButtonClick" prefHeight="73.0" prefWidth="158.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #f19f7f; -fx-border-color: #EC7D51;" styleClass="simpleFont, dropShadow" text="Room 3" AnchorPane.bottomAnchor="21.0" AnchorPane.topAnchor="22.0">
-                                    <cursor>
-                                        <Cursor fx:constant="HAND" />
-                                    </cursor>
-                                </Button>
-                                <Button fx:id="Room4_Button" alignment="CENTER" layoutX="565.0" layoutY="22.0" mnemonicParsing="false" onAction="#Room4ButtonClick" prefHeight="73.0" prefWidth="158.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #f19f7f; -fx-border-color: #EC7D51;" styleClass="simpleFont, dropShadow" text="Room 4" AnchorPane.bottomAnchor="21.0" AnchorPane.topAnchor="22.0">
-                                    <cursor>
-                                        <Cursor fx:constant="HAND" />
-                                    </cursor>
-                                </Button>
-                            </children></AnchorPane>
+                     <children>
+                        <GridPane layoutX="70.0" layoutY="43.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <AnchorPane GridPane.columnIndex="3">
+                                 <children>
+                                            <Button fx:id="room4" alignment="CENTER" layoutX="24.0" layoutY="18.0" mnemonicParsing="false" onAction="#Room4ButtonClick" prefHeight="81.0" prefWidth="183.0" text="Room 4" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="18.0">
+                                                <cursor>
+                                                    <Cursor fx:constant="HAND" />
+                                                </cursor>
+                                       <styleClass>
+                                          <String fx:value="simpleFont" />
+                                          <String fx:value="dropShadow" />
+                                          <String fx:value="button" />
+                                          <String fx:value="headerButton" />
+                                       </styleClass>
+                                            </Button>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane GridPane.columnIndex="2">
+                                 <children>
+                                            <Button fx:id="room3" alignment="CENTER" layoutX="24.0" layoutY="18.0" mnemonicParsing="false" onAction="#Room3ButtonClick" prefHeight="81.0" prefWidth="183.0" text="Room 3" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="18.0">
+                                                <cursor>
+                                                    <Cursor fx:constant="HAND" />
+                                                </cursor>
+                                       <styleClass>
+                                          <String fx:value="simpleFont" />
+                                          <String fx:value="dropShadow" />
+                                          <String fx:value="headerButton" />
+                                       </styleClass>
+                                            </Button>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane GridPane.columnIndex="1">
+                                 <children>
+                                               <Button fx:id="room2" alignment="CENTER" layoutX="24.0" layoutY="18.0" mnemonicParsing="false" onAction="#Room2ButtonClick" prefHeight="81.0" prefWidth="183.0" text="Room 2" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="18.0">
+                                                <cursor>
+                                                    <Cursor fx:constant="HAND" />
+                                                </cursor>
+                                       <styleClass>
+                                          <String fx:value="simpleFont" />
+                                          <String fx:value="dropShadow" />
+                                          <String fx:value="headerButton" />
+                                       </styleClass>
+                                            </Button>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane>
+                                 <children>
+                                            <Button fx:id="room1" alignment="CENTER" layoutX="24.0" layoutY="18.0" mnemonicParsing="false" onAction="#Room1ButtonClick" prefHeight="81.0" prefWidth="184.0" text="Room 1" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="18.0">
+                                                <cursor>
+                                                    <Cursor fx:constant="HAND" />
+                                                </cursor>
+                                       <styleClass>
+                                          <String fx:value="simpleFont" />
+                                          <String fx:value="dropShadow" />
+                                          <String fx:value="headerButton" />
+                                       </styleClass>
+                                            </Button>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </GridPane>
+                     </children></AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+                     <children>
+                        <Button fx:id="addRoomButton" alignment="CENTER" layoutX="11.0" layoutY="18.0" mnemonicParsing="false" onAction="#addRoomClick" prefHeight="81.0" prefWidth="79.0" text="+" textAlignment="CENTER" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="18.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <styleClass>
+                              <String fx:value="dropShadow" />
+                              <String fx:value="headerButton" />
+                           </styleClass>
+                           <font>
+                              <Font name="Segoe UI Semibold" size="30.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
                     </children>
                 </GridPane>
             </children>
         </AnchorPane>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+         <children>
+            <GridPane fx:id="roomView" layoutX="-124.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="1025.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="752.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="500.0" minWidth="10.0" prefWidth="272.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints minHeight="10.0" prefHeight="512.0" vgrow="ALWAYS" />
+               </rowConstraints>
+               <children>
+                  <GridPane prefHeight="511.0" prefWidth="752.0" GridPane.rowIndex="1">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="155.0" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="10.0" prefHeight="357.0" vgrow="ALWAYS" />
+                     </rowConstraints>
+                     <children>
+                        <GridPane>
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                           </rowConstraints>
+                           <children>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <Pane depthTest="DISABLE" layoutX="25.0" layoutY="18.0" prefHeight="125.0" prefWidth="201.0" styleClass="dataOverviewPane, dropShadow" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="18.0" />
+                                    <Label alignment="CENTER" layoutX="25.0" layoutY="14.0" prefHeight="49.0" prefWidth="307.0" styleClass="font" text="Temperature:" textAlignment="CENTER" AnchorPane.bottomAnchor="53.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="14.0" />
+                                    <Label fx:id="tempLabel" alignment="CENTER" layoutX="26.0" layoutY="48.0" prefHeight="94.0" prefWidth="201.0" styleClass="font" text="Temperature" textAlignment="CENTER" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="48.0" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <Pane layoutX="25.0" layoutY="18.0" prefHeight="80.0" prefWidth="126.0" styleClass="dataOverviewPane, dropShadow" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="18.0" />
+                                    <Label fx:id="humLabel" alignment="CENTER" layoutX="25.0" layoutY="47.0" prefHeight="49.0" prefWidth="126.0" styleClass="font" text="Humidity" textAlignment="CENTER" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="47.0" />
+                                    <Label alignment="CENTER" layoutX="25.0" layoutY="18.0" prefHeight="49.0" prefWidth="307.0" styleClass="font" text="Humidity:" textAlignment="CENTER" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="18.0" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+                                 <children>
+                                    <Pane layoutX="25.0" layoutY="18.0" prefHeight="80.0" prefWidth="126.0" styleClass="dataOverviewPane, dropShadow" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="18.0" />
+                                    <Label fx:id="noiseLabel" alignment="CENTER" layoutX="25.0" layoutY="47.0" prefHeight="49.0" prefWidth="126.0" styleClass="font" text="Noise" textAlignment="CENTER" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="47.0" />
+                                    <Label alignment="CENTER" layoutX="25.0" layoutY="18.0" prefHeight="49.0" prefWidth="307.0" styleClass="font" text="Loudness:" textAlignment="CENTER" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="18.0" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </GridPane>
+                        <GridPane fx:id="dataGraphing" GridPane.rowIndex="1">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="ALWAYS" maxWidth="150.0" minWidth="10.0" prefWidth="148.0" />
+                              <ColumnConstraints fx:id="dataOverview" hgrow="ALWAYS" minWidth="10.0" prefWidth="605.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                           </rowConstraints>
+                           <children>
+                              <GridPane>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="200.0" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="80.0" minHeight="-Infinity" prefHeight="4.0" vgrow="ALWAYS" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                                    <RowConstraints maxHeight="80.0" minHeight="-Infinity" prefHeight="4.0" vgrow="ALWAYS" />
+                                 </rowConstraints>
+                                 <children>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                       <children>
+                                          <Button fx:id="tempGraph" layoutX="16.0" layoutY="16.0" mnemonicParsing="false" onAction="#displayTempGraph" prefHeight="58.0" prefWidth="70.0" text="Temperature" wrapText="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="16.0">
+                                             <styleClass>
+                                                <String fx:value="dataOverviewPane" />
+                                                <String fx:value="dropShadow" />
+                                                <String fx:value="simpleFont" />
+                                                <String fx:value="defaultButton" />
+                                             </styleClass>
+                                          </Button>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                                       <children>
+                                          <Button fx:id="humGraph" layoutX="16.0" layoutY="16.0" mnemonicParsing="false" onAction="#displayHumGraph" prefHeight="58.0" prefWidth="70.0" text="Humidity" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="16.0">
+                                             <styleClass>
+                                                <String fx:value="simpleFont" />
+                                                <String fx:value="dataOverviewPane" />
+                                                <String fx:value="dropShadow" />
+                                                <String fx:value="defaultButton" />
+                                             </styleClass>
+                                          </Button>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
+                                       <children>
+                                          <Button fx:id="loudGraph" layoutX="16.0" layoutY="16.0" mnemonicParsing="false" onAction="#displayLoudGraph" prefHeight="58.0" prefWidth="70.0" text="Loudness" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="16.0">
+                                             <styleClass>
+                                                <String fx:value="simpleFont" />
+                                                <String fx:value="dataOverviewPane" />
+                                                <String fx:value="dropShadow" />
+                                                <String fx:value="defaultButton" />
+                                             </styleClass>
+                                          </Button>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
+                                       <children>
+                                          <Button fx:id="dataTable" layoutX="16.0" layoutY="16.0" mnemonicParsing="false" onAction="#displayDataTable" prefHeight="58.0" prefWidth="70.0" text="Chart" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="16.0">
+                                             <styleClass>
+                                                <String fx:value="simpleFont" />
+                                                <String fx:value="dataOverviewPane" />
+                                                <String fx:value="dropShadow" />
+                                                <String fx:value="defaultButton" />
+                                             </styleClass>
+                                          </Button>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </GridPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <GridPane layoutX="35.0" layoutY="34.0" prefHeight="598.0" prefWidth="200.0" AnchorPane.bottomAnchor="-4.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="37.0" AnchorPane.topAnchor="34.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints />
+                              <RowConstraints />
+                              <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+                              <RowConstraints maxHeight="46.0" minHeight="46.0" prefHeight="46.0" />
+                              <RowConstraints minHeight="10.0" prefHeight="110.0" vgrow="ALWAYS" />
+                              <RowConstraints maxHeight="190.0" minHeight="10.0" prefHeight="188.80002441406253" vgrow="ALWAYS" />
+                              <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="78.0" vgrow="ALWAYS" />
+                              <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="78.0" vgrow="ALWAYS" />
+                              <RowConstraints maxHeight="85.0" minHeight="10.0" prefHeight="78.0" vgrow="ALWAYS" />
+                           </rowConstraints>
+                           <children>
+                              <AnchorPane prefHeight="197.0" prefWidth="200.0" GridPane.rowIndex="7">
+                                 <children>
+                                    <GridPane hgap="10.0" layoutY="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                                       </rowConstraints>
+                                       <children>
+                                          <GridPane>
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="ALWAYS" maxWidth="57.0" minWidth="10.0" prefWidth="27.0" />
+                                                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="133.0" />
+                                                <ColumnConstraints hgrow="ALWAYS" maxWidth="57.0" minWidth="10.0" prefWidth="27.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                                             </rowConstraints>
+                                             <children>
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                                   <children>
+                                                      <TextField id="maxNoise" fx:id="maxNoise" layoutX="-6.0" layoutY="7.0" onAction="#updateNoiseUpperBound" promptText="Max" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </GridPane>
+                                    <Label alignment="CENTER" layoutY="-1.0" prefHeight="31.0" prefWidth="201.0" styleClass="simpleFont" text="Loudness" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="197.0" prefWidth="200.0" GridPane.rowIndex="6">
+                                 <children>
+                                    <GridPane hgap="10.0" layoutY="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                                       </rowConstraints>
+                                       <children>
+                                          <GridPane>
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="57.0" minWidth="10.0" prefWidth="27.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="71.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                                             </rowConstraints>
+                                             <children>
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                                   <children>
+                                                      <TextField id="minHum" fx:id="minHumBox" alignment="CENTER" layoutX="-26.0" layoutY="4.0" onAction="#updateMinHum" promptText="Min" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </children>
+                                          </GridPane>
+                                          <GridPane GridPane.columnIndex="1">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="71.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="57.0" minWidth="10.0" prefWidth="27.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                                             </rowConstraints>
+                                             <children>
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                   <children>
+                                                      <TextField id="maxHum" fx:id="maxHumBox" alignment="CENTER" layoutX="-26.0" layoutY="4.0" onAction="#updateMaxHum" promptText="Max" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </GridPane>
+                                    <Label alignment="CENTER" layoutY="-1.0" prefHeight="31.0" prefWidth="201.0" styleClass="simpleFont" text="Humidity" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="197.0" prefWidth="200.0" GridPane.rowIndex="5">
+                                 <children>
+                                    <GridPane hgap="10.0" layoutY="67.0" prefHeight="106.0" prefWidth="200.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="67.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                                          <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                                       </rowConstraints>
+                                       <children>
+                                          <GridPane>
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="57.0" minWidth="10.0" prefWidth="27.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="71.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                                             </rowConstraints>
+                                             <children>
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                                   <children>
+                                                      <TextField id="minTemp" fx:id="minTempBox" alignment="CENTER" layoutX="-26.0" layoutY="4.0" onAction="#updateTempLbound" promptText="Min" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </children>
+                                          </GridPane>
+                                          <GridPane GridPane.columnIndex="1">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="71.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="57.0" minWidth="10.0" prefWidth="27.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                                             </rowConstraints>
+                                             <children>
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                   <children>
+                                                      <TextField id="maxTemp" fx:id="maxTempBox" alignment="CENTER" layoutX="-26.0" layoutY="4.0" onAction="#updateTempUbound" promptText="Max" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </children>
+                                          </GridPane>
+                                          <GridPane GridPane.rowIndex="1">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="57.0" minWidth="10.0" prefWidth="27.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="71.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                                             </rowConstraints>
+                                             <children>
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                                   <children>
+                                                      <Button fx:id="celciusButton" layoutY="23.0" mnemonicParsing="false" onAction="#convertToCelsius" prefHeight="23.0" prefWidth="71.0" text="C" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0">
+                                                         <font>
+                                                            <Font name="System Bold" size="12.0" />
+                                                         </font>
+                                                         <styleClass>
+                                                            <String fx:value="dataOverviewPane" />
+                                                            <String fx:value="dropShadow" />
+                                                            <String fx:value="simpleFont" />
+                                                            <String fx:value="defaultButton" />
+                                                         </styleClass>
+                                                      </Button>
+                                                   </children>
+                                                </AnchorPane>
+                                             </children>
+                                          </GridPane>
+                                          <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="71.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="57.0" minWidth="10.0" prefWidth="27.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                                             </rowConstraints>
+                                             <children>
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Button fx:id="fahrenButton" layoutY="23.0" mnemonicParsing="false" onAction="#convertToFahrenheit" prefHeight="23.0" prefWidth="71.0" text="F" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0">
+                                                         <font>
+                                                            <Font name="System Bold" size="12.0" />
+                                                         </font>
+                                                         <styleClass>
+                                                            <String fx:value="dataOverviewPane" />
+                                                            <String fx:value="dropShadow" />
+                                                            <String fx:value="simpleFont" />
+                                                            <String fx:value="defaultButton" />
+                                                         </styleClass>
+                                                      </Button>
+                                                   </children>
+                                                </AnchorPane>
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </GridPane>
+                                    <Label alignment="CENTER" layoutY="36.0" prefHeight="31.0" prefWidth="201.0" styleClass="simpleFont" text="Temperature" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0" />
+                                 </children>
+                              </AnchorPane>
+                              <GridPane prefHeight="28.0" prefWidth="200.0" GridPane.rowIndex="8">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="57.0" minWidth="10.0" prefWidth="27.0" />
+                                    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="133.0" />
+                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="57.0" minWidth="10.0" prefWidth="27.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                                 </rowConstraints>
+                                 <children>
+                                    <AnchorPane prefHeight="30.0" prefWidth="137.0" GridPane.columnIndex="1">
+                                       <children>
+                                          <Button fx:id="defaultThresholds" layoutY="18.0" mnemonicParsing="false" onAction="#setDefaultThresholds" prefHeight="42.0" prefWidth="133.0" text="Set To Default" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="18.0">
+                                             <styleClass>
+                                                <String fx:value="dataOverviewPane" />
+                                                <String fx:value="dropShadow" />
+                                                <String fx:value="simpleFont" />
+                                                <String fx:value="defaultButton" />
+                                             </styleClass>
+                                          </Button>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                                 <GridPane.margin>
+                                    <Insets bottom="8.0" />
+                                 </GridPane.margin>
+                              </GridPane>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
+                                 <children>
+                                    <Label fx:id="roomCapLabel" alignment="CENTER" layoutX="41.0" layoutY="14.0" prefHeight="48.0" prefWidth="200.0" text="Room capacity" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <styleClass>
+                                          <String fx:value="simpleFont" />
+                                          <String fx:value="dropShadow" />
+                                          <String fx:value="dataOverviewPane" />
+                                       </styleClass>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </GridPane>
+         </children>
+      </AnchorPane>
     </children>
 </GridPane>

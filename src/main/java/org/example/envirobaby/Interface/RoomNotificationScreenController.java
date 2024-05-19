@@ -64,117 +64,37 @@ public class RoomNotificationScreenController {
     @FXML
     private UserExchanger instanceUser = UserExchanger.getInstance();
     private User currentUser = instanceUser.getInstanceUser();
+    @FXML
+    private GridPane roomView;
 
-    private boolean room1IsActive = false;
-    private boolean room2IsActive = false;
-    private boolean room3IsActive = false;
-    private boolean room4IsActive = false;
     private DatabaseControl database;
+    private Room currentRoom;
+    private SharedControllerFunctions setupFunctions = new SharedControllerFunctions();
 
     public void initialize () throws IOException, SQLException { // based on user`s data , after the FXML file loaded, configures visibility and startup settings.
 
         database = new DatabaseControl();
 
         // Hide all buttons initially
-        room1.setVisible(false);
-        room2.setVisible(false);
-        room3.setVisible(false);
-        room4.setVisible(false);
-
-        turnOnTempNotifButton.setVisible(false);
-        turnOffTempNotifButton.setVisible(false);
-        turnOnHumiNotifButton.setVisible(false);
-        turnOffHumiNotifButton.setVisible(false);
-        turnOnNoiseNotifButton.setVisible(false);
-        turnOffNoiseNotifButton.setVisible(false);
-
-    // Display the room buttons based on how many rooms the current user has
-        switch (currentUser.getRooms().size()) {
-        case 1 -> {
-            room1.setText(currentUser.getRoom(FIRST_ROOM).getRoomName());
-            room1.setVisible(true);
-            turnOnTempNotifButton.setVisible(true);
-            turnOffTempNotifButton.setVisible(true);
-            turnOnHumiNotifButton.setVisible(true);
-            turnOffHumiNotifButton.setVisible(true);
-            turnOnNoiseNotifButton.setVisible(true);
-            turnOffNoiseNotifButton.setVisible(true);
-
-            room1IsActive = true;
-            room2IsActive = false;
-            room3IsActive = false;
-            room4IsActive = false;
-        }
-        case 2 -> {
-            room1.setText(currentUser.getRoom(FIRST_ROOM).getRoomName());
-            room1.setVisible(true);
-            room2.setText(currentUser.getRoom(SECOND_ROOM).getRoomName());
-            room2.setVisible(true);
-            turnOnTempNotifButton.setVisible(true);
-            turnOffTempNotifButton.setVisible(true);
-            turnOnHumiNotifButton.setVisible(true);
-            turnOffHumiNotifButton.setVisible(true);
-            turnOnNoiseNotifButton.setVisible(true);
-            turnOffNoiseNotifButton.setVisible(true);
-
-            room1IsActive = true;
-            room2IsActive = false;
-            room3IsActive = false;
-            room4IsActive = false;
-        }
-        case 3 -> {
-            room1.setText(currentUser.getRoom(FIRST_ROOM).getRoomName());
-            room1.setVisible(true);
-            room2.setText(currentUser.getRoom(SECOND_ROOM).getRoomName());
-            room2.setVisible(true);
-            room3.setText(currentUser.getRoom(THIRD_ROOM).getRoomName());
-            room3.setVisible(true);
-            turnOnTempNotifButton.setVisible(true);
-            turnOffTempNotifButton.setVisible(true);
-            turnOnHumiNotifButton.setVisible(true);
-            turnOffHumiNotifButton.setVisible(true);
-            turnOnNoiseNotifButton.setVisible(true);
-            turnOffNoiseNotifButton.setVisible(true);
-
-            room1IsActive = true;
-            room2IsActive = false;
-            room3IsActive = false;
-            room4IsActive = false;
-        }
-        case 4 -> {
-            room1.setText(currentUser.getRoom(FIRST_ROOM).getRoomName());
-            room1.setVisible(true);
-            room2.setText(currentUser.getRoom(SECOND_ROOM).getRoomName());
-            room2.setVisible(true);
-            room3.setText(currentUser.getRoom(THIRD_ROOM).getRoomName());
-            room3.setVisible(true);
-            room4.setText(currentUser.getRoom(FOURTH_ROOM).getRoomName());
-            room4.setVisible(true);
-            turnOnTempNotifButton.setVisible(true);
-            turnOffTempNotifButton.setVisible(true);
-            turnOnHumiNotifButton.setVisible(true);
-            turnOffHumiNotifButton.setVisible(true);
-            turnOnNoiseNotifButton.setVisible(true);
-            turnOffNoiseNotifButton.setVisible(true);
-
-            room1IsActive = true;
-            room2IsActive = false;
-            room3IsActive = false;
-            room4IsActive = false;
-        }
+        setupFunctions.setupRoomsDisplay(room1,room2,room3,room4,roomView);
+        displayRoomNotifSettings();
     }
-    }
+
 
     /**
      * Navigates back to the home screen.
      * @param event The event that triggered this action.
      * @throws IOException if unable to load the home screen FXML.
      */
-    public void homeButtonClick(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("homeScreen.fxml"));
+    public void goBackButtonClick(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("SystemNotificationSettingsScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        double chosenHeight = stage.getHeight();
+        double chosenWidth = stage.getWidth();
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setHeight(chosenHeight);
+        stage.setWidth(chosenWidth);
     }
 
     /**
@@ -183,6 +103,9 @@ public class RoomNotificationScreenController {
      */
     public void moveToRoom1(ActionEvent event) {
         instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRooms().get(FIRST_ROOM));
+        setupFunctions.resetButtons(room1,room2,room3,room4);
+        room1.setDisable(true);
+        displayRoomNotifSettings();
     }
 
     /**
@@ -192,6 +115,9 @@ public class RoomNotificationScreenController {
 
     public void moveToRoom2(ActionEvent event) {
         instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRooms().get(SECOND_ROOM));
+        setupFunctions.resetButtons(room1,room2,room3,room4);
+        room2.setDisable(true);
+        displayRoomNotifSettings();
     }
 
     /**
@@ -201,6 +127,9 @@ public class RoomNotificationScreenController {
 
     public void moveToRoom3(ActionEvent event) {
         instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRooms().get(THIRD_ROOM));
+        setupFunctions.resetButtons(room1,room2,room3,room4);
+        room3.setDisable(true);
+        displayRoomNotifSettings();
     }
 
     /**
@@ -210,6 +139,9 @@ public class RoomNotificationScreenController {
 
     public void moveToRoom4(ActionEvent event) {
         instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRooms().get(FOURTH_ROOM));
+        setupFunctions.resetButtons(room1,room2,room3,room4);
+        room4.setDisable(true);
+        displayRoomNotifSettings();
     }
 
     public RoomNotificationScreenController() {
@@ -223,6 +155,8 @@ public class RoomNotificationScreenController {
     public void tempNotiOn(ActionEvent actionEvent) throws SQLException {
         instanceUser.getCurrentRoom().settTempNotifON(true);
         updateRoomNotifSettings();
+        turnOnTempNotifButton.setDisable(true);
+        turnOffTempNotifButton.setDisable(false);
     }
 
     /**
@@ -232,6 +166,8 @@ public class RoomNotificationScreenController {
     public void tempNotiOff(ActionEvent actionEvent) throws SQLException {
         instanceUser.getCurrentRoom().settTempNotifON(false);
         updateRoomNotifSettings();
+        turnOnTempNotifButton.setDisable(false);
+        turnOffTempNotifButton.setDisable(true);
     }
 
     /**
@@ -241,6 +177,8 @@ public class RoomNotificationScreenController {
     public void humiNotiOn(ActionEvent actionEvent) throws SQLException {
         instanceUser.getCurrentRoom().setHumiNotifON(true);
         updateRoomNotifSettings();
+        turnOnHumiNotifButton.setDisable(true);
+        turnOffHumiNotifButton.setDisable(false);
     }
 
     /**
@@ -250,6 +188,8 @@ public class RoomNotificationScreenController {
     public void humiNotiOff(ActionEvent actionEvent) throws SQLException {
         instanceUser.getCurrentRoom().setHumiNotifON(false);
         updateRoomNotifSettings();
+        turnOnHumiNotifButton.setDisable(false);
+        turnOffHumiNotifButton.setDisable(true);
     }
 
     /**
@@ -259,6 +199,8 @@ public class RoomNotificationScreenController {
     public void noiseNotiOn(ActionEvent actionEvent) throws SQLException {
         instanceUser.getCurrentRoom().setNoiseNotifON(true);
         updateRoomNotifSettings();
+        turnOnNoiseNotifButton.setDisable(true);
+        turnOffNoiseNotifButton.setDisable(false);
     }
 
     /**
@@ -268,11 +210,44 @@ public class RoomNotificationScreenController {
     public void noiseNotiOff(ActionEvent actionEvent) throws SQLException {
         instanceUser.getCurrentRoom().setNoiseNotifON(false);
         updateRoomNotifSettings();
+        turnOnNoiseNotifButton.setDisable(false);
+        turnOffNoiseNotifButton.setDisable(true);
     }
 
     public void updateRoomNotifSettings() throws SQLException {
         Room currentRoom = instanceUser.getCurrentRoom();
         database.updateAlertToggle(currentRoom.getUserId(), currentRoom.getRoomName(), currentRoom.isNoiseNotif(),currentRoom.isTempNotif(),currentRoom.isHumiNotif());
+    }
+
+    public void displayRoomNotifSettings() {
+        currentRoom=instanceUser.getCurrentRoom();
+
+        turnOnTempNotifButton.setDisable(false);
+        turnOffTempNotifButton.setDisable(false);
+        turnOnHumiNotifButton.setDisable(false);
+        turnOffHumiNotifButton.setDisable(false);
+        turnOnNoiseNotifButton.setDisable(false);
+        turnOffNoiseNotifButton.setDisable(false);
+
+
+
+        if (!currentUser.getRooms().isEmpty()) {
+            if (currentRoom.isTempNotif()){
+                turnOnTempNotifButton.setDisable(true);
+            } else {
+                turnOffTempNotifButton.setDisable(true);
+            }
+            if (currentRoom.isHumiNotif()){
+                turnOnHumiNotifButton.setDisable(true);
+            } else {
+                turnOffHumiNotifButton.setDisable(true);
+            }
+            if (currentRoom.isNoiseNotif()){
+                turnOnNoiseNotifButton.setDisable(true);
+            } else {
+                turnOffNoiseNotifButton.setDisable(true);
+            }
+        }
     }
 
 }

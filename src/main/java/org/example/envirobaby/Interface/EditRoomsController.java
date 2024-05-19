@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.example.envirobaby.Database.DatabaseControl;
 
@@ -57,11 +58,15 @@ public class EditRoomsController {
 
     @FXML
     private Button room4;
+    @FXML
+    private GridPane roomView;
+
     private Alert deleteConfirmation;
     private UserExchanger instanceUser;
     private User currentUser;
     private DatabaseControl database;
     private int selectedRoomNum;
+    private SharedControllerFunctions setupFunctions = new SharedControllerFunctions();
 
 
     public void initialize () throws IOException, SQLException { // based on user`s data , after the FXML file loaded, configures visibility and startup settings.
@@ -70,65 +75,23 @@ public class EditRoomsController {
         instanceUser= UserExchanger.getInstance();
         currentUser = instanceUser.getInstanceUser();
 
-        // Hide all buttons initially
-        room1.setVisible(false);
-        room2.setVisible(false);
-        room3.setVisible(false);
-        room4.setVisible(false);
+        setupFunctions.setupRoomsDisplay(room1,room2,room3,room4,roomView);
 
-        // Display the room buttons based on how many rooms the current user has
-        switch (currentUser.getRooms().size()) {
-            case 1 -> {
-                room1.setText(currentUser.getRoom(1).getRoomName());
-                instanceUser.setCurrentRoom(currentUser.getRoom(1));
-                selectedRoomNum =1; // set selectedRoomNum so we know which hashmap index needs to be deleted
-                room1.setVisible(true);
-                displayRoomData();
-            }
-            case 2 -> {
-                room1.setText(currentUser.getRoom(1).getRoomName());
-                instanceUser.setCurrentRoom(currentUser.getRoom(1));
-                selectedRoomNum =1;
-                room1.setVisible(true);
-                room2.setText(currentUser.getRoom(2).getRoomName());
-                room2.setVisible(true);
-                displayRoomData();
-            }
-            case 3 -> {
-                room1.setText(currentUser.getRoom(1).getRoomName());
-                instanceUser.setCurrentRoom(currentUser.getRoom(1));
-                selectedRoomNum =1;
-                room1.setVisible(true);
-                room2.setText(currentUser.getRoom(2).getRoomName());
-                room2.setVisible(true);
-                room3.setText(currentUser.getRoom(3).getRoomName());
-                room3.setVisible(true);
-                displayRoomData();
-            }
-            case 4 -> {
-                room1.setText(currentUser.getRoom(1).getRoomName());
-                instanceUser.setCurrentRoom(currentUser.getRoom(1));
-                selectedRoomNum =1;
-                room1.setVisible(true);
-                room2.setText(currentUser.getRoom(2).getRoomName());
-                room2.setVisible(true);
-                room3.setText(currentUser.getRoom(3).getRoomName());
-                room3.setVisible(true);
-                room4.setText(currentUser.getRoom(4).getRoomName());
-                room4.setVisible(true);
-                displayRoomData();
-            }
+        //Loads the room overview screen for the currently selected room, if there is one
+        if (!currentUser.getRooms().isEmpty()) {
+            selectedRoomNum=1;
+            ObservableList<String> ageGroupOptions = FXCollections.observableArrayList(
+                    "0-6 Months",
+                    "6-12 Months",
+                    "12-24 Months"
+            );
+            AgeGroupPicker.setItems(ageGroupOptions);
+            displayRoomData();
         }
 
         deleteConfirmation= new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you wish to delete " + instanceUser.getCurrentRoom().getRoomName() +"?", ButtonType.YES, ButtonType.NO);
         deleteConfirmation.setTitle("Confirm Delete");
 
-        ObservableList<String> ageGroupOptions = FXCollections.observableArrayList(
-                "0-6 Months",
-                "6-12 Months",
-                "12-24 Months"
-        );
-        AgeGroupPicker.setItems(ageGroupOptions);
     }
 
     @FXML
@@ -143,12 +106,16 @@ public class EditRoomsController {
             Scene scene = new Scene(root);
             stage.setScene(scene);
         }
+        if (currentUser.getRooms().isEmpty()){
+            roomView.setVisible(false);
+        }
     }
 
     @FXML
     void editRoom(ActionEvent event) throws SQLException {
         int maxCapacity = Integer.parseInt(MaxCapacity.getText());
         instanceUser.getCurrentRoom().updateRoom(currentUser.getUserID(), NewRoomName.getText(),AgeGroupPicker.getValue(),maxCapacity);
+        instanceUser.getCurrentRoom().getThresholds().setDefaultThresholds(AgeGroupPicker.getValue()); //update default thresholds according to new choice
 
         switch (selectedRoomNum){ // update room button label in case its been changed
             case 1 -> {
@@ -167,14 +134,20 @@ public class EditRoomsController {
     void homeButtonClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("homeScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        double chosenHeight = stage.getHeight();
+        double chosenWidth = stage.getWidth();
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setHeight(chosenHeight);
+        stage.setWidth(chosenWidth);
     }
 
     @FXML
     void moveToRoom1(ActionEvent event) {
         instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRooms().get(1));
         selectedRoomNum =1; // set selectedRoomNum so we know which hashmap index needs to be deleted
+        setupFunctions.resetButtons(room1,room2,room3,room4);
+        room1.setDisable(true);
         displayRoomData();
     }
 
@@ -182,6 +155,8 @@ public class EditRoomsController {
     void moveToRoom2(ActionEvent event) {
         instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRooms().get(2));
         selectedRoomNum =2;
+        setupFunctions.resetButtons(room1,room2,room3,room4);
+        room2.setDisable(true);
         displayRoomData();
     }
 
@@ -189,6 +164,8 @@ public class EditRoomsController {
     void moveToRoom3(ActionEvent event) {
         instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRooms().get(3));
         selectedRoomNum =3;
+        setupFunctions.resetButtons(room1,room2,room3,room4);
+        room3.setDisable(true);
         displayRoomData();
     }
 
@@ -196,14 +173,27 @@ public class EditRoomsController {
     void moveToRoom4(ActionEvent event) {
         instanceUser.setCurrentRoom(instanceUser.getInstanceUser().getRooms().get(4));
         selectedRoomNum =4;
+        setupFunctions.resetButtons(room1,room2,room3,room4);
+        room4.setDisable(true);
         displayRoomData();
     }
+    public void addRoomClick(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("addRooms.fxml"));
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        double chosenHeight = stage.getHeight();
+        double chosenWidth = stage.getWidth();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setHeight(chosenHeight);
+        stage.setWidth(chosenWidth);
+    }
 
-    void displayRoomData() {
+    void displayRoomData() { //automatically fill out fields with the rooms current data
        Room currentRoom = instanceUser.getCurrentRoom();
        NewRoomName.setText(currentRoom.getRoomName());
        AgeGroupPicker.setValue(currentRoom.isAgeGroup());
        String capacity = String.format("%d",currentRoom.getCapacity());
        MaxCapacity.setText(capacity);
     }
+
 }

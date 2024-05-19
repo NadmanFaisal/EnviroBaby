@@ -3,14 +3,14 @@
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.control.TextField?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="507.0" prefWidth="420.0" style="-fx-background-color: #fef5e1;" stylesheets="@roomStylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.envirobaby.Interface.LogInController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="507.0" prefWidth="380.0" style="-fx-background-color: #fef5e1;" stylesheets="@roomStylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.envirobaby.Interface.LogInController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -21,12 +21,12 @@
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F3B197;" styleClass="headDropShadow">
          <children>
-            <Label layoutX="107.0" layoutY="14.0" prefHeight="71.0" prefWidth="207.0" text="EnviroBaby" textFill="#460a0aa3">
+            <Label layoutX="87.0" layoutY="17.0" prefHeight="71.0" prefWidth="207.0" text="EnviroBaby" textFill="#460a0aa3">
                <font>
                   <Font name="Gill Sans Ultra Bold Condensed" size="41.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="129.0" layoutY="70.0" prefHeight="31.0" prefWidth="164.0" text="Log In" textFill="#450a0ab2">
+            <Label alignment="CENTER" layoutX="108.0" layoutY="73.0" prefHeight="31.0" prefWidth="164.0" text="Log In" textFill="#450a0ab2">
                <font>
                   <Font name="Gill Sans Ultra Bold" size="15.0" />
                </font>
@@ -35,24 +35,26 @@
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
          <children>
-            <TextField fx:id="username" layoutX="110.0" layoutY="78.0" prefHeight="31.0" prefWidth="200.0" promptText="Enter Your Username" />
-            <TextField fx:id="password" layoutX="110.0" layoutY="150.0" prefHeight="31.0" prefWidth="200.0" promptText="Enter Your Password" />
-            <Button fx:id="logInConfirm"  onAction="#logIn" layoutX="143.0" layoutY="215.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="135.0" text="Log In">
+            <TextField fx:id="username" layoutX="95.0" layoutY="78.0" prefHeight="31.0" prefWidth="200.0" promptText="Enter Your Username" />
+            <TextField fx:id="password" layoutX="95.0" layoutY="150.0" prefHeight="31.0" prefWidth="200.0" promptText="Enter Your Password" />
+            <Button fx:id="logInConfirm" layoutX="123.0" layoutY="215.0" mnemonicParsing="false" onAction="#logIn" prefHeight="31.0" prefWidth="135.0" text="Log In">
                <styleClass>
                   <String fx:value="dataOverviewPane" />
                   <String fx:value="dropShadow" />
                   <String fx:value="simpleFont" />
+                  <String fx:value="defaultButton" />
                </styleClass>
             </Button>
-            <Button fx:id="signUpButton" onAction="#signUpRedirect" layoutX="143.0" layoutY="272.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="135.0" text="Sign Up">
+            <Button fx:id="signUpButton" layoutX="123.0" layoutY="274.0" mnemonicParsing="false" onAction="#signUpRedirect" prefHeight="25.0" prefWidth="135.0" text="Sign Up">
                <styleClass>
                   <String fx:value="dataOverviewPane" />
                   <String fx:value="dropShadow" />
                   <String fx:value="simpleFont" />
+                  <String fx:value="defaultButton" />
                </styleClass>
             </Button>
-            <Label layoutX="110.0" layoutY="55.0" prefHeight="23.0" prefWidth="85.0" styleClass="simpleFont" text="Username" />
-            <Label layoutX="110.0" layoutY="127.0" prefHeight="23.0" prefWidth="85.0" styleClass="simpleFont" text="Password" />
+            <Label layoutX="95.0" layoutY="55.0" prefHeight="23.0" prefWidth="85.0" styleClass="simpleFont" text="Username" />
+            <Label layoutX="95.0" layoutY="127.0" prefHeight="23.0" prefWidth="85.0" styleClass="simpleFont" text="Password" />
          </children>
       </AnchorPane>
    </children>

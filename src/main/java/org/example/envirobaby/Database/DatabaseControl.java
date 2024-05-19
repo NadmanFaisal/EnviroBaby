@@ -93,7 +93,7 @@ public class DatabaseControl {
         String sqlQuery = String.format("SELECT DISTINCT record_date FROM RECORD WHERE userid='%s' AND room_name='%s' ORDER BY record_date DESC",userId,roomName);
         ResultSet rs = statement.executeQuery(sqlQuery);
         return rs;
-    }
+    } //return only one instance of each unique recorded date for the room.
 
     public ResultSet recieveRecordedData(String userId, String roomName, String recordDate) throws SQLException {
         String sqlQuery = String.format("SELECT record_time, loud_data, temp_data, hum_data FROM RECORD" +
@@ -101,23 +101,6 @@ public class DatabaseControl {
         ResultSet rs = statement.executeQuery(sqlQuery);
         return rs;
     } //return data stored in the db
-
-
-    public void addChild(String userId, String roomName, String childName, int age) throws SQLException {
-        String insertQuery = String.format("INSERT INTO CHILDREN(userid,room,child,age) VALUES('%s','%s','%s',%d)", userId,roomName,childName,age);
-        statement.executeUpdate(insertQuery); //create new row in children table. childId is declared automatically in table
-    }
-
-    public void removeChild(int childId) throws SQLException {
-        String removeQuery = String.format("DELETE FROM CHILDREN WHERE childid=%d",childId);
-        statement.executeUpdate(removeQuery); //remove child from the children table
-    }
-
-    public ResultSet retrieveChildren(String userId, String roomName) throws SQLException {
-        String sqlQuery = String.format("SELECT * FROM CHILDREN WHERE userid='%s' AND room='%s' ORDER BY child ASC", userId,roomName);
-        ResultSet rs = statement.executeQuery(sqlQuery);
-        return rs; //return all children data for a specific room owned by the user
-    }
 
     public ResultSet retrieveSystemNotificationSettings(String userId) throws SQLException {
         String sqlQuery = String.format("SELECT noise_alert_setting, temp_alert_setting, hum_alert_setting FROM USERS WHERE id='%s'", userId);

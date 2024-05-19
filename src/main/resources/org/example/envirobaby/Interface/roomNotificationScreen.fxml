@@ -21,10 +21,10 @@
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="headDropShadow">
          <children>
-            <GridPane layoutX="221.0" layoutY="13.0" style="-fx-background-color: #F3B197;" styleClass="headDropShadow" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <GridPane fx:id="roomHeader" style="-fx-background-color: #F3B197;" styleClass="headDropShadow" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="ALWAYS" maxWidth="150.0" minWidth="10.0" prefWidth="101.0" />
-                  <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="924.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="150.0" minWidth="10.0" prefWidth="110.0" />
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="860.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -32,42 +32,97 @@
                <children>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Button alignment="CENTER" layoutX="11.0" layoutY="22.0" mnemonicParsing="false" onAction="#homeButtonClick" prefHeight="73.0" prefWidth="79.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color:#f19f7f; -fx-border-color: #EC7D51;" styleClass="simpleFont, dropShadow" text="Home" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="22.0">
+                        <Button alignment="CENTER" layoutX="24.0" layoutY="18.0" mnemonicParsing="false" onAction="#goBackButtonClick" prefHeight="81.0" prefWidth="89.0" text="Back" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="18.0">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <styleClass>
+                              <String fx:value="simpleFont" />
+                              <String fx:value="dropShadow" />
+                              <String fx:value="headerButton" />
+                           </styleClass>
                         </Button>
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                      <children>
-                        <Button fx:id="room1" alignment="CENTER" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" onAction="#moveToRoom1" prefHeight="73.0" prefWidth="158.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #f19f7f; -fx-border-color: #EC7D51;" styleClass="simpleFont, dropShadow" text="Room 1" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="22.0">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button fx:id="room2" alignment="CENTER" layoutX="198.0" layoutY="22.0" mnemonicParsing="false" onAction="#moveToRoom2" prefHeight="73.0" prefWidth="158.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #f19f7f; -fx-border-color: #EC7D51;" styleClass="simpleFont, dropShadow" text="Room 2" AnchorPane.bottomAnchor="21.0" AnchorPane.topAnchor="22.0">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button fx:id="room3" alignment="CENTER" layoutX="383.0" layoutY="22.0" mnemonicParsing="false" onAction="#moveToRoom3" prefHeight="73.0" prefWidth="158.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #f19f7f; -fx-border-color: #EC7D51;" styleClass="simpleFont, dropShadow" text="Room 3" AnchorPane.bottomAnchor="21.0" AnchorPane.topAnchor="22.0">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button fx:id="room4" alignment="CENTER" layoutX="565.0" layoutY="22.0" mnemonicParsing="false" onAction="#moveToRoom4" prefHeight="73.0" prefWidth="158.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #f19f7f; -fx-border-color: #EC7D51;" styleClass="simpleFont, dropShadow" text="Room 4" AnchorPane.bottomAnchor="21.0" AnchorPane.topAnchor="22.0">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
+                        <GridPane layoutX="70.0" layoutY="43.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <AnchorPane GridPane.columnIndex="3">
+                                 <children>
+                                    <Button fx:id="room4" alignment="CENTER" layoutX="24.0" layoutY="18.0" mnemonicParsing="false" onAction="#moveToRoom4" prefHeight="81.0" prefWidth="183.0" text="Room 4" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="18.0">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <styleClass>
+                                          <String fx:value="simpleFont" />
+                                          <String fx:value="dropShadow" />
+                                          <String fx:value="button" />
+                                          <String fx:value="headerButton" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane GridPane.columnIndex="2">
+                                 <children>
+                                    <Button fx:id="room3" alignment="CENTER" layoutX="24.0" layoutY="18.0" mnemonicParsing="false" onAction="#moveToRoom3" prefHeight="81.0" prefWidth="183.0" text="Room 3" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="18.0">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <styleClass>
+                                          <String fx:value="simpleFont" />
+                                          <String fx:value="dropShadow" />
+                                          <String fx:value="headerButton" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane GridPane.columnIndex="1">
+                                 <children>
+                                    <Button fx:id="room2" alignment="CENTER" layoutX="24.0" layoutY="18.0" mnemonicParsing="false" onAction="#moveToRoom2" prefHeight="81.0" prefWidth="183.0" text="Room 2" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="18.0">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <styleClass>
+                                          <String fx:value="simpleFont" />
+                                          <String fx:value="dropShadow" />
+                                          <String fx:value="headerButton" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane>
+                                 <children>
+                                    <Button fx:id="room1" alignment="CENTER" layoutX="24.0" layoutY="18.0" mnemonicParsing="false" onAction="#moveToRoom1" prefHeight="81.0" prefWidth="184.0" text="Room 1" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="18.0">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <styleClass>
+                                          <String fx:value="simpleFont" />
+                                          <String fx:value="dropShadow" />
+                                          <String fx:value="headerButton" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </GridPane>
                      </children>
                   </AnchorPane>
                </children>
             </GridPane>
          </children>
       </AnchorPane>
-      <GridPane GridPane.rowIndex="1">
+      <GridPane fx:id="roomView" GridPane.rowIndex="1">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
@@ -81,7 +136,7 @@
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
-                  <GridPane layoutX="159.0" layoutY="14.0" prefHeight="102.0" prefWidth="712.0" vgap="10.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="159.0" AnchorPane.topAnchor="14.0">
+                  <GridPane layoutX="157.0" layoutY="22.0" prefHeight="102.0" prefWidth="712.0" vgap="10.0" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="157.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="22.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
@@ -106,6 +161,7 @@
                                           <String fx:value="dropShadow" />
                                           <String fx:value="dataOverviewPane" />
                                           <String fx:value="font" />
+                                          <String fx:value="defaultButton" />
                                        </styleClass>
                                     </Button>
                                  </children>
@@ -117,6 +173,7 @@
                                           <String fx:value="dropShadow" />
                                           <String fx:value="dataOverviewPane" />
                                           <String fx:value="font" />
+                                          <String fx:value="defaultButton" />
                                        </styleClass>
                                     </Button>
                                  </children>
@@ -139,7 +196,7 @@
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                <children>
-                  <GridPane layoutX="179.0" layoutY="34.0" prefHeight="102.0" prefWidth="712.0" vgap="10.0">
+                  <GridPane layoutX="157.0" layoutY="14.0" prefHeight="102.0" prefWidth="712.0" vgap="10.0" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="157.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="14.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                      </columnConstraints>
@@ -164,6 +221,7 @@
                                           <String fx:value="dropShadow" />
                                           <String fx:value="dataOverviewPane" />
                                           <String fx:value="font" />
+                                          <String fx:value="defaultButton" />
                                        </styleClass>
                                     </Button>
                                  </children>
@@ -175,6 +233,7 @@
                                           <String fx:value="dropShadow" />
                                           <String fx:value="dataOverviewPane" />
                                           <String fx:value="font" />
+                                          <String fx:value="defaultButton" />
                                        </styleClass>
                                     </Button>
                                  </children>
@@ -197,7 +256,7 @@
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                <children>
-                  <GridPane layoutX="169.0" layoutY="24.0" prefHeight="102.0" prefWidth="712.0" vgap="10.0">
+                  <GridPane layoutX="157.0" layoutY="14.0" prefHeight="102.0" prefWidth="712.0" vgap="10.0" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="157.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="22.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                      </columnConstraints>
@@ -222,6 +281,7 @@
                                           <String fx:value="dropShadow" />
                                           <String fx:value="dataOverviewPane" />
                                           <String fx:value="font" />
+                                          <String fx:value="defaultButton" />
                                        </styleClass>
                                     </Button>
                                  </children>
@@ -233,6 +293,7 @@
                                           <String fx:value="dropShadow" />
                                           <String fx:value="dataOverviewPane" />
                                           <String fx:value="font" />
+                                          <String fx:value="defaultButton" />
                                        </styleClass>
                                     </Button>
                                  </children>

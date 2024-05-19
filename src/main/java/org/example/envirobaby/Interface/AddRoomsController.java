@@ -99,28 +99,34 @@ public class AddRoomsController {
         if (currentUser.getRooms().size()<4) {
             //Gets the user input for the new rooms details
             String roomName = NewRoomName.getText();
-            int capacity = Integer.parseInt(MaxCapacity.getText());
-            String ageGroup = (String) AgeGroupPicker.getValue();
-            int maxNoiseLevel = Integer.parseInt(maxNoise.getText());
-            double maxHum = Double.parseDouble(maxHumBox.getText());
-            double minHum = Double.parseDouble(minHumBox.getText());
-            double maxTemp = Double.parseDouble(maxTempBox.getText());
-            double minTemp = Double.parseDouble(minTempBox.getText());
+            if(roomName.length()<=8) {
+                int capacity = Integer.parseInt(MaxCapacity.getText());
+                String ageGroup = AgeGroupPicker.getValue();
+                int maxNoiseLevel = Integer.parseInt(maxNoise.getText());
+                double maxHum = Double.parseDouble(maxHumBox.getText());
+                double minHum = Double.parseDouble(minHumBox.getText());
+                double maxTemp = Double.parseDouble(maxTempBox.getText());
+                double minTemp = Double.parseDouble(minTempBox.getText());
 
-           //Gets the current users ID
-            UserExchanger userExchanger = UserExchanger.getInstance();
-            User currentUser = userExchanger.getInstanceUser();
-            String userId = currentUser.getUserID();
+                //Gets the current users ID
+                UserExchanger userExchanger = UserExchanger.getInstance();
+                User currentUser = userExchanger.getInstanceUser();
+                String userId = currentUser.getUserID();
 
-            //Creates the new room
-            Room room = currentUser.createRoom(roomName, userId, capacity, ageGroup, maxNoiseLevel, maxTemp, minTemp, maxHum, minHum, currentUser.isCelsius());
-            userExchanger.setCurrentRoom(room);
+                //Creates the new room
+                Room room = currentUser.createRoom(roomName, userId, capacity, ageGroup, maxNoiseLevel, maxTemp, minTemp, maxHum, minHum, currentUser.isCelsius());
+                userExchanger.setCurrentRoom(room);
+                userExchanger.getCurrentRoom().getThresholds().setDefaultThresholds(ageGroup); //initialise default thresholds for the user selected age group
 
-            //Loads the "View rooms" screen
-            Parent root = FXMLLoader.load(getClass().getResource("viewRooms.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+                //Loads the "View rooms" screen
+                Parent root = FXMLLoader.load(getClass().getResource("viewRooms.fxml"));
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+            } else {
+                alert.setContentText("Room name must be 8 letters or less.");
+                alert.show();
+            }
         } else {
             alert.setContentText("You can only have four rooms at a time");
             alert.show();
@@ -135,29 +141,33 @@ public class AddRoomsController {
     public void homeButtonClick (ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("homeScreen.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        double chosenHeight = stage.getHeight();
+        double chosenWidth = stage.getWidth();
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setHeight(chosenHeight);
+        stage.setWidth(chosenWidth);
     }
 
     public void setDefaultThresholds(ActionEvent event) {
         if(AgeGroupPicker.getValue().equals("0-6 Months")) {
-            this.maxHumBox.setText("60");
-            this.minHumBox.setText("45");
-            this.minTempBox.setText("30");
-            this.maxTempBox.setText("36");
-            this.maxNoise.setText("65");
-        } else if(AgeGroupPicker.getValue().equals("6-12 Months")) {
-            this.maxHumBox.setText("60");
-            this.minHumBox.setText("45");
-            this.minTempBox.setText("30");
-            this.maxTempBox.setText("40");
-            this.maxNoise.setText("65");
-        } else {
-            this.maxHumBox.setText("60");
+            this.maxHumBox.setText("50");
             this.minHumBox.setText("35");
             this.minTempBox.setText("20");
-            this.maxTempBox.setText("42");
+            this.maxTempBox.setText("25");
             this.maxNoise.setText("65");
+        } else if(AgeGroupPicker.getValue().equals("6-12 Months")) {
+            this.maxHumBox.setText("50");
+            this.minHumBox.setText("40");
+            this.minTempBox.setText("23");
+            this.maxTempBox.setText("28");
+            this.maxNoise.setText("55");
+        } else {
+            this.maxHumBox.setText("50");
+            this.minHumBox.setText("40");
+            this.minTempBox.setText("23");
+            this.maxTempBox.setText("30");
+            this.maxNoise.setText("55");
         }
     }
 }

@@ -13,17 +13,14 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class OverviewManager implements Runnable{
+public class OverviewManager {
     private Label noiseLabel;
     private Label tempLabel;
     private Label humLabel;
-    private Label roomCapLabel;
-
-    private Notification alerts;
     private Room room;
-    private MQTTSender sender;
     private UserExchanger instanceUser = UserExchanger.getInstance();
 
+    ScheduledExecutorService overviewScheduler;
 
 
     DecimalFormat df = new DecimalFormat("#.00");
@@ -32,13 +29,12 @@ public class OverviewManager implements Runnable{
     public OverviewManager(Label noiseLabel, Label tempLabel, Label humLabel, Room userRoom) throws MqttException {
 
         this.room = userRoom;
-        this.alerts= new Notification();
-        this.sender = new MQTTSender();
 
 
         this.noiseLabel=noiseLabel;
         this.tempLabel=tempLabel;
         this.humLabel=humLabel;
+        this.overviewScheduler = Executors.newSingleThreadScheduledExecutor();
     }
 
 
@@ -76,12 +72,12 @@ public class OverviewManager implements Runnable{
         this.room = room;
     }
 
-    @Override
-    public void run() {
-        // Create a ScheduledExecutorService for overviews
-        ScheduledExecutorService overviewScheduler = Executors.newSingleThreadScheduledExecutor();
-
+    public void runOverview(){
         // Schedule updateOverview with a delay
         overviewScheduler.scheduleAtFixedRate(this::updateOverview, 0, 100, TimeUnit.MILLISECONDS);
+    }
+
+    public void stopOverview() throws InterruptedException {
+        overviewScheduler.shutdownNow();
     }
 }

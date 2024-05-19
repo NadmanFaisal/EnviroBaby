@@ -26,12 +26,6 @@ public class SignUpController {
     @FXML
     private TextField createUsername;
 
-    @FXML
-    private Button logInButton;
-
-    @FXML
-    private Button signUpConfirm;
-
     private UserExchanger transferable; //transfers user object between classes
     private User user;
     private DatabaseControl database;
