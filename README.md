@@ -9,16 +9,26 @@ The system continuously tracks temperature, humidity and noise levels to ensure 
 It also provides caregivers with real-time alerts when any of the environmental parameters breach their predefined thresholds, and allows customisation in order to make the system suitable for specific childcare needs.
 
 By automating the monitoring process, Envirobaby offers nurseries improved resource management. 
-Caregivers can now spend less time time manually checking and monitoring room conditions, and focus more on direct childcare. 
+Caregivers can now spend less time manually checking and monitoring room conditions, and focus more on direct childcare. 
 Furthermore, this also improves children’s safety and comfort by reducing the risk of human error. The system is designed to be scalable for up to 4 nursery rooms, making it suitable for larger-scale nurseries as well.
+***
+
+## System Architecture
+
+This is our system architecture, displaying the architect for the software and the hardware: 
+
+<img height="567" src="pictures/component diagram.jpg" width="1062"/>
+
+Click [here](https://drive.google.com/file/d/1lQnLxKE-23G7OKVCaXYln47tVGS6P1wJ/view?usp=sharing) to see even higher quality picture of the software architecture.
+
 ***
 ## Get Started
 The instructions will help you set up and run Envirobaby.
 
 ### Hardware Requirements:
-- Wio Terminal
-- Wio Accessories (Optional)
-- Sensors click here for list of sensors
+- [Wio Terminal](https://www.seeedstudio.com/Wio-Terminal-p-4509.html)
+- [Wio Accessories](https://www.seeedstudio.com/Wio-Terminal-Chassis-Battery-650mAh-p-4756.html) (Optional)
+- Sensors [click here for list of sensors](https://git.chalmers.se/courses/dit113/2024/group-6/EnviroBaby/-/wikis/System-Sensors)
 - Wires
 
 ### Software Requirements:
@@ -145,6 +155,71 @@ If we notice carefully we can see that every time we try to install a new Wio Te
 If we remove room 2 and want to reconfigure room 2, as users we must be careful to initialize ‘_variable declarations_’ for specifically room 2.
 
 ### Starting the App:
+
+### Installing the Database
+
+- Follow this [video](https://www.youtube.com/watch?v=0n41UTkOBb0&ab_channel=GeekyScript) to download the database and stop right after cancelling the installation of 'StackBuilder'
+- On your task bar search, type 'pgAdmin 4'
+- After entering, on the top left, press 'Server'
+- Enter the password you set during installation
+- Expand 'Database'
+- Right click on 'Database' and press 'Create' and then 'Database...'
+- Enter the name of the database as 'envirobaby'
+- Then from the task bard, search 'psql'
+- Upon entering the shell, enter your user name and password.
+- After that enter '\c envirobaby' and press enter
+- After that, paste in the following schema -
+
+```
+CREATE TABLE USERS (
+id VARCHAR(15) PRIMARY KEY,
+password VARCHAR(20),
+noise_alert_setting BOOLEAN DEFAULT TRUE,
+temp_alert_setting BOOLEAN DEFAULT TRUE,
+hum_alert_setting BOOLEAN DEFAULT TRUE
+);
+
+CREATE TABLE ROOM(
+room_name VARCHAR(8),
+userid VARCHAR(15),
+capacity INTEGER,
+age_group boolean,
+maxnoise INTEGER,
+maxtemp NUMERIC(5,2),
+mintemp NUMERIC(5,2),
+maxhum NUMERIC(5,2),
+minhum NUMERIC(5,2),
+noise_alerts BOOLEAN,
+temp_alerts BOOLEAN,
+hum_alerts BOOLEAN,
+
+    PRIMARY KEY(userid, room_name),
+    FOREIGN KEY (userid)
+        REFERENCES USERS(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+CREATE TABLE RECORD(
+userid VARCHAR(15),
+room_name VARCHAR(8),
+record_date DATE,
+record_time TIME WITHOUT TIME ZONE,
+loud_data INTEGER,
+temp_data NUMERIC(5,2),
+hum_data NUMERIC(5,2),
+
+    PRIMARY KEY(userid, room_name, record_date, record_time),
+    FOREIGN KEY(userid, room_name)
+        REFERENCES ROOM(userid, room_name)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+```
+- Go to intellij, and go to DatabaseControl in 'Database' package and enter the following -
+
+<img height="200" src="pictures/databaseControlInfo.png" width="600"/>
+
 Considering we have Intellij IDEA, let's start with running the App through GUI.
 Open the EnviroBaby in Intellij **(_File > Open > Path To EnviroBaby_)**.
 Envirobaby is now open in Intellij, let's follow the step below:
@@ -152,3 +227,14 @@ Envirobaby is now open in Intellij, let's follow the step below:
 - On the next step we run the file, and wait for the build to compile.
 - CONGRATULATION! The GUI popped up, you are in the App.
 
+## Team Contribution
+
+- Feride Hansson: Made significant contributions to developing the GUI with JavaFX and programming in Arduino, and played a key role in drafting requirements and user stories.
+- Nadman Abdullah Bin Faisal: Made significant contribution in GUI development using JavaFX and programming WIO terminal with Arduino. Also contributed to creating requirements and user stories.
+- Alev Kara: Contributed largely on database creation, data visualization, and improving the UI, in addition to creating requirements and user stories.
+- Mesimaaria Alastalo: Played crucial role in developing the GUI with JavaFX and helped create requirements and user stories.
+- Hasan Zahid: Specialized in programming the WIO terminal with Arduino and refactoring Arduino files, alongside contributing to requirements and user stories.
+
+## Demo Video
+
+To watch our demo video, click [here](https://youtu.be/ME3XJxVz600).
