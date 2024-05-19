@@ -54,10 +54,10 @@ public class SystemNotificationSettingsScreenController {
         instanceUser= UserExchanger.getInstance();
         database = new DatabaseControl();
 
-        systemsettings.setDisable(true);
+        systemsettings.setDisable(true); //indicate current page
 
         if (instanceUser.getInstanceUser().isTempNotiStatus()){
-            tempNotiTurnOnButton.setDisable(true);
+            tempNotiTurnOnButton.setDisable(true); //display the users selected settings and make sure the user can't have an unselected setting by disabling it
         } else {
             tempNotiTurnOffButton.setDisable(true);
         }
@@ -76,16 +76,12 @@ public class SystemNotificationSettingsScreenController {
     void loadHomeScreen(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("homeScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        double chosenHeight = stage.getHeight();
+        double chosenWidth = stage.getWidth();
         Scene scene = new Scene(root);
         stage.setScene(scene);
-    }
-
-    @FXML
-    void systemSettingsClick(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("systemNotificationSettingsScreen.fxml"));
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
+        stage.setHeight(chosenHeight);
+        stage.setWidth(chosenWidth);
     }
 
     public void tempNotiOn(ActionEvent actionEvent) throws SQLException {
@@ -139,7 +135,11 @@ public class SystemNotificationSettingsScreenController {
     public void moveToRoom1Screen(ActionEvent actionEvent)  throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("RoomNotificationScreen.fxml"));
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+        double chosenHeight = stage.getHeight();
+        double chosenWidth = stage.getWidth();
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setHeight(chosenHeight);
+        stage.setWidth(chosenWidth);
     }
 }

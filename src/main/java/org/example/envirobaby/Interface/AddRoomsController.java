@@ -116,7 +116,7 @@ public class AddRoomsController {
                 //Creates the new room
                 Room room = currentUser.createRoom(roomName, userId, capacity, ageGroup, maxNoiseLevel, maxTemp, minTemp, maxHum, minHum, currentUser.isCelsius());
                 userExchanger.setCurrentRoom(room);
-                userExchanger.getCurrentRoom().getThresholds().setDefaultThresholds(ageGroup);
+                userExchanger.getCurrentRoom().getThresholds().setDefaultThresholds(ageGroup); //initialise default thresholds for the user selected age group
 
                 //Loads the "View rooms" screen
                 Parent root = FXMLLoader.load(getClass().getResource("viewRooms.fxml"));
@@ -141,8 +141,12 @@ public class AddRoomsController {
     public void homeButtonClick (ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("homeScreen.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        double chosenHeight = stage.getHeight();
+        double chosenWidth = stage.getWidth();
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setHeight(chosenHeight);
+        stage.setWidth(chosenWidth);
     }
 
     public void setDefaultThresholds(ActionEvent event) {

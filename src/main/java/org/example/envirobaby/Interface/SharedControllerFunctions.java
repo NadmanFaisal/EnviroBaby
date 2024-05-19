@@ -18,7 +18,7 @@ public class SharedControllerFunctions {
         room2.setVisible(false);
         room3.setVisible(false);
         room4.setVisible(false);
-        roomView.setVisible(false);
+        roomView.setVisible(false); //if user has no rooms registered, do not show the page data related to specific rooms
 
         // Display the room buttons based on how many rooms the current user has
         switch (currentUser.getRooms().size()){
@@ -58,11 +58,11 @@ public class SharedControllerFunctions {
 
         if (!currentUser.getRooms().isEmpty()) {
             instanceUser.setCurrentRoom(currentUser.getRoom(1)); //ensure first room viewed upon loading screen is always room1
-            roomView.setVisible(true); //if the user has no rooms registered, do not display a screen
+            roomView.setVisible(true); //if the user has no rooms registered, do not display the options associated with rooms
         }
     }
 
-    public void resetButtons(Button room1, Button room2, Button room3, Button room4){
+    public void resetButtons(Button room1, Button room2, Button room3, Button room4){ //enable all buttons so that the new selected one is the only button seen as selected
         room1.setDisable(false);
         room2.setDisable(false);
         room3.setDisable(false);

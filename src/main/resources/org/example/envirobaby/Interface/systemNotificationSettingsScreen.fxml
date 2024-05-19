@@ -269,7 +269,7 @@
                         </AnchorPane>
                         <AnchorPane>
                            <children>
-                              <Button fx:id="systemsettings" layoutX="69.0" layoutY="18.0" mnemonicParsing="false" onAction="#systemSettingsClick" prefHeight="91.0" prefWidth="300.0" stylesheets="@roomStylesheet.css" text="System Notifications" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="69.0" AnchorPane.rightAnchor="69.0" AnchorPane.topAnchor="18.0">
+                              <Button fx:id="systemsettings" layoutX="69.0" layoutY="18.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="300.0" stylesheets="@roomStylesheet.css" text="System Notifications" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="69.0" AnchorPane.rightAnchor="69.0" AnchorPane.topAnchor="18.0">
                                  <font>
                                     <Font size="19.0" />
                                  </font>

@@ -101,7 +101,7 @@ public class ViewRoomsController {
 
         //Loads the room overview screen for the currently selected room, if there is one
         if (!currentUser.getRooms().isEmpty()) {
-            setRoomDisplay();
+            setRoomDisplay(); //start displaying room data if the user has any rooms registered
         }
     }
 
@@ -113,8 +113,8 @@ public class ViewRoomsController {
 
     public void Room1ButtonClick (ActionEvent event) throws IOException, SQLException, MqttException, InterruptedException {
         instanceUser.setCurrentRoom(currentUser.getRoom(1));
-        setupFunctions.resetButtons(room1,room2,room3,room4);
-        room1.setDisable(true);
+        setupFunctions.resetButtons(room1,room2,room3,room4); //re-enable buttons the user previously clicked
+        room1.setDisable(true); //disable buttons once clicked so that user can't have an unselected room.
         roomOverview.stopOverview();
         setRoomDisplay();
     }
@@ -146,15 +146,23 @@ public class ViewRoomsController {
     public void homeButtonClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("homeScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        double chosenHeight = stage.getHeight();
+        double chosenWidth = stage.getWidth();
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setHeight(chosenHeight);
+        stage.setWidth(chosenWidth);
     }
 
     public void addRoomClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("addRooms.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        double chosenHeight = stage.getHeight();
+        double chosenWidth = stage.getWidth();
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setHeight(chosenHeight);
+        stage.setWidth(chosenWidth);
     }
 
     public void setRoomDisplay() throws SQLException, MqttException, IOException {
@@ -172,7 +180,7 @@ public class ViewRoomsController {
         minTempBox.setText(String.valueOf(roomOverview.getUserRoom().getThresholds().getTempLowerBound()));
         roomCapLabel.setText("Capacity: " + currentRoom.getCapacity());
 
-        if(currentUser.isCelsius()) {
+        if(currentUser.isCelsius()) { //show which temperature unit the user has selected and ensure they can't have any unselected by disabling it
             celciusButton.setDisable(true);
         } else {
             fahrenButton.setDisable(true);
@@ -190,7 +198,7 @@ public class ViewRoomsController {
             dataGraphing.getChildren().remove(currentDataView);
             dataGraphing.add(newGraphPane, 1, 0);
             currentDataView = newGraphPane;
-            switch (currentUser.getSelectedDataView()) {
+            switch (currentUser.getSelectedDataView()) { //indicate which graph view the user has selected
                 case "temp"->{
                     tempGraph.setDisable(true);
                 }
@@ -232,7 +240,7 @@ public class ViewRoomsController {
         currentUser.setCelsius(true);
         database.updateTempUnit(currentUser.getUserID(),true);
         celciusButton.setDisable(true);
-        fahrenButton.setDisable(false);
+        fahrenButton.setDisable(false); //re-enable fahrenheit button
 
 
         if(currentUser.getSelectedDataView().equals("temp")){ //set temp units for graph view
@@ -260,12 +268,12 @@ public class ViewRoomsController {
     @FXML
     public void displayDataTable(ActionEvent actionEvent) throws IOException {
         currentUser.setSelectedDataView("table"); // set for consistency on data view when switching rooms
-        tempGraph.setDisable(false);
+        tempGraph.setDisable(false); //re-enable all other buttons
         loudGraph.setDisable(false);
         humGraph.setDisable(false);
-        dataTable.setDisable(true);
+        dataTable.setDisable(true); //ensure user can't have an unselected button by disabling it after selection
         AnchorPane newTablePane = FXMLLoader.load(getClass().getResource("dataTable.fxml"));
-        dataGraphing.getChildren().remove(currentDataView);
+        dataGraphing.getChildren().remove(currentDataView); //remove the previous dataView so there is no layering of panes
         dataGraphing.add(newTablePane, 1, 0);
         currentDataView=newTablePane;
     } //show table view
@@ -315,7 +323,7 @@ public class ViewRoomsController {
         maxHumBox.setText(String.valueOf(currentRoom.getThresholds().getHumUpperBound()));
         maxTempBox.setText(String.valueOf(currentRoom.getThresholds().getTempUpperBound()));
         minTempBox.setText(String.valueOf(currentRoom.getThresholds().getTempLowerBound()));
-    }
+    } //reset thresholds to fit the age groups default thresholds, display in threshold boxes.
 }
 
 

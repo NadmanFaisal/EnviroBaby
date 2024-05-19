@@ -65,7 +65,7 @@ public class DataTableController {
 
         recordTime.setCellValueFactory(new PropertyValueFactory<Record,String>("recordTime")); //set based on observable list column name
         recordNoise.setCellValueFactory(new PropertyValueFactory<Record,Integer>("recordNoise"));
-        if (instanceUser.getInstanceUser().isCelsius()) {
+        if (instanceUser.getInstanceUser().isCelsius()) { //display temp values depending on the users preferences
             recordTemp.setCellValueFactory(new PropertyValueFactory<Record, Double>("recordTemp"));
         } else {
             recordTemp.setCellValueFactory(new PropertyValueFactory<Record, Double>("recordTempF"));
