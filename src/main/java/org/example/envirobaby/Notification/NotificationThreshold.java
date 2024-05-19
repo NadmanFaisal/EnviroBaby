@@ -85,24 +85,24 @@ public class NotificationThreshold {
         switch (ageGroupOption) {
             case "0-6 Months"->{
                 this.defaultLoudThreshold=65;
-                this.defaultTempUbound=36;
-                this.defaultTempLbound=30;
-                this.defaultHumUbound=60;
-                this.defaultHumLbound=45;
+                this.defaultTempUbound=25;
+                this.defaultTempLbound=20;
+                this.defaultHumUbound=50;
+                this.defaultHumLbound=35;
             }
             case "6-12 Months"->{
-                this.defaultLoudThreshold=65;
-                this.defaultTempUbound=40;
-                this.defaultTempLbound=30;
-                this.defaultHumUbound=60;
-                this.defaultHumLbound=45;
+                this.defaultLoudThreshold=55;
+                this.defaultTempUbound=28;
+                this.defaultTempLbound=23;
+                this.defaultHumUbound=50;
+                this.defaultHumLbound=40;
             }
             case "12-24 Months"->{
-                this.defaultLoudThreshold=65;
-                this.defaultTempUbound=42;
-                this.defaultTempLbound=20;
-                this.defaultHumUbound=60;
-                this.defaultHumLbound=35;
+                this.defaultLoudThreshold=55;
+                this.defaultTempUbound=30;
+                this.defaultTempLbound=23;
+                this.defaultHumUbound=50;
+                this.defaultHumLbound=40;
             }
         }
     }

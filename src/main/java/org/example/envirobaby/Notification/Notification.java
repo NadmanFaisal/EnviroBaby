@@ -2,6 +2,7 @@ package org.example.envirobaby.Notification;
 
 import javafx.application.Platform;
 import javafx.geometry.Pos;
+import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 
@@ -20,6 +21,11 @@ public class Notification {
     private long lastMinTempAlert;
     private long lastMaxHumAlert;
     private long lastMinHumAlert;
+
+    //Sound Effect by "https://pixabay.com/users/universfield-28281460/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=126514" from "https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=126514"
+    private AudioClip notification = new AudioClip(getClass().getResource("notif.mp3").toExternalForm());
+
+
 
 
     DecimalFormat df = new DecimalFormat("#.00");
@@ -53,7 +59,7 @@ public class Notification {
     public void createNotification(String title, String message, String notifType) {
 
         long currentTime = System.currentTimeMillis();
-        long notificationInterval = 10000L;
+        long notificationInterval = 60000L;
         long timeDif = 0L;
 
         switch (notifType) { // Calculates the time difference between the current time and the last notification time, based on the notification type
@@ -80,6 +86,7 @@ public class Notification {
                 // Source for the code:- https://javadoc.io/doc/org.controlsfx/controlsfx/8.40.16/org/controlsfx/control/Notifications.html
                 Notifications notifications = Notifications.create().title(title).text(message).graphic(null).hideAfter(Duration.seconds(7)).position(Pos.BOTTOM_RIGHT);
                 notifications.showWarning();
+                notification.play();
             });
             switch (notifType) { // Updates the last notification time to the current time, based on the notification type
                 case "maxTemp":

@@ -4,6 +4,7 @@ module org.example.envirobaby {
     requires org.eclipse.paho.client.mqttv3;
     requires org.controlsfx.controls;
     requires java.sql;
+    requires javafx.media;
 
 
     exports org.example.envirobaby.Interface;
