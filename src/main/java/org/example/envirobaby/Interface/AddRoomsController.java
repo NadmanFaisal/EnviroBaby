@@ -99,28 +99,34 @@ public class AddRoomsController {
         if (currentUser.getRooms().size()<4) {
             //Gets the user input for the new rooms details
             String roomName = NewRoomName.getText();
-            int capacity = Integer.parseInt(MaxCapacity.getText());
-            String ageGroup = (String) AgeGroupPicker.getValue();
-            int maxNoiseLevel = Integer.parseInt(maxNoise.getText());
-            double maxHum = Double.parseDouble(maxHumBox.getText());
-            double minHum = Double.parseDouble(minHumBox.getText());
-            double maxTemp = Double.parseDouble(maxTempBox.getText());
-            double minTemp = Double.parseDouble(minTempBox.getText());
+            if(roomName.length()<=8) {
+                int capacity = Integer.parseInt(MaxCapacity.getText());
+                String ageGroup = AgeGroupPicker.getValue();
+                int maxNoiseLevel = Integer.parseInt(maxNoise.getText());
+                double maxHum = Double.parseDouble(maxHumBox.getText());
+                double minHum = Double.parseDouble(minHumBox.getText());
+                double maxTemp = Double.parseDouble(maxTempBox.getText());
+                double minTemp = Double.parseDouble(minTempBox.getText());
 
-           //Gets the current users ID
-            UserExchanger userExchanger = UserExchanger.getInstance();
-            User currentUser = userExchanger.getInstanceUser();
-            String userId = currentUser.getUserID();
+                //Gets the current users ID
+                UserExchanger userExchanger = UserExchanger.getInstance();
+                User currentUser = userExchanger.getInstanceUser();
+                String userId = currentUser.getUserID();
 
-            //Creates the new room
-            Room room = currentUser.createRoom(roomName, userId, capacity, ageGroup, maxNoiseLevel, maxTemp, minTemp, maxHum, minHum, currentUser.isCelsius());
-            userExchanger.setCurrentRoom(room);
+                //Creates the new room
+                Room room = currentUser.createRoom(roomName, userId, capacity, ageGroup, maxNoiseLevel, maxTemp, minTemp, maxHum, minHum, currentUser.isCelsius());
+                userExchanger.setCurrentRoom(room);
+                userExchanger.getCurrentRoom().getThresholds().setDefaultThresholds(ageGroup);
 
-            //Loads the "View rooms" screen
-            Parent root = FXMLLoader.load(getClass().getResource("viewRooms.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+                //Loads the "View rooms" screen
+                Parent root = FXMLLoader.load(getClass().getResource("viewRooms.fxml"));
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+            } else {
+                alert.setContentText("Room name must be 8 letters or less.");
+                alert.show();
+            }
         } else {
             alert.setContentText("You can only have four rooms at a time");
             alert.show();

@@ -59,15 +59,20 @@ public class Notification {
         switch (notifType) { // Calculates the time difference between the current time and the last notification time, based on the notification type
             case "maxTemp":
                 timeDif= currentTime-lastMaxTempAlert;
+                break;
             case "minTemp":
                 timeDif= currentTime-lastMinTempAlert;
+                break;
             case "maxHum":
                 timeDif= currentTime-lastMaxHumAlert;
+                break;
             case "minHum":
                 timeDif= currentTime-lastMinHumAlert;
+                break;
             case "maxNoise":
                 timeDif= currentTime-lastNoiseAlert;
-                }
+                break;
+        }
 
         if (timeDif > notificationInterval) { // Checks if the time difference exceeds the minimum notification interval
             Platform.runLater(() -> {
@@ -79,12 +84,16 @@ public class Notification {
             switch (notifType) { // Updates the last notification time to the current time, based on the notification type
                 case "maxTemp":
                     lastMaxTempAlert = currentTime;
+                    break;
                 case "minTemp":
                     lastMinTempAlert = currentTime;
+                    break;
                 case "maxHum":
                     lastMaxHumAlert = currentTime;
+                    break;
                 case "minHum":
                     lastMinHumAlert = currentTime;
+                    break;
                 case "maxNoise":
                     lastNoiseAlert = currentTime;
             }

@@ -40,4 +40,37 @@
 .table-view .column-header-background .filler {
     -fx-background-color: transparent;
 }
+.headerButton {
+    -fx-cursor: hand;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-background-color:  #f19f7f;
+    -fx-border-color: #EC7D51;
+}
 
+.headerButton:pressed{
+    -fx-background-color:  #EC7D51;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.15), 10, 0.5, 0.0, 0.0);
+}
+.headerButton:disabled{
+    -fx-background-color:  #EC7D51;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.15), 10, 0.5, 0.0, 0.0);
+    -fx-opacity: 1.0;
+    -fx-cursor: hand;
+}
+
+.defaultButton {
+    -fx-cursor: hand;
+}
+
+.defaultButton:pressed {
+    -fx-background-color: #ec957a;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.15), 10, 0.5, 0.0, 0.0);
+}
+
+.defaultButton:disabled {
+    -fx-background-color: #ec957a;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.15), 10, 0.5, 0.0, 0.0);
+    -fx-opacity: 1.0;
+    -fx-cursor: hand;
+}

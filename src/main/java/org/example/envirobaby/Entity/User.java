@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class User implements Runnable {
+public class User {
 
     private String userID;
     private DatabaseControl database;
@@ -241,9 +241,7 @@ public class User implements Runnable {
     }
 
 
-
-    @Override
-    public void run() {
+    public void backGroundFunctions() {
         int delay=0;
         int currentTime = LocalTime.now().getMinute();
 
@@ -263,5 +261,26 @@ public class User implements Runnable {
         storeData.scheduleAtFixedRate(this::recordData, delay, 30, TimeUnit.MINUTES);
         // starts recording data every 30 minutes after an initial delay.
     }
+
+//    public void run() {
+//        int delay=0;
+//        int currentTime = LocalTime.now().getMinute();
+//
+//        if (currentTime>30) {
+//            delay = 60-currentTime;
+//        } else if(currentTime!=0 && currentTime!=30) {
+//            delay=30-currentTime;
+//        } // set delay so that we start recording data only when the clock is at HH:00 or HH:30
+//
+//        // Create a ScheduledExecutorService for notifications
+//        ScheduledExecutorService notificationScheduler = Executors.newSingleThreadScheduledExecutor();
+//        //Schedule sendAlerts with initial delay of 101 to avoid notifications during initialisation
+//        notificationScheduler.scheduleAtFixedRate(this::sendAlerts, 101, 100, TimeUnit.MILLISECONDS);
+//
+//        // Create a ScheduleExecutorService for storing records
+//        ScheduledExecutorService storeData = Executors.newSingleThreadScheduledExecutor();
+//        storeData.scheduleAtFixedRate(this::recordData, delay, 30, TimeUnit.MINUTES);
+//        // starts recording data every 30 minutes after an initial delay.
+//    }
 }
 

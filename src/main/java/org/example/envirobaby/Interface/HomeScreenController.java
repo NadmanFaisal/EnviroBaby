@@ -30,9 +30,9 @@ public class HomeScreenController {
     @FXML
     public void initialize() throws MqttException {
         instanceUser = UserExchanger.getInstance();
-        Thread thread = new Thread(instanceUser.getInstanceUser());
-        thread.start();
-
+//        Thread thread = new Thread(instanceUser.getInstanceUser());
+//        thread.start();
+        instanceUser.getInstanceUser().backGroundFunctions();
 
 
     }

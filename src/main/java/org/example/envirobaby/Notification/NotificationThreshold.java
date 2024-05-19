@@ -2,11 +2,11 @@ package org.example.envirobaby.Notification;
 
 public class NotificationThreshold {
 
-    private static final int DEFAULT_LOUD_THRESHOLD =90;
-    private static final double DEFAULT_CTEMP_UBOUND =25.00;
-    private static final double DEFAULT_CTEMP_LBOUND =18.00;
-    private static final double DEFAULT_HUM_UBOUND =60.00;
-    private static final double DEFAULT_HUM_LBOUND =30.00;
+    private int defaultLoudThreshold;
+    private double defaultTempUbound;
+    private double defaultTempLbound;
+    private double defaultHumUbound;
+    private double defaultHumLbound;
 
 
     private int loudThreshold;
@@ -18,11 +18,11 @@ public class NotificationThreshold {
 
 
     public NotificationThreshold(){
-        this.loudThreshold = DEFAULT_LOUD_THRESHOLD;
-        this.tempUpperBound = DEFAULT_CTEMP_UBOUND;
-        this.tempLowerBound = DEFAULT_CTEMP_LBOUND;
-        this.humUpperBound = DEFAULT_HUM_UBOUND;
-        this.humLowerBound = DEFAULT_HUM_LBOUND;
+        this.loudThreshold = defaultLoudThreshold;
+        this.tempUpperBound = defaultTempUbound;
+        this.tempLowerBound = defaultTempLbound;
+        this.humUpperBound = defaultHumUbound;
+        this.humLowerBound = defaultHumLbound;
     }
 
 
@@ -74,10 +74,36 @@ public class NotificationThreshold {
      * it triggers notification.
      */
     public void resetThresholds(){
-        this.loudThreshold = DEFAULT_LOUD_THRESHOLD;
-        this.tempUpperBound = DEFAULT_CTEMP_UBOUND;
-        this.tempLowerBound = DEFAULT_CTEMP_LBOUND;
-        this.humUpperBound = DEFAULT_HUM_UBOUND;
-        this.humLowerBound = DEFAULT_HUM_LBOUND;
+        this.loudThreshold = defaultLoudThreshold;
+        this.tempUpperBound = defaultTempUbound;
+        this.tempLowerBound = defaultTempLbound;
+        this.humUpperBound = defaultHumUbound;
+        this.humLowerBound = defaultHumLbound;
+    }
+
+    public void setDefaultThresholds(String ageGroupOption) {
+        switch (ageGroupOption) {
+            case "0-6 Months"->{
+                this.defaultLoudThreshold=65;
+                this.defaultTempUbound=36;
+                this.defaultTempLbound=30;
+                this.defaultHumUbound=60;
+                this.defaultHumLbound=45;
+            }
+            case "6-12 Months"->{
+                this.defaultLoudThreshold=65;
+                this.defaultTempUbound=40;
+                this.defaultTempLbound=30;
+                this.defaultHumUbound=60;
+                this.defaultHumLbound=45;
+            }
+            case "12-24 Months"->{
+                this.defaultLoudThreshold=65;
+                this.defaultTempUbound=42;
+                this.defaultTempLbound=20;
+                this.defaultHumUbound=60;
+                this.defaultHumLbound=35;
+            }
+        }
     }
 }

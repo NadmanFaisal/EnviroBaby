@@ -34,65 +34,71 @@
                   <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="10.0" vgrow="ALWAYS" />
                   <RowConstraints minHeight="10.0" prefHeight="26.0" vgrow="ALWAYS" />
                   <RowConstraints minHeight="10.0" prefHeight="26.0" vgrow="ALWAYS" />
                   <RowConstraints minHeight="10.0" prefHeight="26.0" vgrow="ALWAYS" />
                   <RowConstraints minHeight="10.0" prefHeight="26.0" vgrow="ALWAYS" />
                   <RowConstraints minHeight="10.0" prefHeight="26.0" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="10.0" vgrow="ALWAYS" />
                </rowConstraints>
                <children>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                      <children>
-                        <Button fx:id="roomView" layoutX="121.0" layoutY="-13.0" mnemonicParsing="false" onAction="#ViewRoomsClick" prefHeight="66.0" prefWidth="780.0" text="View Rooms" AnchorPane.bottomAnchor="51.0" AnchorPane.leftAnchor="121.0" AnchorPane.rightAnchor="124.0" AnchorPane.topAnchor="-13.0">
+                        <Button fx:id="roomView" layoutX="123.0" layoutY="19.0" mnemonicParsing="false" onAction="#ViewRoomsClick" prefHeight="66.0" prefWidth="780.0" text="View Rooms" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="123.0" AnchorPane.rightAnchor="122.0" AnchorPane.topAnchor="19.0">
                            <styleClass>
                               <String fx:value="dataOverviewPane" />
                               <String fx:value="font" />
                               <String fx:value="dropShadow" />
+                              <String fx:value="defaultButton" />
                            </styleClass>
                         </Button>
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                      <children>
-                        <Button fx:id="roomAdd" layoutX="123.0" layoutY="-13.0" mnemonicParsing="false" onAction="#AddRoomsClick" prefHeight="66.0" prefWidth="780.0" text="Add Rooms" AnchorPane.bottomAnchor="51.0" AnchorPane.leftAnchor="123.0" AnchorPane.rightAnchor="122.0" AnchorPane.topAnchor="-13.0">
+                        <Button fx:id="roomAdd" layoutX="123.0" layoutY="19.0" mnemonicParsing="false" onAction="#AddRoomsClick" prefHeight="66.0" prefWidth="780.0" text="Add Rooms" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="123.0" AnchorPane.rightAnchor="122.0" AnchorPane.topAnchor="19.0">
                            <styleClass>
                               <String fx:value="dataOverviewPane" />
                               <String fx:value="dropShadow" />
                               <String fx:value="font" />
+                              <String fx:value="defaultButton" />
                            </styleClass>
                         </Button>
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                      <children>
-                        <Button fx:id="roomEdit" onAction="#editRoomsClick" layoutX="123.0" layoutY="-17.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="780.0" text="Edit Rooms" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="128.0" AnchorPane.rightAnchor="117.0" AnchorPane.topAnchor="-17.0">
+                        <Button fx:id="roomEdit" layoutX="123.0" layoutY="19.0" mnemonicParsing="false" onAction="#editRoomsClick" prefHeight="66.0" prefWidth="780.0" text="Edit Rooms" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="123.0" AnchorPane.rightAnchor="122.0" AnchorPane.topAnchor="19.0">
                            <styleClass>
                               <String fx:value="dataOverviewPane" />
                               <String fx:value="dropShadow" />
                               <String fx:value="font" />
+                              <String fx:value="defaultButton" />
                            </styleClass>
                         </Button>
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="125.0" prefWidth="1024.0" GridPane.rowIndex="4">
                      <children>
-                        <Button fx:id="findMe" layoutX="123.0" layoutY="-29.0" mnemonicParsing="false" onAction="#findMeClick" prefHeight="66.0" prefWidth="780.0" text="Find Me" AnchorPane.bottomAnchor="67.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="-29.0">
+                        <Button fx:id="notificationSettings" layoutX="123.0" layoutY="19.0" mnemonicParsing="false" onAction="#notificationSettingsClick" prefHeight="66.0" prefWidth="780.0" stylesheets="@roomStylesheet.css" text="Notification Settings" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="123.0" AnchorPane.rightAnchor="122.0" AnchorPane.topAnchor="19.0">
                            <styleClass>
                               <String fx:value="dataOverviewPane" />
                               <String fx:value="dropShadow" />
                               <String fx:value="font" />
+                              <String fx:value="defaultButton" />
                            </styleClass>
                         </Button>
                      </children>
                   </AnchorPane>
                   <AnchorPane layoutX="200.0" layoutY="200.0" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5">
                      <children>
-                        <Button fx:id="notificationSettings" layoutX="123.0" layoutY="-29.0" mnemonicParsing="false" onAction="#notificationSettingsClick" prefHeight="66.0" prefWidth="780.0" stylesheets="@roomStylesheet.css" text="Notification Settings" AnchorPane.bottomAnchor="67.2" AnchorPane.leftAnchor="124.8" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="-28.8">
+                        <Button fx:id="findMe" layoutX="123.0" layoutY="19.0" mnemonicParsing="false" onAction="#findMeClick" prefHeight="66.0" prefWidth="780.0" text="Find Me" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="123.0" AnchorPane.rightAnchor="122.0" AnchorPane.topAnchor="19.0">
                            <styleClass>
                               <String fx:value="dataOverviewPane" />
                               <String fx:value="dropShadow" />
                               <String fx:value="font" />
+                              <String fx:value="defaultButton" />
                            </styleClass>
                         </Button>
                      </children>

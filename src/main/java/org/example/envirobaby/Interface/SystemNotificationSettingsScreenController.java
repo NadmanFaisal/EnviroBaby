@@ -34,6 +34,8 @@ public class SystemNotificationSettingsScreenController {
     private Button noiseNotiTurnOffButton;
     @FXML
     private Button roomNotificationSettings;
+    @FXML
+    private Button systemsettings;
 
     @FXML
     private Label tempTXT;
@@ -51,6 +53,24 @@ public class SystemNotificationSettingsScreenController {
     void initialize() throws SQLException {
         instanceUser= UserExchanger.getInstance();
         database = new DatabaseControl();
+
+        systemsettings.setDisable(true);
+
+        if (instanceUser.getInstanceUser().isTempNotiStatus()){
+            tempNotiTurnOnButton.setDisable(true);
+        } else {
+            tempNotiTurnOffButton.setDisable(true);
+        }
+        if (instanceUser.getInstanceUser().isHumiNotiStatus()){
+            humiNotiTurnOnButton.setDisable(true);
+        } else {
+            humiNotiTurnOffButton.setDisable(true);
+        }
+        if (instanceUser.getInstanceUser().isNoiseNotiStatus()){
+            noiseNotiTurnOnButton.setDisable(true);
+        } else {
+            noiseNotiTurnOffButton.setDisable(true);
+        }
     }
     @FXML
     void loadHomeScreen(ActionEvent event) throws IOException {
@@ -71,33 +91,45 @@ public class SystemNotificationSettingsScreenController {
     public void tempNotiOn(ActionEvent actionEvent) throws SQLException {
         instanceUser.getInstanceUser().setTempNotiStatus(true);
         updateDatabaseSettings();
+        tempNotiTurnOffButton.setDisable(false);
+        tempNotiTurnOnButton.setDisable(true);
     }
 
     public void tempNotiOff(ActionEvent actionEvent) throws SQLException {
 
         instanceUser.getInstanceUser().setTempNotiStatus(false);
         updateDatabaseSettings();
+        tempNotiTurnOffButton.setDisable(true);
+        tempNotiTurnOnButton.setDisable(false);
     }
 
     public void humiNotiOn(ActionEvent actionEvent) throws SQLException {
 
         instanceUser.getInstanceUser().setHumiNotiStatus(true);
         updateDatabaseSettings();
+        humiNotiTurnOffButton.setDisable(false);
+        humiNotiTurnOnButton.setDisable(true);
     }
 
     public void humiNotiOff(ActionEvent actionEvent) throws SQLException {
         instanceUser.getInstanceUser().setHumiNotiStatus(false);
         updateDatabaseSettings();
+        humiNotiTurnOffButton.setDisable(true);
+        humiNotiTurnOnButton.setDisable(false);
     }
 
     public void noiseNotiOn(ActionEvent actionEvent) throws SQLException {
         instanceUser.getInstanceUser().setNoiseNotiStatus(true);
         updateDatabaseSettings();
+        noiseNotiTurnOnButton.setDisable(true);
+        noiseNotiTurnOffButton.setDisable(false);
     }
 
     public void noiseNotiOff(ActionEvent actionEvent) throws SQLException {
         instanceUser.getInstanceUser().setNoiseNotiStatus(false);
         updateDatabaseSettings();
+        noiseNotiTurnOnButton.setDisable(false);
+        noiseNotiTurnOffButton.setDisable(true);
     }
 
     public void updateDatabaseSettings() throws SQLException {
