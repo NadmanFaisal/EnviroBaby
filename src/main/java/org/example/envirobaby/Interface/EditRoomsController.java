@@ -134,12 +134,8 @@ public class EditRoomsController {
     void homeButtonClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("homeScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        double chosenHeight = stage.getHeight();
-        double chosenWidth = stage.getWidth();
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setHeight(chosenHeight);
-        stage.setWidth(chosenWidth);
     }
 
     @FXML
@@ -180,12 +176,8 @@ public class EditRoomsController {
     public void addRoomClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("addRooms.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        double chosenHeight = stage.getHeight();
-        double chosenWidth = stage.getWidth();
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setHeight(chosenHeight);
-        stage.setWidth(chosenWidth);
     }
 
     void displayRoomData() { //automatically fill out fields with the rooms current data

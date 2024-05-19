@@ -60,12 +60,8 @@ public class BuzzerScreenController {
     public void homeButtonClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("homeScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        double chosenHeight = stage.getHeight();
-        double chosenWidth = stage.getWidth();
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setHeight(chosenHeight);
-        stage.setWidth(chosenWidth);
     }
 
     /**

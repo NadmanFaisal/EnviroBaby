@@ -10,9 +10,9 @@ public class DatabaseControl {
      Statement statement;
 
     public DatabaseControl() throws SQLException {
-        String jdbcURL = "";
-        String username = "";
-        String password = "";
+        String jdbcURL = "jdbc:postgresql://65.19.141.67:5432/alevka_envirobaby";
+        String username = "alevka_envbUser";
+        String password = "Vzb3_783r";
         connection = DriverManager.getConnection(jdbcURL,username,password);
         statement = connection.createStatement(); //initialise statement
     }
