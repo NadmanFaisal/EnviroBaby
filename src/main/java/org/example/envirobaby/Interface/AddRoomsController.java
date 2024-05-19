@@ -68,6 +68,7 @@ public class AddRoomsController {
     private void AddRoomsClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("addRooms.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.resizableProperty().setValue(false);
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
@@ -121,6 +122,7 @@ public class AddRoomsController {
                 //Loads the "View rooms" screen
                 Parent root = FXMLLoader.load(getClass().getResource("viewRooms.fxml"));
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.resizableProperty().setValue(false);
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
             } else {
@@ -141,12 +143,9 @@ public class AddRoomsController {
     public void homeButtonClick (ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("homeScreen.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        double chosenHeight = stage.getHeight();
-        double chosenWidth = stage.getWidth();
         Scene scene = new Scene(root);
+        stage.resizableProperty().setValue(false);
         stage.setScene(scene);
-        stage.setHeight(chosenHeight);
-        stage.setWidth(chosenWidth);
     }
 
     public void setDefaultThresholds(ActionEvent event) {

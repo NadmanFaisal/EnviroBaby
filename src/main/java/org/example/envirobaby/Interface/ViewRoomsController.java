@@ -146,23 +146,17 @@ public class ViewRoomsController {
     public void homeButtonClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("homeScreen.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        double chosenHeight = stage.getHeight();
-        double chosenWidth = stage.getWidth();
+        stage.resizableProperty().setValue(false);
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setHeight(chosenHeight);
-        stage.setWidth(chosenWidth);
     }
 
     public void addRoomClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("addRooms.fxml"));
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        double chosenHeight = stage.getHeight();
-        double chosenWidth = stage.getWidth();
+        stage.resizableProperty().setValue(false);
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setHeight(chosenHeight);
-        stage.setWidth(chosenWidth);
     }
 
     public void setRoomDisplay() throws SQLException, MqttException, IOException {
